@@ -13,9 +13,9 @@ import eubrazil.atmosphere.service.PrivacyService;
 
 @Service
 @Transactional
-public class AnalyzerPollJob implements Job {
+public class PrivacyPollJob implements Job {
 
-	public static final Logger LOGGER = LoggerFactory.getLogger(AnalyzerPollJob.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(PrivacyPollJob.class);
 	
 	@Autowired
 	private PrivacyService privacyService;
@@ -37,4 +37,5 @@ public class AnalyzerPollJob implements Job {
 		System.out.println("AnalyserPullJob fim execução..");
 		
 	}
+
 }

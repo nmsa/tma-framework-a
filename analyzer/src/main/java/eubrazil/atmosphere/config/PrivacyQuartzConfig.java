@@ -21,10 +21,10 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import eubrazil.atmosphere.config.quartz.AutowiringSpringBeanJobFactory;
-import eubrazil.atmosphere.job.AnalyzerPollJob;
+import eubrazil.atmosphere.job.PrivacyPollJob;
 
 @Configuration
-public class QuartzConfig {
+public class PrivacyQuartzConfig {
 
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
@@ -67,7 +67,7 @@ public class QuartzConfig {
 	@Bean
 	public JobDetailFactoryBean procesoMQJob() {
 		JobDetailFactoryBean jobDetailFactory = new JobDetailFactoryBean();
-		jobDetailFactory.setJobClass(AnalyzerPollJob.class);
+		jobDetailFactory.setJobClass(PrivacyPollJob.class);
 		jobDetailFactory.setGroup("analyzer-quartz");
 		return jobDetailFactory;
 	}
