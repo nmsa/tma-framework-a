@@ -1,5 +1,4 @@
 package eubrazil.atmosphere.job;
-import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
@@ -13,7 +12,7 @@ import eubrazil.atmosphere.service.PrivacyService;
 
 @Service
 @Transactional
-public class PrivacyPollJob implements Job {
+public class PrivacyPollJob extends AnalyzerPollJob {
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(PrivacyPollJob.class);
 	
@@ -23,7 +22,7 @@ public class PrivacyPollJob implements Job {
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
 	
-		System.out.println("AnalyserPullJob executando..");
+		System.out.println("PrivacyPollJob executando..");
 		try {
 			Privacy privacy = this.privacyService.getLastMeasure();
 			if (privacy != null) {
@@ -34,8 +33,13 @@ public class PrivacyPollJob implements Job {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("AnalyserPullJob fim execução..");
+		System.out.println("PrivacyPollJob fim execução..");
 		
+	}
+
+	@Override
+	public int getFrequencyInSec() {
+		return 5;
 	}
 
 }
