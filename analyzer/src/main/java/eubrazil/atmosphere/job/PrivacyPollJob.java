@@ -1,27 +1,33 @@
 package eubrazil.atmosphere.job;
+
+import org.quartz.DisallowConcurrentExecution;
+import org.quartz.Job;
+import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
+import org.springframework.scheduling.quartz.JobDetailFactoryBean;
+import org.springframework.stereotype.Component;
 
+import eubrazil.atmosphere.config.SchedulerConfig;
 import eubrazil.atmosphere.entity.Privacy;
 import eubrazil.atmosphere.service.PrivacyService;
 
-@Service
-@Transactional
-public class PrivacyPollJob extends AnalyzerPollJob {
+@Component
+@DisallowConcurrentExecution
+public class PrivacyPollJob implements Job {
 
-	public static final Logger LOGGER = LoggerFactory.getLogger(PrivacyPollJob.class);
-	
+	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
 	@Autowired
 	private PrivacyService privacyService;
-	
+
 	@Override
-	public void execute(JobExecutionContext arg0) throws JobExecutionException {
-	
+	public void execute(JobExecutionContext jobExecutionContext) {
 		System.out.println("PrivacyPollJob executando..");
 		try {
 			Privacy privacy = this.privacyService.getLastMeasure();
@@ -34,12 +40,16 @@ public class PrivacyPollJob extends AnalyzerPollJob {
 			e.printStackTrace();
 		}
 		System.out.println("PrivacyPollJob fim execução..");
-		
 	}
 
-	@Override
-	public int getFrequencyInSec() {
-		return 5;
+	@Bean(name = "jobBean1")
+	public JobDetailFactoryBean job() {
+		return SchedulerConfig.createJobDetail(this.getClass());
+	}
+
+	@Bean(name = "jobBean1Trigger")
+	public CronTriggerFactoryBean jobTrigger(@Qualifier("jobBean1") JobDetail jobDetail) {
+		return SchedulerConfig.createCronTrigger(jobDetail, "0/5 * * * * ?");
 	}
 
 }
