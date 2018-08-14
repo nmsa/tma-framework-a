@@ -5,7 +5,7 @@ spring:
             ddl-auto: validate
 
     datasource:
-        url: jdbc:mysql://mysql:3306/knowledgebd
+        url: jdbc:mysql://mysql:3306/knowledgedb
         username: atm
         password: root
         driver-class-name: com.mysql.jdbc.Driver
