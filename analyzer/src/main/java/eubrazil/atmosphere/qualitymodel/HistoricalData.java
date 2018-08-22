@@ -5,96 +5,95 @@ package eubrazil.atmosphere.qualitymodel;
 import java.sql.Timestamp;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Historical Data</b></em>'.
- * <!-- end-user-doc -->
- *
- * <p>
- * The following features are supported:
- * </p>
- * <ul>
- *   <li>{@link eubrazil.atmosphere.qualitymodel.HistoricalData#getInstant <em>Instant</em>}</li>
- *   <li>{@link eubrazil.atmosphere.qualitymodel.HistoricalData#getValue <em>Value</em>}</li>
- *   <li>{@link eubrazil.atmosphere.qualitymodel.HistoricalData#getAttribute <em>Attribute</em>}</li>
- * </ul>
- *
- * @model
  * @generated
  */
-public interface HistoricalData {
+public class HistoricalData {
 	/**
-	 * Returns the value of the '<em><b>Instant</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Instant</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Instant</em>' attribute.
-	 * @see #setInstant(Timestamp)
-	 * @model dataType="eubrazil.atmosphere.qualitymodel.Timestamp" required="true"
 	 * @generated
 	 */
-	Timestamp getInstant();
+	protected static final Timestamp INSTANT_EDEFAULT = null;
 
 	/**
-	 * Sets the value of the '{@link eubrazil.atmosphere.qualitymodel.HistoricalData#getInstant <em>Instant</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Instant</em>' attribute.
-	 * @see #getInstant()
 	 * @generated
 	 */
-	void setInstant(Timestamp value);
+	protected Timestamp instant = INSTANT_EDEFAULT;
 
 	/**
-	 * Returns the value of the '<em><b>Value</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Value</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Value</em>' attribute.
-	 * @see #setValue(double)
-	 * @model required="true"
 	 * @generated
 	 */
-	double getValue();
+	protected static final double VALUE_EDEFAULT = 0.0;
 
 	/**
-	 * Sets the value of the '{@link eubrazil.atmosphere.qualitymodel.HistoricalData#getValue <em>Value</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Value</em>' attribute.
-	 * @see #getValue()
 	 * @generated
 	 */
-	void setValue(double value);
+	protected double value = VALUE_EDEFAULT;
 
 	/**
-	 * Returns the value of the '<em><b>Attribute</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Attribute</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Attribute</em>' reference.
-	 * @see #setAttribute(Attribute)
-	 * @model required="true"
 	 * @generated
 	 */
-	Attribute getAttribute();
+	protected Attribute attribute;
 
 	/**
-	 * Sets the value of the '{@link eubrazil.atmosphere.qualitymodel.HistoricalData#getAttribute <em>Attribute</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Attribute</em>' reference.
-	 * @see #getAttribute()
 	 * @generated
 	 */
-	void setAttribute(Attribute value);
+	public HistoricalData() {
+		super();
+	}
+
+	/**
+	 * @generated
+	 */
+	public Timestamp getInstant() {
+		return instant;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void setInstant(Timestamp newInstant) {
+		instant = newInstant;
+	}
+
+	/**
+	 * @generated
+	 */
+	public double getValue() {
+		return value;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void setValue(double newValue) {
+		value = newValue;
+	}
+
+	/**
+	 * @generated
+	 */
+	public Attribute getAttribute() {
+		return attribute;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void setAttribute(Attribute newAttribute) {
+		attribute = newAttribute;
+	}
+
+	/**
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (instant: ");
+		result.append(instant);
+		result.append(", value: ");
+		result.append(value);
+		result.append(')');
+		return result.toString();
+	}
 
 } // HistoricalData

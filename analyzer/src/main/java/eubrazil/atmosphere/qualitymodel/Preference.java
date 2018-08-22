@@ -2,100 +2,96 @@
  */
 package eubrazil.atmosphere.qualitymodel;
 
-
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Preference</b></em>'.
- * <!-- end-user-doc -->
- *
- * <p>
- * The following features are supported:
- * </p>
- * <ul>
- *   <li>{@link eubrazil.atmosphere.qualitymodel.Preference#getWeight <em>Weight</em>}</li>
- *   <li>{@link eubrazil.atmosphere.qualitymodel.Preference#getAttribute <em>Attribute</em>}</li>
- *   <li>{@link eubrazil.atmosphere.qualitymodel.Preference#getThreshold <em>Threshold</em>}</li>
- * </ul>
- *
- * @model
  * @generated
  */
-public interface Preference {
+public class Preference {
 	/**
-	 * Returns the value of the '<em><b>Weight</b></em>' attribute.
-	 * The default value is <code>"1.0"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Weight</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Weight</em>' attribute.
-	 * @see #setWeight(double)
-	 * @model default="1.0" required="true"
 	 * @generated
 	 */
-	double getWeight();
+	protected static final double WEIGHT_EDEFAULT = 1.0;
 
 	/**
-	 * Sets the value of the '{@link eubrazil.atmosphere.qualitymodel.Preference#getWeight <em>Weight</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Weight</em>' attribute.
-	 * @see #getWeight()
 	 * @generated
 	 */
-	void setWeight(double value);
+	protected double weight = WEIGHT_EDEFAULT;
 
 	/**
-	 * Returns the value of the '<em><b>Attribute</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Attribute</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Attribute</em>' reference.
-	 * @see #setAttribute(Attribute)
-	 * @model required="true"
 	 * @generated
 	 */
-	Attribute getAttribute();
+	protected Attribute attribute;
 
 	/**
-	 * Sets the value of the '{@link eubrazil.atmosphere.qualitymodel.Preference#getAttribute <em>Attribute</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Attribute</em>' reference.
-	 * @see #getAttribute()
 	 * @generated
 	 */
-	void setAttribute(Attribute value);
+	protected static final double THRESHOLD_EDEFAULT = 1.0;
 
 	/**
-	 * Returns the value of the '<em><b>Threshold</b></em>' attribute.
-	 * The default value is <code>"1.0"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Threshold</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Threshold</em>' attribute.
-	 * @see #setThreshold(double)
-	 * @model default="1.0" required="true"
 	 * @generated
 	 */
-	double getThreshold();
+	protected double threshold = THRESHOLD_EDEFAULT;
 
 	/**
-	 * Sets the value of the '{@link eubrazil.atmosphere.qualitymodel.Preference#getThreshold <em>Threshold</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Threshold</em>' attribute.
-	 * @see #getThreshold()
 	 * @generated
 	 */
-	void setThreshold(double value);
+	public Preference() {
+		super();
+	}
+
+	/**
+	 * @generated
+	 */
+	public double getWeight() {
+		return weight;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void setWeight(double newWeight) {
+		weight = newWeight;
+	}
+
+	/**
+	 * @generated
+	 */
+	public Attribute getAttribute() {
+		return attribute;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void setAttribute(Attribute newAttribute) {
+		attribute = newAttribute;
+	}
+
+	/**
+	 * @generated
+	 */
+	public double getThreshold() {
+		return threshold;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void setThreshold(double newThreshold) {
+		threshold = newThreshold;
+	}
+
+	/**
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (weight: ");
+		result.append(weight);
+		result.append(", threshold: ");
+		result.append(threshold);
+		result.append(')');
+		return result.toString();
+	}
 
 } // Preference

@@ -11,11 +11,10 @@ import java.util.List;
  * A representation of the literals of the enumeration '<em><b>Metric Aggregation Operator</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
- * @see eubrazil.atmosphere.qualitymodel.impl.QualityModelPackageImpl#getMetricAggregationOperator()
- * @model
+ * @see eubrazil.atmosphere.qualitymodel.QualityModelPackage#getMetricAggregationOperator()
  * @generated
  */
-public enum MetricAggregationOperator implements InternalMetricAggregationOperator {
+public enum MetricAggregationOperator {
 	/**
 	 * The '<em><b>AVERAGE</b></em>' literal object.
 	 * <!-- begin-user-doc -->
@@ -65,7 +64,6 @@ public enum MetricAggregationOperator implements InternalMetricAggregationOperat
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #AVERAGE
-	 * @model
 	 * @generated
 	 * @ordered
 	 */
@@ -80,7 +78,6 @@ public enum MetricAggregationOperator implements InternalMetricAggregationOperat
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #MINIMUM
-	 * @model
 	 * @generated
 	 * @ordered
 	 */
@@ -95,7 +92,6 @@ public enum MetricAggregationOperator implements InternalMetricAggregationOperat
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #MAXIMUM
-	 * @model
 	 * @generated
 	 * @ordered
 	 */
@@ -110,7 +106,6 @@ public enum MetricAggregationOperator implements InternalMetricAggregationOperat
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #SUM
-	 * @model
 	 * @generated
 	 * @ordered
 	 */
@@ -261,13 +256,3 @@ public enum MetricAggregationOperator implements InternalMetricAggregationOperat
 	}
 	
 } //MetricAggregationOperator
-
-/**
- * A private implementation interface used to hide the inheritance from Enumerator.
- * <!-- begin-user-doc -->
- * <!-- end-user-doc -->
- * @generated
- */
-interface InternalMetricAggregationOperator extends org.eclipse.emf.common.util.Enumerator {
-	// Empty 
-}

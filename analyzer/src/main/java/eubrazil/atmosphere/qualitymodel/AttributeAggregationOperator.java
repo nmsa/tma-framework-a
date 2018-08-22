@@ -11,11 +11,10 @@ import java.util.List;
  * A representation of the literals of the enumeration '<em><b>Attribute Aggregation Operator</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
- * @see eubrazil.atmosphere.qualitymodel.impl.QualityModelPackageImpl#getAttributeAggregationOperator()
- * @model
+ * @see eubrazil.atmosphere.qualitymodel.QualityModelPackage#getAttributeAggregationOperator()
  * @generated
  */
-public enum AttributeAggregationOperator implements InternalAttributeAggregationOperator {
+public enum AttributeAggregationOperator {
 	/**
 	 * The '<em><b>NEUTRALITY</b></em>' literal object.
 	 * <!-- begin-user-doc -->
@@ -55,7 +54,6 @@ public enum AttributeAggregationOperator implements InternalAttributeAggregation
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #NEUTRALITY
-	 * @model
 	 * @generated
 	 * @ordered
 	 */
@@ -70,7 +68,6 @@ public enum AttributeAggregationOperator implements InternalAttributeAggregation
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #SIMULTANEITY
-	 * @model
 	 * @generated
 	 * @ordered
 	 */
@@ -85,7 +82,6 @@ public enum AttributeAggregationOperator implements InternalAttributeAggregation
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #REPLACEABILITY
-	 * @model
 	 * @generated
 	 * @ordered
 	 */
@@ -235,13 +231,3 @@ public enum AttributeAggregationOperator implements InternalAttributeAggregation
 	}
 	
 } //AttributeAggregationOperator
-
-/**
- * A private implementation interface used to hide the inheritance from Enumerator.
- * <!-- begin-user-doc -->
- * <!-- end-user-doc -->
- * @generated
- */
-interface InternalAttributeAggregationOperator extends org.eclipse.emf.common.util.Enumerator {
-	// Empty 
-}

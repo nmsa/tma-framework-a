@@ -2,98 +2,103 @@
  */
 package eubrazil.atmosphere.qualitymodel;
 
-
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Metric</b></em>'.
- * <!-- end-user-doc -->
- *
- * <p>
- * The following features are supported:
- * </p>
- * <ul>
- *   <li>{@link eubrazil.atmosphere.qualitymodel.Metric#getProbe <em>Probe</em>}</li>
- *   <li>{@link eubrazil.atmosphere.qualitymodel.Metric#getDescription <em>Description</em>}</li>
- *   <li>{@link eubrazil.atmosphere.qualitymodel.Metric#getResource <em>Resource</em>}</li>
- * </ul>
- *
- * @model
  * @generated
  */
-public interface Metric {
+public class Metric {
 	/**
-	 * Returns the value of the '<em><b>Probe</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Probe</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Probe</em>' attribute.
-	 * @see #setProbe(int)
-	 * @model required="true"
 	 * @generated
 	 */
-	int getProbe();
+	protected static final int PROBE_EDEFAULT = 0;
 
 	/**
-	 * Sets the value of the '{@link eubrazil.atmosphere.qualitymodel.Metric#getProbe <em>Probe</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Probe</em>' attribute.
-	 * @see #getProbe()
 	 * @generated
 	 */
-	void setProbe(int value);
+	protected int probe = PROBE_EDEFAULT;
 
 	/**
-	 * Returns the value of the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Description</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Description</em>' attribute.
-	 * @see #setDescription(String)
-	 * @model required="true"
 	 * @generated
 	 */
-	String getDescription();
+	protected static final String DESCRIPTION_EDEFAULT = null;
 
 	/**
-	 * Sets the value of the '{@link eubrazil.atmosphere.qualitymodel.Metric#getDescription <em>Description</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Description</em>' attribute.
-	 * @see #getDescription()
 	 * @generated
 	 */
-	void setDescription(String value);
+	protected String description = DESCRIPTION_EDEFAULT;
 
 	/**
-	 * Returns the value of the '<em><b>Resource</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Resource</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Resource</em>' attribute.
-	 * @see #setResource(int)
-	 * @model required="true"
 	 * @generated
 	 */
-	int getResource();
+	protected static final int RESOURCE_EDEFAULT = 0;
 
 	/**
-	 * Sets the value of the '{@link eubrazil.atmosphere.qualitymodel.Metric#getResource <em>Resource</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Resource</em>' attribute.
-	 * @see #getResource()
 	 * @generated
 	 */
-	void setResource(int value);
+	protected int resource = RESOURCE_EDEFAULT;
+
+	/**
+	 * @generated
+	 */
+	public Metric() {
+		super();
+	}
+
+	/**
+	 * @generated
+	 */
+	public int getProbe() {
+		return probe;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void setProbe(int newProbe) {
+		probe = newProbe;
+	}
+
+	/**
+	 * @generated
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void setDescription(String newDescription) {
+		description = newDescription;
+	}
+
+	/**
+	 * @generated
+	 */
+	public int getResource() {
+		return resource;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void setResource(int newResource) {
+		resource = newResource;
+	}
+
+	/**
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (probe: ");
+		result.append(probe);
+		result.append(", description: ");
+		result.append(description);
+		result.append(", resource: ");
+		result.append(resource);
+		result.append(')');
+		return result.toString();
+	}
 
 } // Metric

@@ -2,119 +2,252 @@
  */
 package eubrazil.atmosphere.qualitymodel;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Leaf Attribute</b></em>'.
- * <!-- end-user-doc -->
- *
- * <p>
- * The following features are supported:
- * </p>
- * <ul>
- *   <li>{@link eubrazil.atmosphere.qualitymodel.LeafAttribute#getMin <em>Min</em>}</li>
- *   <li>{@link eubrazil.atmosphere.qualitymodel.LeafAttribute#getMax <em>Max</em>}</li>
- *   <li>{@link eubrazil.atmosphere.qualitymodel.LeafAttribute#getMetric <em>Metric</em>}</li>
- *   <li>{@link eubrazil.atmosphere.qualitymodel.LeafAttribute#getOperator <em>Operator</em>}</li>
- * </ul>
- *
- * @model
  * @generated
  */
-public interface LeafAttribute extends Attribute {
+public class LeafAttribute extends Attribute {
 	/**
-	 * Returns the value of the '<em><b>Min</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Min</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Min</em>' attribute.
-	 * @see #setMin(double)
-	 * @model
 	 * @generated
 	 */
-	double getMin();
+	protected static final double LOWER_BOUND_EDEFAULT = 0.0;
 
 	/**
-	 * Sets the value of the '{@link eubrazil.atmosphere.qualitymodel.LeafAttribute#getMin <em>Min</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Min</em>' attribute.
-	 * @see #getMin()
 	 * @generated
 	 */
-	void setMin(double value);
+	protected double lowerBound = LOWER_BOUND_EDEFAULT;
 
 	/**
-	 * Returns the value of the '<em><b>Max</b></em>' attribute.
-	 * The default value is <code>"1.0"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Max</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Max</em>' attribute.
-	 * @see #setMax(double)
-	 * @model default="1.0"
 	 * @generated
 	 */
-	double getMax();
+	protected boolean lowerBoundESet;
 
 	/**
-	 * Sets the value of the '{@link eubrazil.atmosphere.qualitymodel.LeafAttribute#getMax <em>Max</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Max</em>' attribute.
-	 * @see #getMax()
 	 * @generated
 	 */
-	void setMax(double value);
+	protected static final double UPPER_BOUND_EDEFAULT = 1.0;
 
 	/**
-	 * Returns the value of the '<em><b>Metric</b></em>' reference list.
-	 * The list contents are of type {@link eubrazil.atmosphere.qualitymodel.Metric}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Metric</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Metric</em>' reference list.
-	 * @model required="true"
 	 * @generated
 	 */
-	List<Metric> getMetric();
+	protected double upperBound = UPPER_BOUND_EDEFAULT;
 
 	/**
-	 * Returns the value of the '<em><b>Operator</b></em>' attribute.
-	 * The literals are from the enumeration {@link eubrazil.atmosphere.qualitymodel.MetricAggregationOperator}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Operator</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Operator</em>' attribute.
-	 * @see eubrazil.atmosphere.qualitymodel.MetricAggregationOperator
-	 * @see #setOperator(MetricAggregationOperator)
-	 * @model required="true"
 	 * @generated
 	 */
-	MetricAggregationOperator getOperator();
+	protected boolean upperBoundESet;
 
 	/**
-	 * Sets the value of the '{@link eubrazil.atmosphere.qualitymodel.LeafAttribute#getOperator <em>Operator</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Operator</em>' attribute.
-	 * @see eubrazil.atmosphere.qualitymodel.MetricAggregationOperator
-	 * @see #getOperator()
 	 * @generated
 	 */
-	void setOperator(MetricAggregationOperator value);
+	protected List<Metric> metric;
+
+	/**
+	 * @generated
+	 */
+	protected static final MetricAggregationOperator OPERATOR_EDEFAULT = MetricAggregationOperator.AVERAGE;
+
+	/**
+	 * @generated
+	 */
+	protected MetricAggregationOperator operator = OPERATOR_EDEFAULT;
+
+	/**
+	 * @generated
+	 */
+	protected static final int NUM_SAMPLES_EDEFAULT = 1;
+
+	/**
+	 * @generated
+	 */
+	protected int numSamples = NUM_SAMPLES_EDEFAULT;
+
+	/**
+	 * @generated
+	 */
+	public LeafAttribute() {
+		super();
+	}
+
+	/**
+	 * @generated
+	 */
+	public double getLowerBound() {
+		return lowerBound;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void setLowerBound(double newLowerBound) {
+		lowerBound = newLowerBound;
+		lowerBoundESet = true;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void unsetLowerBound() {
+		lowerBound = LOWER_BOUND_EDEFAULT;
+		lowerBoundESet = false;
+	}
+
+	/**
+	 * @generated
+	 */
+	public boolean isSetLowerBound() {
+		return lowerBoundESet;
+	}
+
+	/**
+	 * @generated
+	 */
+	public double getUpperBound() {
+		return upperBound;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void setUpperBound(double newUpperBound) {
+		upperBound = newUpperBound;
+		upperBoundESet = true;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void unsetUpperBound() {
+		upperBound = UPPER_BOUND_EDEFAULT;
+		upperBoundESet = false;
+	}
+
+	/**
+	 * @generated
+	 */
+	public boolean isSetUpperBound() {
+		return upperBoundESet;
+	}
+
+	/**
+	 * @generated
+	 */
+	public List<Metric> getMetric() {
+		if (metric == null) {
+			metric = new ArrayList<Metric>();
+		}
+		return metric;
+	}
+
+	/**
+	 * @generated
+	 */
+	public MetricAggregationOperator getOperator() {
+		return operator;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void setOperator(MetricAggregationOperator newOperator) {
+		operator = newOperator == null ? OPERATOR_EDEFAULT : newOperator;
+	}
+
+	/**
+	 * @generated
+	 */
+	public int getNumSamples() {
+		return numSamples;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void setNumSamples(int newNumSamples) {
+		numSamples = newNumSamples;
+	}
+
+	/**
+	 * @generated
+	 */
+	protected double calculateAverage() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @generated
+	 */
+	protected double calculateMinimum() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @generated
+	 */
+	protected double calculateMaximum() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @generated
+	 */
+	protected double calculateSum() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (lowerBound: ");
+		if (lowerBoundESet) result.append(lowerBound); else result.append("<unset>");
+		result.append(", upperBound: ");
+		if (upperBoundESet) result.append(upperBound); else result.append("<unset>");
+		result.append(", operator: ");
+		result.append(operator);
+		result.append(", numSamples: ");
+		result.append(numSamples);
+		result.append(')');
+		return result.toString();
+	}
+	
+	@Override
+	public HistoricalData calculate(UserProfile user) {
+		HistoricalData d = new HistoricalData();
+		d.setInstant(new Timestamp(System.currentTimeMillis()));
+		d.attribute = this;
+		
+		switch (operator) {
+		case AVERAGE:
+			d.value = calculateAverage();
+			break;
+		case MINIMUM:
+			d.value = calculateMinimum();
+			break;
+		case MAXIMUM:
+			d.value = calculateMaximum();
+			break;
+		case SUM:
+			d.value = calculateSum();
+			break;
+		default:
+			throw new UnsupportedOperationException();
+		}
+		
+		return d;
+	}
 
 } // LeafAttribute
