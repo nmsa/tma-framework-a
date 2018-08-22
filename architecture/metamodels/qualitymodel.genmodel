@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/tma-framework-a/analyzer/src/main/java/" modelPluginID="qualitymodel"
+    modelName="QualityModel" rootExtendsInterface="" rootExtendsClass="" suppressEMFTypes="true"
+    suppressEMFMetaData="true" suppressEMFModelTags="true" suppressInterfaces="true"
+    importerID="org.eclipse.emf.importer.ecore" suppressContainment="true" suppressNotification="true"
+    complianceLevel="8.0" copyrightFields="false" publicConstructors="true" classNamePattern=""
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>qualitymodel.ecore</foreignModel>
+  <genPackages prefix="QualityModel" basePackage="eubrazil.atmosphere" disposableProviderFactory="true"
+      adapterFactory="false" contentTypeIdentifier="" fileExtensions="qm" ecorePackage="qualitymodel.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="qualitymodel.ecore#//MetricAggregationOperator">
+      <genEnumLiterals ecoreEnumLiteral="qualitymodel.ecore#//MetricAggregationOperator/AVERAGE"/>
+      <genEnumLiterals ecoreEnumLiteral="qualitymodel.ecore#//MetricAggregationOperator/MINIMUM"/>
+      <genEnumLiterals ecoreEnumLiteral="qualitymodel.ecore#//MetricAggregationOperator/MAXIMUM"/>
+      <genEnumLiterals ecoreEnumLiteral="qualitymodel.ecore#//MetricAggregationOperator/SUM"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="qualitymodel.ecore#//AttributeAggregationOperator">
+      <genEnumLiterals ecoreEnumLiteral="qualitymodel.ecore#//AttributeAggregationOperator/NEUTRALITY"/>
+      <genEnumLiterals ecoreEnumLiteral="qualitymodel.ecore#//AttributeAggregationOperator/SIMULTANEITY"/>
+      <genEnumLiterals ecoreEnumLiteral="qualitymodel.ecore#//AttributeAggregationOperator/REPLACEABILITY"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="qualitymodel.ecore#//Timestamp"/>
+    <genClasses ecoreClass="qualitymodel.ecore#//Metric">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Metric/probe"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Metric/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Metric/resource"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="qualitymodel.ecore#//Attribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Attribute/name"/>
+      <genOperations ecoreOperation="qualitymodel.ecore#//Attribute/calculate">
+        <genParameters ecoreParameter="qualitymodel.ecore#//Attribute/calculate/user"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="qualitymodel.ecore#//CompositeAttribute">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qualitymodel.ecore#//CompositeAttribute/children"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//CompositeAttribute/operator"/>
+      <genOperations ecoreOperation="qualitymodel.ecore#//CompositeAttribute/calculateNeutrality"/>
+      <genOperations ecoreOperation="qualitymodel.ecore#//CompositeAttribute/calculateSimultaneity"/>
+      <genOperations ecoreOperation="qualitymodel.ecore#//CompositeAttribute/calculateReplaceability"/>
+    </genClasses>
+    <genClasses ecoreClass="qualitymodel.ecore#//LeafAttribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//LeafAttribute/lowerBound"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//LeafAttribute/upperBound"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference qualitymodel.ecore#//LeafAttribute/metric"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//LeafAttribute/operator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//LeafAttribute/numSamples"/>
+      <genOperations ecoreOperation="qualitymodel.ecore#//LeafAttribute/calculateAverage"/>
+      <genOperations ecoreOperation="qualitymodel.ecore#//LeafAttribute/calculateMinimum"/>
+      <genOperations ecoreOperation="qualitymodel.ecore#//LeafAttribute/calculateMaximum"/>
+      <genOperations ecoreOperation="qualitymodel.ecore#//LeafAttribute/calculateSum"/>
+    </genClasses>
+    <genClasses ecoreClass="qualitymodel.ecore#//HistoricalData">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//HistoricalData/instant"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//HistoricalData/value"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference qualitymodel.ecore#//HistoricalData/attribute"/>
+    </genClasses>
+    <genClasses ecoreClass="qualitymodel.ecore#//Preference">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Preference/weight"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference qualitymodel.ecore#//Preference/attribute"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Preference/threshold"/>
+    </genClasses>
+    <genClasses ecoreClass="qualitymodel.ecore#//UserProfile">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qualitymodel.ecore#//UserProfile/preference"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//UserProfile/userID"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
