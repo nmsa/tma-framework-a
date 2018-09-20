@@ -534,25 +534,28 @@
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']"/>
       </ownedElements>
-      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_etALcKYcEeiDUfoigO_0fA" name="calculateNeutrality() : EDouble" tooltipText="calculateNeutrality() : EDouble">
+      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_etALcKYcEeiDUfoigO_0fA" name="calculateNeutrality(profile ConfigurationProfile) : EDouble" tooltipText="calculateNeutrality(profile) : EDouble">
         <target xmi:type="ecore:EOperation" href="qualitymodel.ecore#//CompositeAttribute/calculateNeutrality"/>
         <semanticElements xmi:type="ecore:EOperation" href="qualitymodel.ecore#//CompositeAttribute/calculateNeutrality"/>
+        <semanticElements xmi:type="ecore:EParameter" href="qualitymodel.ecore#//CompositeAttribute/calculateNeutrality/profile"/>
         <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_etALcaYcEeiDUfoigO_0fA" labelAlignment="LEFT">
           <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='Operation']/@style"/>
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='Operation']"/>
       </ownedElements>
-      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_gemr8KYcEeiDUfoigO_0fA" name="calculateSimultaneity() : EDouble" tooltipText="calculateSimultaneity() : EDouble">
+      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_gemr8KYcEeiDUfoigO_0fA" name="calculateSimultaneity(profile ConfigurationProfile) : EDouble" tooltipText="calculateSimultaneity(profile) : EDouble">
         <target xmi:type="ecore:EOperation" href="qualitymodel.ecore#//CompositeAttribute/calculateSimultaneity"/>
         <semanticElements xmi:type="ecore:EOperation" href="qualitymodel.ecore#//CompositeAttribute/calculateSimultaneity"/>
+        <semanticElements xmi:type="ecore:EParameter" href="qualitymodel.ecore#//CompositeAttribute/calculateSimultaneity/profile"/>
         <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_genTAKYcEeiDUfoigO_0fA" labelAlignment="LEFT">
           <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='Operation']/@style"/>
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='Operation']"/>
       </ownedElements>
-      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_glunoKYcEeiDUfoigO_0fA" name="calculateReplaceability() : EDouble" tooltipText="calculateReplaceability() : EDouble">
+      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_glunoKYcEeiDUfoigO_0fA" name="calculateReplaceability(profile ConfigurationProfile) : EDouble" tooltipText="calculateReplaceability(profile) : EDouble">
         <target xmi:type="ecore:EOperation" href="qualitymodel.ecore#//CompositeAttribute/calculateReplaceability"/>
         <semanticElements xmi:type="ecore:EOperation" href="qualitymodel.ecore#//CompositeAttribute/calculateReplaceability"/>
+        <semanticElements xmi:type="ecore:EParameter" href="qualitymodel.ecore#//CompositeAttribute/calculateReplaceability/profile"/>
         <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_glunoaYcEeiDUfoigO_0fA" labelAlignment="LEFT">
           <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='Operation']/@style"/>
         </ownedStyle>
@@ -609,33 +612,37 @@
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']"/>
       </ownedElements>
-      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_08_4MKYbEeiDUfoigO_0fA" name="calculateAverage() : EDouble" tooltipText="calculateAverage() : EDouble">
+      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_08_4MKYbEeiDUfoigO_0fA" name="calculateAverage(profile ConfigurationProfile) : EDouble" tooltipText="calculateAverage(profile) : EDouble">
         <target xmi:type="ecore:EOperation" href="qualitymodel.ecore#//LeafAttribute/calculateAverage"/>
         <semanticElements xmi:type="ecore:EOperation" href="qualitymodel.ecore#//LeafAttribute/calculateAverage"/>
+        <semanticElements xmi:type="ecore:EParameter" href="qualitymodel.ecore#//LeafAttribute/calculateAverage/profile"/>
         <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_09AfQKYbEeiDUfoigO_0fA" labelAlignment="LEFT">
           <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='Operation']/@style"/>
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='Operation']"/>
       </ownedElements>
-      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_Wzl_MKYcEeiDUfoigO_0fA" name="calculateMinimum() : EDouble" tooltipText="calculateMinimum() : EDouble">
+      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_Wzl_MKYcEeiDUfoigO_0fA" name="calculateMinimum(profile ConfigurationProfile) : EDouble" tooltipText="calculateMinimum(profile) : EDouble">
         <target xmi:type="ecore:EOperation" href="qualitymodel.ecore#//LeafAttribute/calculateMinimum"/>
         <semanticElements xmi:type="ecore:EOperation" href="qualitymodel.ecore#//LeafAttribute/calculateMinimum"/>
+        <semanticElements xmi:type="ecore:EParameter" href="qualitymodel.ecore#//LeafAttribute/calculateMinimum/profile"/>
         <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_WzmmQKYcEeiDUfoigO_0fA" labelAlignment="LEFT">
           <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='Operation']/@style"/>
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='Operation']"/>
       </ownedElements>
-      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_XVyGQKYcEeiDUfoigO_0fA" name="calculateMaximum() : EDouble" tooltipText="calculateMaximum() : EDouble">
+      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_XVyGQKYcEeiDUfoigO_0fA" name="calculateMaximum(profile ConfigurationProfile) : EDouble" tooltipText="calculateMaximum(profile) : EDouble">
         <target xmi:type="ecore:EOperation" href="qualitymodel.ecore#//LeafAttribute/calculateMaximum"/>
         <semanticElements xmi:type="ecore:EOperation" href="qualitymodel.ecore#//LeafAttribute/calculateMaximum"/>
+        <semanticElements xmi:type="ecore:EParameter" href="qualitymodel.ecore#//LeafAttribute/calculateMaximum/profile"/>
         <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_XVyGQaYcEeiDUfoigO_0fA" labelAlignment="LEFT">
           <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='Operation']/@style"/>
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='Operation']"/>
       </ownedElements>
-      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_bjNwAKYcEeiDUfoigO_0fA" name="calculateSum() : EDouble" tooltipText="calculateSum() : EDouble">
+      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_bjNwAKYcEeiDUfoigO_0fA" name="calculateSum(profile ConfigurationProfile) : EDouble" tooltipText="calculateSum(profile) : EDouble">
         <target xmi:type="ecore:EOperation" href="qualitymodel.ecore#//LeafAttribute/calculateSum"/>
         <semanticElements xmi:type="ecore:EOperation" href="qualitymodel.ecore#//LeafAttribute/calculateSum"/>
+        <semanticElements xmi:type="ecore:EParameter" href="qualitymodel.ecore#//LeafAttribute/calculateSum/profile"/>
         <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_bjOXEKYcEeiDUfoigO_0fA" labelAlignment="LEFT">
           <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='Operation']/@style"/>
         </ownedStyle>

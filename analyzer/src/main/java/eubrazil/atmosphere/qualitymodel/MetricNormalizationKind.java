@@ -6,8 +6,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.emf.common.util.Enumerator;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the literals of the enumeration '<em><b>Metric Normalization Kind</b></em>',
@@ -16,7 +14,7 @@ import org.eclipse.emf.common.util.Enumerator;
  * @see eubrazil.atmosphere.qualitymodel.QualityModelPackage#getMetricNormalizationKind()
  * @generated
  */
-public enum MetricNormalizationKind implements Enumerator {
+public enum MetricNormalizationKind {
 	/**
 	 * The '<em><b>BENEFIT</b></em>' literal object.
 	 * <!-- begin-user-doc -->

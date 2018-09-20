@@ -22,19 +22,33 @@
         iD="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CompositeAttribute" eSuperTypes="#//Attribute">
-    <eOperations name="calculateNeutrality" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
-    <eOperations name="calculateSimultaneity" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
-    <eOperations name="calculateReplaceability" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eOperations name="calculateNeutrality" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eParameters name="profile" eType="#//ConfigurationProfile"/>
+    </eOperations>
+    <eOperations name="calculateSimultaneity" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eParameters name="profile" eType="#//ConfigurationProfile"/>
+    </eOperations>
+    <eOperations name="calculateReplaceability" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eParameters name="profile" eType="#//ConfigurationProfile"/>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" lowerBound="1"
         upperBound="-1" eType="#//Attribute" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" lowerBound="1"
         eType="#//AttributeAggregationOperator"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LeafAttribute" eSuperTypes="#//Attribute">
-    <eOperations name="calculateAverage" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
-    <eOperations name="calculateMinimum" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
-    <eOperations name="calculateMaximum" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
-    <eOperations name="calculateSum" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eOperations name="calculateAverage" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eParameters name="profile" eType="#//ConfigurationProfile"/>
+    </eOperations>
+    <eOperations name="calculateMinimum" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eParameters name="profile" eType="#//ConfigurationProfile"/>
+    </eOperations>
+    <eOperations name="calculateMaximum" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eParameters name="profile" eType="#//ConfigurationProfile"/>
+    </eOperations>
+    <eOperations name="calculateSum" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eParameters name="profile" eType="#//ConfigurationProfile"/>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="normalizationMin" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
         unsettable="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="normalizationMax" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"

@@ -180,7 +180,7 @@ public class LeafAttribute extends Attribute {
 	/**
 	 * @generated
 	 */
-	protected double calculateAverage() {
+	protected double calculateAverage(ConfigurationProfile profile) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -189,7 +189,7 @@ public class LeafAttribute extends Attribute {
 	/**
 	 * @generated
 	 */
-	protected double calculateMinimum() {
+	protected double calculateMinimum(ConfigurationProfile profile) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -198,7 +198,7 @@ public class LeafAttribute extends Attribute {
 	/**
 	 * @generated
 	 */
-	protected double calculateMaximum() {
+	protected double calculateMaximum(ConfigurationProfile profile) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -207,7 +207,7 @@ public class LeafAttribute extends Attribute {
 	/**
 	 * @generated
 	 */
-	protected double calculateSum() {
+	protected double calculateSum(ConfigurationProfile profile) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -234,23 +234,23 @@ public class LeafAttribute extends Attribute {
 	}
 	
 	@Override
-	public HistoricalData calculate(UserProfile user) {
+	public HistoricalData calculate(ConfigurationProfile profile) {
 		HistoricalData d = new HistoricalData();
 		d.setInstant(new Timestamp(System.currentTimeMillis()));
 		d.attribute = this;
 		
 		switch (operator) {
 		case AVERAGE:
-			d.value = calculateAverage();
+			d.value = calculateAverage(profile);
 			break;
 		case MINIMUM:
-			d.value = calculateMinimum();
+			d.value = calculateMinimum(profile);
 			break;
 		case MAXIMUM:
-			d.value = calculateMaximum();
+			d.value = calculateMaximum(profile);
 			break;
 		case SUM:
-			d.value = calculateSum();
+			d.value = calculateSum(profile);
 			break;
 		default:
 			throw new UnsupportedOperationException();
