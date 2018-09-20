@@ -2,6 +2,9 @@
  */
 package eubrazil.atmosphere.qualitymodel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @generated
  */
@@ -9,32 +12,42 @@ public class Metric {
 	/**
 	 * @generated
 	 */
-	protected static final int PROBE_EDEFAULT = 0;
+	protected static final String PROBE_NAME_EDEFAULT = null;
 
 	/**
 	 * @generated
 	 */
-	protected int probe = PROBE_EDEFAULT;
+	protected String probeName = PROBE_NAME_EDEFAULT;
 
 	/**
 	 * @generated
 	 */
-	protected static final String DESCRIPTION_EDEFAULT = null;
+	protected static final String DESCRIPTION_NAME_EDEFAULT = null;
 
 	/**
 	 * @generated
 	 */
-	protected String description = DESCRIPTION_EDEFAULT;
+	protected String descriptionName = DESCRIPTION_NAME_EDEFAULT;
 
 	/**
 	 * @generated
 	 */
-	protected static final int RESOURCE_EDEFAULT = 0;
+	protected static final String RESOURCE_NAME_EDEFAULT = null;
 
 	/**
 	 * @generated
 	 */
-	protected int resource = RESOURCE_EDEFAULT;
+	protected String resourceName = RESOURCE_NAME_EDEFAULT;
+
+	/**
+	 * @generated
+	 */
+	protected LeafAttribute attribute;
+
+	/**
+	 * @generated
+	 */
+	protected List<Data> data;
 
 	/**
 	 * @generated
@@ -46,43 +59,67 @@ public class Metric {
 	/**
 	 * @generated
 	 */
-	public int getProbe() {
-		return probe;
+	public String getProbeName() {
+		return probeName;
 	}
 
 	/**
 	 * @generated
 	 */
-	public void setProbe(int newProbe) {
-		probe = newProbe;
+	public void setProbeName(String newProbeName) {
+		probeName = newProbeName;
 	}
 
 	/**
 	 * @generated
 	 */
-	public String getDescription() {
-		return description;
+	public String getDescriptionName() {
+		return descriptionName;
 	}
 
 	/**
 	 * @generated
 	 */
-	public void setDescription(String newDescription) {
-		description = newDescription;
+	public void setDescriptionName(String newDescriptionName) {
+		descriptionName = newDescriptionName;
 	}
 
 	/**
 	 * @generated
 	 */
-	public int getResource() {
-		return resource;
+	public String getResourceName() {
+		return resourceName;
 	}
 
 	/**
 	 * @generated
 	 */
-	public void setResource(int newResource) {
-		resource = newResource;
+	public void setResourceName(String newResourceName) {
+		resourceName = newResourceName;
+	}
+
+	/**
+	 * @generated
+	 */
+	public LeafAttribute getAttribute() {
+		return attribute;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void setAttribute(LeafAttribute newAttribute) {
+		attribute = newAttribute;
+	}
+
+	/**
+	 * @generated
+	 */
+	public List<Data> getData() {
+		if (data == null) {
+			data = new ArrayList<Data>();
+		}
+		return data;
 	}
 
 	/**
@@ -91,12 +128,12 @@ public class Metric {
 	@Override
 	public String toString() {
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (probe: ");
-		result.append(probe);
-		result.append(", description: ");
-		result.append(description);
-		result.append(", resource: ");
-		result.append(resource);
+		result.append(" (probeName: ");
+		result.append(probeName);
+		result.append(", descriptionName: ");
+		result.append(descriptionName);
+		result.append(", resourceName: ");
+		result.append(resourceName);
 		result.append(')');
 		return result.toString();
 	}

@@ -3,15 +3,20 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="qualitymodel" nsURI="https://www.atmosphere-eubrazil.eu/analyzer/qualitymodel"
     nsPrefix="qm">
   <eClassifiers xsi:type="ecore:EClass" name="Metric">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="probe" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" lowerBound="1"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="probeName" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="resource" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="descriptionName" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="resourceName" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" lowerBound="1"
+        eType="#//LeafAttribute"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="data" lowerBound="1" upperBound="-1"
+        eType="#//Data" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Attribute" abstract="true">
     <eOperations name="calculate" lowerBound="1" eType="#//HistoricalData">
-      <eParameters name="user" eType="#//UserProfile"/>
+      <eParameters name="profile" eType="#//ConfigurationProfile"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         iD="true"/>
@@ -30,16 +35,16 @@
     <eOperations name="calculateMinimum" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eOperations name="calculateMaximum" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eOperations name="calculateSum" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lowerBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="normalizationMin" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
         unsettable="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="upperBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="normalizationMax" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
         defaultValueLiteral="1.0" unsettable="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="metric" lowerBound="1"
-        upperBound="-1" eType="#//Metric"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" lowerBound="1"
         eType="#//MetricAggregationOperator"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="numSamples" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt" defaultValueLiteral="1"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="normalizationKind" lowerBound="1"
+        eType="#//MetricNormalizationKind"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="MetricAggregationOperator">
     <eLiterals name="AVERAGE"/>
@@ -68,10 +73,21 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="threshold" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble" defaultValueLiteral="1.0"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="UserProfile">
+  <eClassifiers xsi:type="ecore:EClass" name="ConfigurationProfile">
     <eStructuralFeatures xsi:type="ecore:EReference" name="preference" upperBound="-1"
         eType="#//Preference" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userID" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ID" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="metric" lowerBound="1"
+        upperBound="-1" eType="#//Metric" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Data">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="valueTime" lowerBound="1"
+        eType="#//Timestamp"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MetricNormalizationKind">
+    <eLiterals name="BENEFIT"/>
+    <eLiterals name="COST"/>
   </eClassifiers>
 </ecore:EPackage>

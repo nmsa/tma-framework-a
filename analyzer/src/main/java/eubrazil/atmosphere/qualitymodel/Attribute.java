@@ -40,7 +40,7 @@ public abstract class Attribute {
 	/**
 	 * @generated NOT
 	 */
-	public abstract HistoricalData calculate(UserProfile user);
+	public abstract HistoricalData calculate(ConfigurationProfile user);
 
 	/**
 	 * @generated
