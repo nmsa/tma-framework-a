@@ -59,7 +59,7 @@ public class CompositeAttribute extends Attribute {
 	/**
 	 * @generated
 	 */
-	protected double calculateNeutrality() {
+	protected double calculateNeutrality(ConfigurationProfile profile) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -68,7 +68,7 @@ public class CompositeAttribute extends Attribute {
 	/**
 	 * @generated
 	 */
-	protected double calculateSimultaneity() {
+	protected double calculateSimultaneity(ConfigurationProfile profile) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -77,7 +77,7 @@ public class CompositeAttribute extends Attribute {
 	/**
 	 * @generated
 	 */
-	protected double calculateReplaceability() {
+	protected double calculateReplaceability(ConfigurationProfile profile) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -96,20 +96,20 @@ public class CompositeAttribute extends Attribute {
 	}
 	
 	@Override
-	public HistoricalData calculate(UserProfile user) {
+	public HistoricalData calculate(ConfigurationProfile profile) {
 		HistoricalData d = new HistoricalData();
 		d.setInstant(new Timestamp(System.currentTimeMillis()));
 		d.attribute = this;
 		
 		switch (operator) {
 		case NEUTRALITY:
-			d.value = calculateNeutrality();
+			d.value = calculateNeutrality(profile);
 			break;
 		case REPLACEABILITY:
-			d.value = calculateReplaceability();
+			d.value = calculateReplaceability(profile);
 			break;
 		case SIMULTANEITY:
-			d.value = calculateSimultaneity();
+			d.value = calculateSimultaneity(profile);
 			break;
 		default:
 			throw new UnsupportedOperationException();

@@ -20,16 +20,22 @@
       <genEnumLiterals ecoreEnumLiteral="qualitymodel.ecore#//AttributeAggregationOperator/SIMULTANEITY"/>
       <genEnumLiterals ecoreEnumLiteral="qualitymodel.ecore#//AttributeAggregationOperator/REPLACEABILITY"/>
     </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="qualitymodel.ecore#//MetricNormalizationKind">
+      <genEnumLiterals ecoreEnumLiteral="qualitymodel.ecore#//MetricNormalizationKind/BENEFIT"/>
+      <genEnumLiterals ecoreEnumLiteral="qualitymodel.ecore#//MetricNormalizationKind/COST"/>
+    </genEnums>
     <genDataTypes ecoreDataType="qualitymodel.ecore#//Timestamp"/>
     <genClasses ecoreClass="qualitymodel.ecore#//Metric">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Metric/probe"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Metric/description"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Metric/resource"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Metric/probeName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Metric/descriptionName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Metric/resourceName"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference qualitymodel.ecore#//Metric/attribute"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qualitymodel.ecore#//Metric/data"/>
     </genClasses>
     <genClasses image="false" ecoreClass="qualitymodel.ecore#//Attribute">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Attribute/name"/>
       <genOperations ecoreOperation="qualitymodel.ecore#//Attribute/calculate">
-        <genParameters ecoreParameter="qualitymodel.ecore#//Attribute/calculate/user"/>
+        <genParameters ecoreParameter="qualitymodel.ecore#//Attribute/calculate/profile"/>
       </genOperations>
     </genClasses>
     <genClasses ecoreClass="qualitymodel.ecore#//CompositeAttribute">
@@ -40,11 +46,11 @@
       <genOperations ecoreOperation="qualitymodel.ecore#//CompositeAttribute/calculateReplaceability"/>
     </genClasses>
     <genClasses ecoreClass="qualitymodel.ecore#//LeafAttribute">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//LeafAttribute/lowerBound"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//LeafAttribute/upperBound"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference qualitymodel.ecore#//LeafAttribute/metric"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//LeafAttribute/normalizationMin"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//LeafAttribute/normalizationMax"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//LeafAttribute/operator"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//LeafAttribute/numSamples"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//LeafAttribute/normalizationKind"/>
       <genOperations ecoreOperation="qualitymodel.ecore#//LeafAttribute/calculateAverage"/>
       <genOperations ecoreOperation="qualitymodel.ecore#//LeafAttribute/calculateMinimum"/>
       <genOperations ecoreOperation="qualitymodel.ecore#//LeafAttribute/calculateMaximum"/>
@@ -60,9 +66,14 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference qualitymodel.ecore#//Preference/attribute"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Preference/threshold"/>
     </genClasses>
-    <genClasses ecoreClass="qualitymodel.ecore#//UserProfile">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qualitymodel.ecore#//UserProfile/preference"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//UserProfile/userID"/>
+    <genClasses ecoreClass="qualitymodel.ecore#//ConfigurationProfile">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qualitymodel.ecore#//ConfigurationProfile/preference"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//ConfigurationProfile/ID"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qualitymodel.ecore#//ConfigurationProfile/metric"/>
+    </genClasses>
+    <genClasses ecoreClass="qualitymodel.ecore#//Data">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Data/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Data/valueTime"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

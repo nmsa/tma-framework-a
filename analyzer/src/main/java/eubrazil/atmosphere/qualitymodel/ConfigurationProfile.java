@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @generated
  */
-public class UserProfile {
+public class ConfigurationProfile {
 	/**
 	 * @generated
 	 */
@@ -17,17 +17,22 @@ public class UserProfile {
 	/**
 	 * @generated
 	 */
-	protected static final int USER_ID_EDEFAULT = 0;
+	protected static final int ID_EDEFAULT = 0;
 
 	/**
 	 * @generated
 	 */
-	protected int userID = USER_ID_EDEFAULT;
+	protected int id = ID_EDEFAULT;
 
 	/**
 	 * @generated
 	 */
-	public UserProfile() {
+	protected List<Metric> metric;
+
+	/**
+	 * @generated
+	 */
+	public ConfigurationProfile() {
 		super();
 	}
 
@@ -44,15 +49,25 @@ public class UserProfile {
 	/**
 	 * @generated
 	 */
-	public int getUserID() {
-		return userID;
+	public int getID() {
+		return id;
 	}
 
 	/**
 	 * @generated
 	 */
-	public void setUserID(int newUserID) {
-		userID = newUserID;
+	public void setID(int newID) {
+		id = newID;
+	}
+
+	/**
+	 * @generated
+	 */
+	public List<Metric> getMetric() {
+		if (metric == null) {
+			metric = new ArrayList<Metric>();
+		}
+		return metric;
 	}
 
 	/**
@@ -61,10 +76,10 @@ public class UserProfile {
 	@Override
 	public String toString() {
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (userID: ");
-		result.append(userID);
+		result.append(" (ID: ");
+		result.append(id);
 		result.append(')');
 		return result.toString();
 	}
 
-} // UserProfile
+} // ConfigurationProfile

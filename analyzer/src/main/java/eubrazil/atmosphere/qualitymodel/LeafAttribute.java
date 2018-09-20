@@ -3,8 +3,6 @@
 package eubrazil.atmosphere.qualitymodel;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @generated
@@ -13,37 +11,32 @@ public class LeafAttribute extends Attribute {
 	/**
 	 * @generated
 	 */
-	protected static final double LOWER_BOUND_EDEFAULT = 0.0;
+	protected static final double NORMALIZATION_MIN_EDEFAULT = 0.0;
 
 	/**
 	 * @generated
 	 */
-	protected double lowerBound = LOWER_BOUND_EDEFAULT;
+	protected double normalizationMin = NORMALIZATION_MIN_EDEFAULT;
 
 	/**
 	 * @generated
 	 */
-	protected boolean lowerBoundESet;
+	protected boolean normalizationMinESet;
 
 	/**
 	 * @generated
 	 */
-	protected static final double UPPER_BOUND_EDEFAULT = 1.0;
+	protected static final double NORMALIZATION_MAX_EDEFAULT = 1.0;
 
 	/**
 	 * @generated
 	 */
-	protected double upperBound = UPPER_BOUND_EDEFAULT;
+	protected double normalizationMax = NORMALIZATION_MAX_EDEFAULT;
 
 	/**
 	 * @generated
 	 */
-	protected boolean upperBoundESet;
-
-	/**
-	 * @generated
-	 */
-	protected List<Metric> metric;
+	protected boolean normalizationMaxESet;
 
 	/**
 	 * @generated
@@ -68,6 +61,16 @@ public class LeafAttribute extends Attribute {
 	/**
 	 * @generated
 	 */
+	protected static final MetricNormalizationKind NORMALIZATION_KIND_EDEFAULT = MetricNormalizationKind.BENEFIT;
+
+	/**
+	 * @generated
+	 */
+	protected MetricNormalizationKind normalizationKind = NORMALIZATION_KIND_EDEFAULT;
+
+	/**
+	 * @generated
+	 */
 	public LeafAttribute() {
 		super();
 	}
@@ -75,71 +78,61 @@ public class LeafAttribute extends Attribute {
 	/**
 	 * @generated
 	 */
-	public double getLowerBound() {
-		return lowerBound;
+	public double getNormalizationMin() {
+		return normalizationMin;
 	}
 
 	/**
 	 * @generated
 	 */
-	public void setLowerBound(double newLowerBound) {
-		lowerBound = newLowerBound;
-		lowerBoundESet = true;
+	public void setNormalizationMin(double newNormalizationMin) {
+		normalizationMin = newNormalizationMin;
+		normalizationMinESet = true;
 	}
 
 	/**
 	 * @generated
 	 */
-	public void unsetLowerBound() {
-		lowerBound = LOWER_BOUND_EDEFAULT;
-		lowerBoundESet = false;
+	public void unsetNormalizationMin() {
+		normalizationMin = NORMALIZATION_MIN_EDEFAULT;
+		normalizationMinESet = false;
 	}
 
 	/**
 	 * @generated
 	 */
-	public boolean isSetLowerBound() {
-		return lowerBoundESet;
+	public boolean isSetNormalizationMin() {
+		return normalizationMinESet;
 	}
 
 	/**
 	 * @generated
 	 */
-	public double getUpperBound() {
-		return upperBound;
+	public double getNormalizationMax() {
+		return normalizationMax;
 	}
 
 	/**
 	 * @generated
 	 */
-	public void setUpperBound(double newUpperBound) {
-		upperBound = newUpperBound;
-		upperBoundESet = true;
+	public void setNormalizationMax(double newNormalizationMax) {
+		normalizationMax = newNormalizationMax;
+		normalizationMaxESet = true;
 	}
 
 	/**
 	 * @generated
 	 */
-	public void unsetUpperBound() {
-		upperBound = UPPER_BOUND_EDEFAULT;
-		upperBoundESet = false;
+	public void unsetNormalizationMax() {
+		normalizationMax = NORMALIZATION_MAX_EDEFAULT;
+		normalizationMaxESet = false;
 	}
 
 	/**
 	 * @generated
 	 */
-	public boolean isSetUpperBound() {
-		return upperBoundESet;
-	}
-
-	/**
-	 * @generated
-	 */
-	public List<Metric> getMetric() {
-		if (metric == null) {
-			metric = new ArrayList<Metric>();
-		}
-		return metric;
+	public boolean isSetNormalizationMax() {
+		return normalizationMaxESet;
 	}
 
 	/**
@@ -173,7 +166,21 @@ public class LeafAttribute extends Attribute {
 	/**
 	 * @generated
 	 */
-	protected double calculateAverage() {
+	public MetricNormalizationKind getNormalizationKind() {
+		return normalizationKind;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void setNormalizationKind(MetricNormalizationKind newNormalizationKind) {
+		normalizationKind = newNormalizationKind == null ? NORMALIZATION_KIND_EDEFAULT : newNormalizationKind;
+	}
+
+	/**
+	 * @generated
+	 */
+	protected double calculateAverage(ConfigurationProfile profile) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -182,7 +189,7 @@ public class LeafAttribute extends Attribute {
 	/**
 	 * @generated
 	 */
-	protected double calculateMinimum() {
+	protected double calculateMinimum(ConfigurationProfile profile) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -191,7 +198,7 @@ public class LeafAttribute extends Attribute {
 	/**
 	 * @generated
 	 */
-	protected double calculateMaximum() {
+	protected double calculateMaximum(ConfigurationProfile profile) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -200,7 +207,7 @@ public class LeafAttribute extends Attribute {
 	/**
 	 * @generated
 	 */
-	protected double calculateSum() {
+	protected double calculateSum(ConfigurationProfile profile) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -212,36 +219,38 @@ public class LeafAttribute extends Attribute {
 	@Override
 	public String toString() {
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (lowerBound: ");
-		if (lowerBoundESet) result.append(lowerBound); else result.append("<unset>");
-		result.append(", upperBound: ");
-		if (upperBoundESet) result.append(upperBound); else result.append("<unset>");
+		result.append(" (normalizationMin: ");
+		if (normalizationMinESet) result.append(normalizationMin); else result.append("<unset>");
+		result.append(", normalizationMax: ");
+		if (normalizationMaxESet) result.append(normalizationMax); else result.append("<unset>");
 		result.append(", operator: ");
 		result.append(operator);
 		result.append(", numSamples: ");
 		result.append(numSamples);
+		result.append(", normalizationKind: ");
+		result.append(normalizationKind);
 		result.append(')');
 		return result.toString();
 	}
 	
 	@Override
-	public HistoricalData calculate(UserProfile user) {
+	public HistoricalData calculate(ConfigurationProfile profile) {
 		HistoricalData d = new HistoricalData();
 		d.setInstant(new Timestamp(System.currentTimeMillis()));
 		d.attribute = this;
 		
 		switch (operator) {
 		case AVERAGE:
-			d.value = calculateAverage();
+			d.value = calculateAverage(profile);
 			break;
 		case MINIMUM:
-			d.value = calculateMinimum();
+			d.value = calculateMinimum(profile);
 			break;
 		case MAXIMUM:
-			d.value = calculateMaximum();
+			d.value = calculateMaximum(profile);
 			break;
 		case SUM:
-			d.value = calculateSum();
+			d.value = calculateSum(profile);
 			break;
 		default:
 			throw new UnsupportedOperationException();
