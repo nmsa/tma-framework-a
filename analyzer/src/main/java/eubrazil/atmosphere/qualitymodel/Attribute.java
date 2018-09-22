@@ -2,6 +2,8 @@
  */
 package eubrazil.atmosphere.qualitymodel;
 
+import eubrazil.atmosphere.exceptions.UndefinedMetricException;
+
 /**
  * @generated
  */
@@ -38,9 +40,10 @@ public abstract class Attribute {
 	}
 
 	/**
+	 * @throws UndefinedMetricException 
 	 * @generated NOT
 	 */
-	public abstract HistoricalData calculate(ConfigurationProfile user);
+	public abstract HistoricalData calculate(ConfigurationProfile user) throws UndefinedMetricException;
 
 	/**
 	 * @generated
