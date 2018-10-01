@@ -4,6 +4,8 @@ package eubrazil.atmosphere.qualitymodel;
 
 import java.sql.Timestamp;
 
+import javax.persistence.Entity;
+
 /**
  * @generated
  */
