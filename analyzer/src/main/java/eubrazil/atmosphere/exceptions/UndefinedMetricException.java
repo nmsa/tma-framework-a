@@ -2,6 +2,8 @@ package eubrazil.atmosphere.exceptions;
 
 public class UndefinedMetricException extends Exception {
 
+	private static final long serialVersionUID = 1L;
+
 	public UndefinedMetricException() {
 		// TODO Auto-generated constructor stub
 	}
