@@ -182,23 +182,26 @@ public class LeafAttribute extends Attribute {
 	}
 
 	/**
-	 * @throws Exception 
 	 * @generated NOT
 	 */
 	protected double calculateAverage(ConfigurationProfile profile) {
 				
 		double average = 0;
 		double amount = 0;
-		// TODO in case the attribute has more than one metric, what to do? Average of average?
 		Iterator<Metric> iterMetric = profile.getMetric().iterator();
 		while (iterMetric.hasNext()) {
 			Metric metric = iterMetric.next();
-			List<Data> data = metric.updateData();
-			amount += (double)data.size();
-			Iterator<Data> iterData = data.iterator();
-			while (iterData.hasNext()) {
-				Data measure = iterData.next();
-				average += measure.getValue();
+			
+			if(metric.getAttribute().equals(this)) { 
+				// The user-defined metric concerns the same leaf attribute (metric definition)
+				List<Data> data = metric.updateData();
+				amount += (double)data.size();
+				Iterator<Data> iterData = data.iterator();
+				while (iterData.hasNext()) {
+					Data measure = iterData.next();
+					average += measure.getValue();
+				}
+				
 			}
 		}
 
@@ -211,16 +214,19 @@ public class LeafAttribute extends Attribute {
 	protected double calculateMinimum(ConfigurationProfile profile) {
 
 		double minimum = 0;
-		// TODO in case the attribute has more than one metric, what to do? Minimum of minimum?
 		Iterator<Metric> iterMetric = profile.getMetric().iterator();
 		while (iterMetric.hasNext()) {
 			Metric metric = iterMetric.next();
-			List<Data> data = metric.updateData();
-			Iterator<Data> iterData = data.iterator();
-			while (iterData.hasNext()) {
-				Data measure = iterData.next();
-				if (measure.getValue() < minimum)
-					minimum = measure.getValue();
+			
+			if(metric.getAttribute().equals(this)) { 
+				// The user-defined metric concerns the same leaf attribute (metric definition)
+				List<Data> data = metric.updateData();
+				Iterator<Data> iterData = data.iterator();
+				while (iterData.hasNext()) {
+					Data measure = iterData.next();
+					if (measure.getValue() < minimum)
+						minimum = measure.getValue();
+				}
 			}
 		}
 
@@ -232,16 +238,19 @@ public class LeafAttribute extends Attribute {
 	 */
 	protected double calculateMaximum(ConfigurationProfile profile) {
 		double maximum = 0;
-		// TODO in case the attribute has more than one metric, what to do? Maximum of maximum?
 		Iterator<Metric> iterMetric = profile.getMetric().iterator();
 		while (iterMetric.hasNext()) {
 			Metric metric = iterMetric.next();
-			List<Data> data = metric.updateData();
-			Iterator<Data> iterData = data.iterator();
-			while (iterData.hasNext()) {
-				Data measure = iterData.next();
-				if (measure.getValue() > maximum)
-					maximum = measure.getValue();
+
+			if(metric.getAttribute().equals(this)) { 
+				// The user-defined metric concerns the same leaf attribute (metric definition)
+				List<Data> data = metric.updateData();
+				Iterator<Data> iterData = data.iterator();
+				while (iterData.hasNext()) {
+					Data measure = iterData.next();
+					if (measure.getValue() > maximum)
+						maximum = measure.getValue();
+				}
 			}
 		}
 
@@ -253,15 +262,18 @@ public class LeafAttribute extends Attribute {
 	 */
 	protected double calculateSum(ConfigurationProfile profile) {
 		double sum = 0;
-		// TODO in case the attribute has more than one metric, what to do? Minimum of minimum?
 		Iterator<Metric> iterMetric = profile.getMetric().iterator();
 		while (iterMetric.hasNext()) {
 			Metric metric = iterMetric.next();
-			List<Data> data = metric.updateData();
-			Iterator<Data> iterData = data.iterator();
-			while (iterData.hasNext()) {
-				Data measure = iterData.next();
-				sum += measure.getValue();
+
+			if(metric.getAttribute().equals(this)) { 
+				// The user-defined metric concerns the same leaf attribute (metric definition)
+				List<Data> data = metric.updateData();
+				Iterator<Data> iterData = data.iterator();
+				while (iterData.hasNext()) {
+					Data measure = iterData.next();
+					sum += measure.getValue();
+				}
 			}
 		}
 
