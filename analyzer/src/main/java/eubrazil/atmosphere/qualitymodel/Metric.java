@@ -121,6 +121,10 @@ public class Metric {
 		}
 		return data;
 	}
+	
+	public List<Data> updateData(){
+		return null;
+	}
 
 	/**
 	 * @generated

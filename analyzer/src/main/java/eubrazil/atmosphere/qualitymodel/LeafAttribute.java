@@ -3,6 +3,10 @@
 package eubrazil.atmosphere.qualitymodel;
 
 import java.sql.Timestamp;
+import java.util.Iterator;
+import java.util.List;
+
+import eubrazil.atmosphere.exceptions.UndefinedMetricException;
 
 /**
  * @generated
@@ -178,39 +182,102 @@ public class LeafAttribute extends Attribute {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected double calculateAverage(ConfigurationProfile profile) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+				
+		double average = 0;
+		double amount = 0;
+		Iterator<Metric> iterMetric = profile.getMetric().iterator();
+		while (iterMetric.hasNext()) {
+			Metric metric = iterMetric.next();
+			
+			if(metric.getAttribute().equals(this)) { 
+				// The user-defined metric concerns the same leaf attribute (metric definition)
+				List<Data> data = metric.updateData();
+				amount += (double)data.size();
+				Iterator<Data> iterData = data.iterator();
+				while (iterData.hasNext()) {
+					Data measure = iterData.next();
+					average += measure.getValue();
+				}
+				
+			}
+		}
+
+		return average/amount;
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected double calculateMinimum(ConfigurationProfile profile) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+
+		double minimum = 0;
+		Iterator<Metric> iterMetric = profile.getMetric().iterator();
+		while (iterMetric.hasNext()) {
+			Metric metric = iterMetric.next();
+			
+			if(metric.getAttribute().equals(this)) { 
+				// The user-defined metric concerns the same leaf attribute (metric definition)
+				List<Data> data = metric.updateData();
+				Iterator<Data> iterData = data.iterator();
+				while (iterData.hasNext()) {
+					Data measure = iterData.next();
+					if (measure.getValue() < minimum)
+						minimum = measure.getValue();
+				}
+			}
+		}
+
+		return minimum;
 	}
 
 	/**
 	 * @generated
 	 */
 	protected double calculateMaximum(ConfigurationProfile profile) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		double maximum = 0;
+		Iterator<Metric> iterMetric = profile.getMetric().iterator();
+		while (iterMetric.hasNext()) {
+			Metric metric = iterMetric.next();
+
+			if(metric.getAttribute().equals(this)) { 
+				// The user-defined metric concerns the same leaf attribute (metric definition)
+				List<Data> data = metric.updateData();
+				Iterator<Data> iterData = data.iterator();
+				while (iterData.hasNext()) {
+					Data measure = iterData.next();
+					if (measure.getValue() > maximum)
+						maximum = measure.getValue();
+				}
+			}
+		}
+
+		return maximum;
 	}
 
 	/**
 	 * @generated
 	 */
 	protected double calculateSum(ConfigurationProfile profile) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		double sum = 0;
+		Iterator<Metric> iterMetric = profile.getMetric().iterator();
+		while (iterMetric.hasNext()) {
+			Metric metric = iterMetric.next();
+
+			if(metric.getAttribute().equals(this)) { 
+				// The user-defined metric concerns the same leaf attribute (metric definition)
+				List<Data> data = metric.updateData();
+				Iterator<Data> iterData = data.iterator();
+				while (iterData.hasNext()) {
+					Data measure = iterData.next();
+					sum += measure.getValue();
+				}
+			}
+		}
+
+		return sum;
 	}
 
 	/**
@@ -234,7 +301,11 @@ public class LeafAttribute extends Attribute {
 	}
 	
 	@Override
-	public HistoricalData calculate(ConfigurationProfile profile) {
+	public HistoricalData calculate(ConfigurationProfile profile) throws UndefinedMetricException {
+
+		if (profile == null || profile.getMetric().isEmpty()) 
+			throw new UndefinedMetricException("No defined metric for leaf atribute "+this.name);
+
 		HistoricalData d = new HistoricalData();
 		d.setInstant(new Timestamp(System.currentTimeMillis()));
 		d.attribute = this;
