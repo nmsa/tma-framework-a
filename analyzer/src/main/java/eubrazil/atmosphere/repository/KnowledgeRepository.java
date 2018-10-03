@@ -14,9 +14,10 @@ import eubrazil.atmosphere.entity.Properties;
 public interface KnowledgeRepository extends CrudRepository<Properties, Long> {
 
 	/**
+	 * Search data list from knowledgedb by resource/probe/description name limited to @param pageable.
 	 * 
-	 * 
-	 * https://stackoverflow.com/questions/44565820/what-is-the-limit-clause-alternative-in-jpql
+	 * Example of pageable usage:
+	 * getLimitedDataListByName (..., new PageableRequest (0,10)); // limits search results to 10 items
 	 * 
 	 * @param resourceName
 	 * @param probeName
