@@ -15,28 +15,39 @@ public class Properties implements Serializable {
 	@GeneratedValue
 	private Long id;
 	
-	private String vtest1;
-	private String vtest2;
-
-	public String getVtest1() {
-		return vtest1;
-	}
+	private String name;
+	private float relevance;
+	private float threshold;
+	private float periodicity;
 	
-	public void setVtest1(String vtest1) {
-		this.vtest1 = vtest1;
+	public String getNome() {
+		return name;
 	}
-	
-	public String getVtest2() {
-		return vtest2;
+	public void setNome(String nome) {
+		this.name = nome;
 	}
-	
-	public void setVtest2(String vtest2) {
-		this.vtest2 = vtest2;
+	public float getRelevance() {
+		return relevance;
 	}
-	
+	public void setRelevance(float relevance) {
+		this.relevance = relevance;
+	}
+	public float getThreshold() {
+		return threshold;
+	}
+	public void setThreshold(float threshold) {
+		this.threshold = threshold;
+	}
+	public float getPeriodicity() {
+		return periodicity;
+	}
+	public void setPeriodicity(float periodicity) {
+		this.periodicity = periodicity;
+	}
 	@Override
 	public String toString() {
-		return "Properties [id=" + id + ", vtest1=" + vtest1 + ", vtest2=" + vtest2 + "]";
+		return "Properties [id=" + id + ", nome=" + name + ", relevance=" + relevance + ", threshold=" + threshold
+				+ ", periodicity=" + periodicity + "]";
 	}
 	
 }
