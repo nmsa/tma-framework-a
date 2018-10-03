@@ -30,13 +30,15 @@ public static final Logger LOGGER = LoggerFactory.getLogger(PrivacyController.cl
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody
-	public Properties save(@RequestBody Properties st) {
-		System.out.println("Vtest1: " + st.getVtest1());
-		System.out.println("Vtest2: " + st.getVtest2());
-		dashBoardService.save(st.getVtest1(), st.getVtest2());
-		
-		return st;
+	public Properties save(@RequestBody Properties prop) {
+		Properties newProp = new Properties();
+		newProp.setNome(prop.getNome());
+		newProp.setRelevance(prop.getRelevance());
+		newProp.setThreshold(prop.getThreshold());
+		newProp.setPeriodicity(prop.getPeriodicity());
+		dashBoardService.save(newProp);
+		newProp.toString();
+		return prop;
 	}
-	
 	
 }
