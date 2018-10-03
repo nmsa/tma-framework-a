@@ -25,12 +25,13 @@
       <genEnumLiterals ecoreEnumLiteral="qualitymodel.ecore#//MetricNormalizationKind/COST"/>
     </genEnums>
     <genDataTypes ecoreDataType="qualitymodel.ecore#//Timestamp"/>
+    <genDataTypes ecoreDataType="qualitymodel.ecore#//Data"/>
     <genClasses ecoreClass="qualitymodel.ecore#//Metric">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Metric/probeName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Metric/descriptionName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Metric/resourceName"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference qualitymodel.ecore#//Metric/attribute"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qualitymodel.ecore#//Metric/data"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Metric/data"/>
     </genClasses>
     <genClasses image="false" ecoreClass="qualitymodel.ecore#//Attribute">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Attribute/name"/>
@@ -41,9 +42,15 @@
     <genClasses ecoreClass="qualitymodel.ecore#//CompositeAttribute">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qualitymodel.ecore#//CompositeAttribute/children"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//CompositeAttribute/operator"/>
-      <genOperations ecoreOperation="qualitymodel.ecore#//CompositeAttribute/calculateNeutrality"/>
-      <genOperations ecoreOperation="qualitymodel.ecore#//CompositeAttribute/calculateSimultaneity"/>
-      <genOperations ecoreOperation="qualitymodel.ecore#//CompositeAttribute/calculateReplaceability"/>
+      <genOperations ecoreOperation="qualitymodel.ecore#//CompositeAttribute/calculateNeutrality">
+        <genParameters ecoreParameter="qualitymodel.ecore#//CompositeAttribute/calculateNeutrality/profile"/>
+      </genOperations>
+      <genOperations ecoreOperation="qualitymodel.ecore#//CompositeAttribute/calculateSimultaneity">
+        <genParameters ecoreParameter="qualitymodel.ecore#//CompositeAttribute/calculateSimultaneity/profile"/>
+      </genOperations>
+      <genOperations ecoreOperation="qualitymodel.ecore#//CompositeAttribute/calculateReplaceability">
+        <genParameters ecoreParameter="qualitymodel.ecore#//CompositeAttribute/calculateReplaceability/profile"/>
+      </genOperations>
     </genClasses>
     <genClasses ecoreClass="qualitymodel.ecore#//LeafAttribute">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//LeafAttribute/normalizationMin"/>
@@ -51,10 +58,18 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//LeafAttribute/operator"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//LeafAttribute/numSamples"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//LeafAttribute/normalizationKind"/>
-      <genOperations ecoreOperation="qualitymodel.ecore#//LeafAttribute/calculateAverage"/>
-      <genOperations ecoreOperation="qualitymodel.ecore#//LeafAttribute/calculateMinimum"/>
-      <genOperations ecoreOperation="qualitymodel.ecore#//LeafAttribute/calculateMaximum"/>
-      <genOperations ecoreOperation="qualitymodel.ecore#//LeafAttribute/calculateSum"/>
+      <genOperations ecoreOperation="qualitymodel.ecore#//LeafAttribute/calculateAverage">
+        <genParameters ecoreParameter="qualitymodel.ecore#//LeafAttribute/calculateAverage/profile"/>
+      </genOperations>
+      <genOperations ecoreOperation="qualitymodel.ecore#//LeafAttribute/calculateMinimum">
+        <genParameters ecoreParameter="qualitymodel.ecore#//LeafAttribute/calculateMinimum/profile"/>
+      </genOperations>
+      <genOperations ecoreOperation="qualitymodel.ecore#//LeafAttribute/calculateMaximum">
+        <genParameters ecoreParameter="qualitymodel.ecore#//LeafAttribute/calculateMaximum/profile"/>
+      </genOperations>
+      <genOperations ecoreOperation="qualitymodel.ecore#//LeafAttribute/calculateSum">
+        <genParameters ecoreParameter="qualitymodel.ecore#//LeafAttribute/calculateSum/profile"/>
+      </genOperations>
     </genClasses>
     <genClasses ecoreClass="qualitymodel.ecore#//HistoricalData">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//HistoricalData/instant"/>
@@ -70,10 +85,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qualitymodel.ecore#//ConfigurationProfile/preference"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//ConfigurationProfile/ID"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qualitymodel.ecore#//ConfigurationProfile/metric"/>
-    </genClasses>
-    <genClasses ecoreClass="qualitymodel.ecore#//Data">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Data/value"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qualitymodel.ecore#//Data/valueTime"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
