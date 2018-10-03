@@ -8,3 +8,7 @@ _DS_Store
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Eclipse files #
+#################
+.project
