@@ -12,10 +12,7 @@ public class DashboardService {
 	@Autowired
 	private DashboardRepository repository;
 	
-	public void save(String vtest1, String vtest2) {
-		Properties prop = new Properties();
-		prop.setVtest1(vtest1);
-		prop.setVtest2(vtest2);
+	public void save(Properties prop) {
 		repository.save(prop);
 	}
 	
