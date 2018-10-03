@@ -2,6 +2,8 @@
  */
 package eubrazil.atmosphere.qualitymodel;
 
+import eubrazil.atmosphere.entity.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -138,6 +140,8 @@ public class Metric {
 		result.append(descriptionName);
 		result.append(", resourceName: ");
 		result.append(resourceName);
+		result.append(", data: ");
+		result.append(data);
 		result.append(')');
 		return result.toString();
 	}
