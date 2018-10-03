@@ -44,14 +44,14 @@ CREATE TABLE properties (
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-DROP TABLE IF EXISTS Data;
-DROP TABLE IF EXISTS Configuration;
+DROP TABLE IF EXISTS data;
+DROP TABLE IF EXISTS configuration;
 
-DROP TABLE IF EXISTS Actuator;
-DROP TABLE IF EXISTS Description;
-DROP TABLE IF EXISTS Probe;
-DROP TABLE IF EXISTS Resource;
-DROP TABLE IF EXISTS Action;
+DROP TABLE IF EXISTS actuator;
+DROP TABLE IF EXISTS description;
+DROP TABLE IF EXISTS probe;
+DROP TABLE IF EXISTS resource;
+DROP TABLE IF EXISTS action;
 
 -- -- Table time was removed for normalization.
 -- DROP TABLE IF EXISTS Time;
@@ -65,9 +65,9 @@ CREATE TABLE actuator (
 
 CREATE TABLE description (
     descriptionId INT NOT NULL AUTO_INCREMENT,
-    dataType CHAR(16),
-    descriptionName CHAR(128),
-    unit CHAR(16),
+    dataType VARCHAR(16),
+    descriptionName VARCHAR(128),
+    unit VARCHAR(16),
     PRIMARY KEY (descriptionId)
 );
 

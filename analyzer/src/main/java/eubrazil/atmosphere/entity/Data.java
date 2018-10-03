@@ -1,61 +1,84 @@
 package eubrazil.atmosphere.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 
-//@Entity(name="data")
+
+/**
+ * The persistent class for the data database table.
+ * 
+ */
+@Entity(name="data")
+@NamedQuery(name="data.findAll", query="SELECT d FROM data d")
 public class Data implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = 5212838079422055278L;
-	
-//	@Id
-//	@GeneratedValue
-	private Long dataId;
-	
-	private Long probeId;
-    private Integer descriptionId;
-    private Integer resourceId;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date valueTime;
-    
-    private double value;
-    
-	public Long getProbeId() {
-		return probeId;
+	@EmbeddedId
+	private DataPK id;
+
+	private double value;
+
+	//bi-directional many-to-one association to Description
+	@ManyToOne
+	@JoinColumn(name="descriptionId", insertable=false, updatable=false)
+	private Description description;
+
+	//bi-directional many-to-one association to Probe
+	@ManyToOne
+	@JoinColumn(name="probeId", insertable=false, updatable=false)
+	private Probe probe;
+
+	//bi-directional many-to-one association to Resource
+	@ManyToOne
+	@JoinColumn(name="resourceId", insertable=false, updatable=false)
+	private Resource resource;
+
+	public Data() {
 	}
-	public void setProbeId(Long probeId) {
-		this.probeId = probeId;
+
+	public DataPK getId() {
+		return this.id;
 	}
-	public Integer getDescriptionId() {
-		return descriptionId;
+
+	public void setId(DataPK id) {
+		this.id = id;
 	}
-	public void setDescriptionId(Integer descriptionId) {
-		this.descriptionId = descriptionId;
-	}
-	public Integer getResourceId() {
-		return resourceId;
-	}
-	public void setResourceId(Integer resourceId) {
-		this.resourceId = resourceId;
-	}
-	public Date getValueTime() {
-		return valueTime;
-	}
-	public void setValueTime(Date valueTime) {
-		this.valueTime = valueTime;
-	}
+
 	public double getValue() {
-		return value;
+		return this.value;
 	}
+
 	public void setValue(double value) {
 		this.value = value;
 	}
-    
+
+	public Description getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(Description description) {
+		this.description = description;
+	}
+
+	public Probe getProbe() {
+		return this.probe;
+	}
+
+	public void setProbe(Probe probe) {
+		this.probe = probe;
+	}
+
+	public Resource getResource() {
+		return this.resource;
+	}
+
+	public void setResource(Resource resource) {
+		this.resource = resource;
+	}
+
 }
