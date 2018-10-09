@@ -8,10 +8,10 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import eubrazil.atmosphere.entity.Data;
-import eubrazil.atmosphere.entity.Properties;
+import eubrazil.atmosphere.entity.dashboard.PropertiesJsonMap;
 
 @Repository
-public interface KnowledgeRepository extends CrudRepository<Properties, Long> {
+public interface KnowledgeRepository extends CrudRepository<PropertiesJsonMap, Long> {
 
 	/**
 	 * Search data list from knowledgedb by resource/probe/description name limited to @param pageable.

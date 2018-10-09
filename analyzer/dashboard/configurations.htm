@@ -147,7 +147,7 @@ table.greyGridTable tfoot td {
 				$scope.metricName4 = 'Transparency';
 
 				$scope.insertdata = function() {
-					$http.post("insert.php", {
+					$http.post("http://localhost:8080/dash/save", {
 						'propRelevance' : [ {
 							'name' : $scope.metricName1,
 							'data' : $scope.metricRelevance1

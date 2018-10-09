@@ -1,4 +1,4 @@
-package eubrazil.atmosphere.entity;
+package eubrazil.atmosphere.entity.dashboard;
 
 import java.io.Serializable;
 
@@ -9,7 +9,7 @@ import javax.persistence.Id;
 @Entity(name="properties")
 public class Properties implements Serializable {
 
-	private static final long serialVersionUID = -1502290920411817303L;
+	private static final long serialVersionUID = 6028870066004550610L;
 
 	@Id
 	@GeneratedValue
@@ -20,11 +20,11 @@ public class Properties implements Serializable {
 	private float threshold;
 	private float periodicity;
 	
-	public String getNome() {
+	public String getName() {
 		return name;
 	}
-	public void setNome(String nome) {
-		this.name = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public float getRelevance() {
 		return relevance;
@@ -43,11 +43,6 @@ public class Properties implements Serializable {
 	}
 	public void setPeriodicity(float periodicity) {
 		this.periodicity = periodicity;
-	}
-	@Override
-	public String toString() {
-		return "Properties [id=" + id + ", nome=" + name + ", relevance=" + relevance + ", threshold=" + threshold
-				+ ", periodicity=" + periodicity + "]";
 	}
 	
 }
