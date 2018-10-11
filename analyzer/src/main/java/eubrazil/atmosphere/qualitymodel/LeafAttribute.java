@@ -6,7 +6,9 @@ import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.List;
 
+import eubrazil.atmosphere.entity.Data;
 import eubrazil.atmosphere.exceptions.UndefinedMetricException;
+
 
 /**
  * @generated

@@ -11,8 +11,8 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" lowerBound="1"
         eType="#//LeafAttribute"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="data" lowerBound="1" upperBound="-1"
-        eType="#//Data" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="data" lowerBound="1" upperBound="-1"
+        eType="#//Data"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Attribute" abstract="true">
     <eOperations name="calculate" lowerBound="1" eType="#//HistoricalData">
@@ -95,13 +95,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="metric" lowerBound="1"
         upperBound="-1" eType="#//Metric" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Data">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="valueTime" lowerBound="1"
-        eType="#//Timestamp"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="MetricNormalizationKind">
     <eLiterals name="BENEFIT"/>
     <eLiterals name="COST"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Data" instanceClassName="eubrazil.atmosphere.entity.Data"/>
 </ecore:EPackage>
