@@ -3,7 +3,7 @@ package eubrazil.atmosphere.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import eubrazil.atmosphere.entity.Properties;
+import eubrazil.atmosphere.entity.dashboard.Properties;
 import eubrazil.atmosphere.repository.DashboardRepository;
 
 @Service

@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import eubrazil.atmosphere.entity.Data;
-import eubrazil.atmosphere.entity.Properties;
+import eubrazil.atmosphere.entity.dashboard.Properties;
 
 @Repository
 public interface KnowledgeRepository extends CrudRepository<Properties, Long> {
