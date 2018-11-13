@@ -2,8 +2,6 @@ version: '3'
 services:
   knowledgedb:
      image: mysql:5.6
-     volumes:
-        - "./.data/db:/var/lib/mysql"
      container_name: mysql
      restart: always
      environment:
@@ -11,8 +9,6 @@ services:
         - MYSQL_DATABASE=knowledgedb
         - MYSQL_USER=atm
         - MYSQL_PASSWORD=root
-     ports:
-         42333:3306
         
   web:
     image: atm/analyzer
