@@ -132,3 +132,76 @@ ALTER TABLE data ADD CONSTRAINT FK_Data_2 FOREIGN KEY (resourceId) REFERENCES re
 
 -- -- Table time was removed for normalization.
 -- ALTER TABLE Data ADD CONSTRAINT FK_Data_3 FOREIGN KEY (valueTime) REFERENCES Time (valueTime);
+
+DROP TABLE IF EXISTS historicaldata;
+DROP TABLE IF EXISTS attribute;
+DROP TABLE IF EXISTS preference;
+DROP TABLE IF EXISTS metric;
+DROP TABLE IF EXISTS configurationprofile;
+DROP TABLE IF EXISTS leafattribute;
+DROP TABLE IF EXISTS compositeattribute;
+
+CREATE TABLE attribute (
+    attributeId INT NOT NULL AUTO_INCREMENT,
+    compositeattributeId INT NOT NULL,
+    name VARCHAR(1024),
+    primary key(attributeId)  
+);
+
+CREATE TABLE historicaldata (
+    attributeId INT NOT NULL,
+    instant TIMESTAMP(6),
+    value DOUBLE PRECISION,
+    PRIMARY KEY (attributeId)
+);
+
+CREATE TABLE configurationprofile (
+    configurationprofileId INT NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (configurationprofileId)
+);
+
+CREATE TABLE preference (
+    attributeId INT NOT NULL,
+    configurationprofileId INT NOT NULL,
+    weight DOUBLE PRECISION,
+    threshold DOUBLE PRECISION,
+    PRIMARY KEY (attributeId)
+);
+
+CREATE TABLE leafattribute (
+    leafattributeId INT NOT NULL AUTO_INCREMENT,
+    normalizationMin DOUBLE PRECISION,
+    normalizationMax DOUBLE PRECISION,
+    operator INT,
+    numSamples INT,
+    normalizationKind INT,
+    PRIMARY KEY (leafattributeId)
+);
+
+CREATE TABLE metric (
+    leafattributeId INT NOT NULL,
+    configurationprofileId INT NOT NULL,
+    probeName VARCHAR(1024),
+    descriptionName VARCHAR(1024),
+    resourceName VARCHAR(1024),
+    data TIMESTAMP(6),
+    PRIMARY KEY (leafattributeId)
+);
+
+CREATE TABLE compositeattribute (
+    compositeattributeId INT NOT NULL AUTO_INCREMENT,
+    operator INT,
+    PRIMARY KEY (compositeattributeId)
+);
+
+
+ALTER TABLE historicaldata ADD CONSTRAINT FK_HistoricalData_0 FOREIGN KEY (attributeId) REFERENCES attribute (attributeId);
+
+ALTER TABLE preference ADD CONSTRAINT FK_Preference_0 FOREIGN KEY (configurationprofileId) REFERENCES configurationprofile (configurationprofileId);
+ALTER TABLE metric ADD CONSTRAINT FK_Metric_0 FOREIGN KEY (configurationprofileId) REFERENCES configurationprofile (configurationprofileId);
+
+ALTER TABLE preference ADD CONSTRAINT FK_Preference_1 FOREIGN KEY (attributeId) REFERENCES attribute (attributeId);
+ALTER TABLE metric ADD CONSTRAINT FK_Metric_1 FOREIGN KEY (leafattributeId) REFERENCES leafattribute (leafattributeId);
+
+ALTER TABLE attribute ADD CONSTRAINT FK_Attribute_0 FOREIGN KEY (compositeattributeId) REFERENCES compositeattribute (compositeattributeId);
+
