@@ -22,6 +22,79 @@ CREATE TABLE properties (
 	PRIMARY KEY (id)
 );
 
+-- -- Quality Model -- --
+
+DROP TABLE IF EXISTS historicaldata;
+DROP TABLE IF EXISTS attribute;
+DROP TABLE IF EXISTS preference;
+DROP TABLE IF EXISTS metric;
+DROP TABLE IF EXISTS configurationprofile;
+DROP TABLE IF EXISTS leafattribute;
+DROP TABLE IF EXISTS compositeattribute;
+
+CREATE TABLE attribute (
+    attributeId INT NOT NULL AUTO_INCREMENT,
+    compositeattributeId INT NOT NULL,
+    name VARCHAR(1024),
+    primary key(attributeId)  
+);
+
+CREATE TABLE historicaldata (
+    attributeId INT NOT NULL,
+    instant TIMESTAMP(6),
+    value DOUBLE PRECISION,
+    PRIMARY KEY (attributeId)
+);
+
+CREATE TABLE configurationprofile (
+    configurationprofileId INT NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (configurationprofileId)
+);
+
+CREATE TABLE preference (
+    attributeId INT NOT NULL,
+    configurationprofileId INT NOT NULL,
+    weight DOUBLE PRECISION,
+    threshold DOUBLE PRECISION,
+    PRIMARY KEY (attributeId)
+);
+
+CREATE TABLE leafattribute (
+    attributeId INT NOT NULL,
+    normalizationMin DOUBLE PRECISION,
+    normalizationMax DOUBLE PRECISION,
+    operator INT,
+    numSamples INT,
+    normalizationKind INT,
+    PRIMARY KEY (attributeId)
+);
+
+CREATE TABLE metric (
+    attributeId INT NOT NULL,
+    configurationprofileId INT NOT NULL,
+    probeName VARCHAR(1024),
+    descriptionName VARCHAR(1024),
+    resourceName VARCHAR(1024),
+    PRIMARY KEY (attributeId)
+);
+
+CREATE TABLE compositeattribute (
+    attributeId INT NOT NULL,
+    operator INT,
+    PRIMARY KEY (attributeId)
+);
+
+
+ALTER TABLE historicaldata ADD CONSTRAINT FK_HistoricalData_0 FOREIGN KEY (attributeId) REFERENCES attribute (attributeId);
+
+ALTER TABLE preference ADD CONSTRAINT FK_Preference_0 FOREIGN KEY (configurationprofileId) REFERENCES configurationprofile (configurationprofileId);
+ALTER TABLE metric ADD CONSTRAINT FK_Metric_0 FOREIGN KEY (configurationprofileId) REFERENCES configurationprofile (configurationprofileId);
+
+ALTER TABLE preference ADD CONSTRAINT FK_Preference_1 FOREIGN KEY (attributeId) REFERENCES attribute (attributeId);
+ALTER TABLE metric ADD CONSTRAINT FK_Metric_1 FOREIGN KEY (attributeId) REFERENCES leafattribute (attributeId);
+
+ALTER TABLE attribute ADD CONSTRAINT FK_Attribute_0 FOREIGN KEY (attributeId) REFERENCES compositeattribute (attributeId);
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 -- ATMOSPHERE - http://www.atmosphere-eubrazil.eu/
@@ -116,6 +189,7 @@ CREATE TABLE data (
     probeId INT NOT NULL,
     descriptionId INT NOT NULL,
     resourceId INT NOT NULL,
+    attributeId INT NOT NULL,
     valueTime TIMESTAMP(6) NOT NULL,
     value DOUBLE PRECISION,
     PRIMARY KEY (probeId,descriptionId,resourceId,valueTime)
@@ -129,82 +203,7 @@ ALTER TABLE configuration ADD CONSTRAINT FK_Configuration_0 FOREIGN KEY (actionI
 ALTER TABLE data ADD CONSTRAINT FK_Data_0 FOREIGN KEY (probeId) REFERENCES probe (probeId);
 ALTER TABLE data ADD CONSTRAINT FK_Data_1 FOREIGN KEY (descriptionId) REFERENCES description (descriptionId);
 ALTER TABLE data ADD CONSTRAINT FK_Data_2 FOREIGN KEY (resourceId) REFERENCES resource (resourceId);
+ALTER TABLE data ADD CONSTRAINT FK_Data_3 FOREIGN KEY (attributeId) REFERENCES metric (attributeId);
 
 -- -- Table time was removed for normalization.
 -- ALTER TABLE Data ADD CONSTRAINT FK_Data_3 FOREIGN KEY (valueTime) REFERENCES Time (valueTime);
-
-
--- -- Quality Model -- --
-
-DROP TABLE IF EXISTS historicaldata;
-DROP TABLE IF EXISTS attribute;
-DROP TABLE IF EXISTS preference;
-DROP TABLE IF EXISTS metric;
-DROP TABLE IF EXISTS configurationprofile;
-DROP TABLE IF EXISTS leafattribute;
-DROP TABLE IF EXISTS compositeattribute;
-
-CREATE TABLE attribute (
-    attributeId INT NOT NULL AUTO_INCREMENT,
-    compositeattributeId INT NOT NULL,
-    name VARCHAR(1024),
-    primary key(attributeId)  
-);
-
-CREATE TABLE historicaldata (
-    attributeId INT NOT NULL,
-    instant TIMESTAMP(6),
-    value DOUBLE PRECISION,
-    PRIMARY KEY (attributeId)
-);
-
-CREATE TABLE configurationprofile (
-    configurationprofileId INT NOT NULL AUTO_INCREMENT,
-    PRIMARY KEY (configurationprofileId)
-);
-
-CREATE TABLE preference (
-    attributeId INT NOT NULL,
-    configurationprofileId INT NOT NULL,
-    weight DOUBLE PRECISION,
-    threshold DOUBLE PRECISION,
-    PRIMARY KEY (attributeId)
-);
-
-CREATE TABLE leafattribute (
-    attributeId INT NOT NULL,
-    normalizationMin DOUBLE PRECISION,
-    normalizationMax DOUBLE PRECISION,
-    operator INT,
-    numSamples INT,
-    normalizationKind INT,
-    PRIMARY KEY (attributeId)
-);
-
-CREATE TABLE metric (
-    attributeId INT NOT NULL,
-    configurationprofileId INT NOT NULL,
-    probeName VARCHAR(1024),
-    descriptionName VARCHAR(1024),
-    resourceName VARCHAR(1024),
-    data TIMESTAMP(6),
-    PRIMARY KEY (attributeId)
-);
-
-CREATE TABLE compositeattribute (
-    attributeId INT NOT NULL,
-    operator INT,
-    PRIMARY KEY (attributeId)
-);
-
-
-ALTER TABLE historicaldata ADD CONSTRAINT FK_HistoricalData_0 FOREIGN KEY (attributeId) REFERENCES attribute (attributeId);
-
-ALTER TABLE preference ADD CONSTRAINT FK_Preference_0 FOREIGN KEY (configurationprofileId) REFERENCES configurationprofile (configurationprofileId);
-ALTER TABLE metric ADD CONSTRAINT FK_Metric_0 FOREIGN KEY (configurationprofileId) REFERENCES configurationprofile (configurationprofileId);
-
-ALTER TABLE preference ADD CONSTRAINT FK_Preference_1 FOREIGN KEY (attributeId) REFERENCES attribute (attributeId);
-ALTER TABLE metric ADD CONSTRAINT FK_Metric_1 FOREIGN KEY (attributeId) REFERENCES leafattribute (attributeId);
-
-ALTER TABLE attribute ADD CONSTRAINT FK_Attribute_0 FOREIGN KEY (attributeId) REFERENCES compositeattribute (attributeId);
-

@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 
+import eubrazil.atmosphere.qualitymodel.Metric;
+
 
 /**
  * The persistent class for the data database table.
@@ -37,6 +39,11 @@ public class Data implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="resourceId", insertable=false, updatable=false)
 	private Resource resource;
+	
+	//bi-directional many-to-one association to Metric
+	@ManyToOne
+	@JoinColumn(name="attributeId", insertable=false, updatable=false)
+	private Metric metric;
 
 	public Data() {
 	}

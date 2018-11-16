@@ -1,7 +1,6 @@
 package eubrazil.atmosphere.qualitymodel;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -11,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import eubrazil.atmosphere.entity.Data;
@@ -30,8 +30,6 @@ public class Metric implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int attributeId;
 
-	private Timestamp data;
-
 	private String descriptionName;
 
 	private String probeName;
@@ -48,6 +46,10 @@ public class Metric implements Serializable {
 	@JoinColumn(name="attributeId")
 	private Leafattribute attribute;
 
+	//bi-directional many-to-one association to Data
+	@OneToMany(mappedBy="metric")
+	private List<Data> data;
+	
 	public Metric() {
 	}
 
@@ -68,14 +70,6 @@ public class Metric implements Serializable {
 //
 	public List<Data> updateData(){
 		return null;
-	}
-
-	public Timestamp getData() {
-		return data;
-	}
-
-	public void setData(Timestamp data) {
-		this.data = data;
 	}
 
 	public String getDescriptionName() {
@@ -116,6 +110,14 @@ public class Metric implements Serializable {
 
 	public void setAttribute(Leafattribute attribute) {
 		this.attribute = attribute;
+	}
+
+	public List<Data> getData() {
+		return data;
+	}
+
+	public void setData(List<Data> data) {
+		this.data = data;
 	}
 
 }
