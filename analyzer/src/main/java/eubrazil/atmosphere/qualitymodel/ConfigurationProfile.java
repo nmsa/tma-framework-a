@@ -1,85 +1,91 @@
-/**
- */
 package eubrazil.atmosphere.qualitymodel;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+
+
 /**
- * @generated
+ * The persistent class for the configurationprofile database table.
+ * 
  */
-public class ConfigurationProfile {
-	/**
-	 * @generated
-	 */
-	protected List<Preference> preference;
+@Entity(name="configurationprofile")
+@NamedQuery(name="configurationprofile.findAll", query="SELECT c FROM configurationprofile c")
+public class ConfigurationProfile implements Serializable {
 
-	/**
-	 * @generated
-	 */
-	protected static final int ID_EDEFAULT = 0;
+	private static final long serialVersionUID = 726009967174063732L;
 
-	/**
-	 * @generated
-	 */
-	protected int id = ID_EDEFAULT;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int configurationprofileId;
 
-	/**
-	 * @generated
-	 */
-	protected List<Metric> metric;
+	//bi-directional many-to-one association to Metric
+	@OneToMany(mappedBy="configurationprofile")
+	private List<Metric> metrics;
 
-	/**
-	 * @generated
-	 */
+	//bi-directional many-to-one association to Preference
+	@OneToMany(mappedBy="configurationprofile")
+	private List<Preference> preferences;
+
 	public ConfigurationProfile() {
-		super();
 	}
 
-	/**
-	 * @generated
-	 */
-	public List<Preference> getPreference() {
-		if (preference == null) {
-			preference = new ArrayList<Preference>();
-		}
-		return preference;
+	public int getConfigurationprofileId() {
+		return this.configurationprofileId;
 	}
 
-	/**
-	 * @generated
-	 */
-	public int getID() {
-		return id;
+	public void setConfigurationprofileId(int configurationprofileId) {
+		this.configurationprofileId = configurationprofileId;
 	}
 
-	/**
-	 * @generated
-	 */
-	public void setID(int newID) {
-		id = newID;
+	public List<Metric> getMetrics() {
+		return this.metrics;
 	}
 
-	/**
-	 * @generated
-	 */
-	public List<Metric> getMetric() {
-		if (metric == null) {
-			metric = new ArrayList<Metric>();
-		}
+	public void setMetrics(List<Metric> metrics) {
+		this.metrics = metrics;
+	}
+
+	public Metric addMetric(Metric metric) {
+		getMetrics().add(metric);
+		metric.setConfigurationprofile(this);
+
 		return metric;
 	}
 
-	/**
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (ID: ");
-		result.append(id);
-		result.append(')');
-		return result.toString();
+	public Metric removeMetric(Metric metric) {
+		getMetrics().remove(metric);
+		metric.setConfigurationprofile(null);
+
+		return metric;
 	}
 
-} // ConfigurationProfile
+	public List<Preference> getPreferences() {
+		return this.preferences;
+	}
+
+	public void setPreferences(List<Preference> preferences) {
+		this.preferences = preferences;
+	}
+
+	public Preference addPreference(Preference preference) {
+		getPreferences().add(preference);
+		preference.setConfigurationprofile(this);
+
+		return preference;
+	}
+
+	public Preference removePreference(Preference preference) {
+		getPreferences().remove(preference);
+		preference.setConfigurationprofile(null);
+
+		return preference;
+	}
+
+}

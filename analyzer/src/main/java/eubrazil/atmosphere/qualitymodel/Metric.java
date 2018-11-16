@@ -1,149 +1,121 @@
-/**
- */
 package eubrazil.atmosphere.qualitymodel;
+
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 
 import eubrazil.atmosphere.entity.Data;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * @generated
+ * The persistent class for the metric database table.
+ * 
  */
-public class Metric {
-	/**
-	 * @generated
-	 */
-	protected static final String PROBE_NAME_EDEFAULT = null;
+@Entity(name="metric")
+@NamedQuery(name="metric.findAll", query="SELECT m FROM metric m")
+public class Metric implements Serializable {
 
-	/**
-	 * @generated
-	 */
-	protected String probeName = PROBE_NAME_EDEFAULT;
+	private static final long serialVersionUID = -4308693747910041479L;
 
-	/**
-	 * @generated
-	 */
-	protected static final String DESCRIPTION_NAME_EDEFAULT = null;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int attributeId;
 
-	/**
-	 * @generated
-	 */
-	protected String descriptionName = DESCRIPTION_NAME_EDEFAULT;
+	private Timestamp data;
 
-	/**
-	 * @generated
-	 */
-	protected static final String RESOURCE_NAME_EDEFAULT = null;
+	private String descriptionName;
 
-	/**
-	 * @generated
-	 */
-	protected String resourceName = RESOURCE_NAME_EDEFAULT;
+	private String probeName;
 
-	/**
-	 * @generated
-	 */
-	protected LeafAttribute attribute;
+	private String resourceName;
 
-	/**
-	 * @generated
-	 */
-	protected List<Data> data;
+	//bi-directional many-to-one association to Configurationprofile
+	@ManyToOne
+	@JoinColumn(name="configurationprofileId")
+	private ConfigurationProfile configurationprofile;
 
-	/**
-	 * @generated
-	 */
+	//bi-directional one-to-one association to Leafattribute
+	@OneToOne
+	@JoinColumn(name="attributeId")
+	private Leafattribute attribute;
+
 	public Metric() {
-		super();
 	}
 
-	/**
-	 * @generated
-	 */
-	public String getProbeName() {
-		return probeName;
+	public int getAttributeId() {
+		return attributeId;
 	}
 
-	/**
-	 * @generated
-	 */
-	public void setProbeName(String newProbeName) {
-		probeName = newProbeName;
+	public void setAttributeId(int attributeId) {
+		this.attributeId = attributeId;
 	}
 
-	/**
-	 * @generated
-	 */
-	public String getDescriptionName() {
-		return descriptionName;
-	}
-
-	/**
-	 * @generated
-	 */
-	public void setDescriptionName(String newDescriptionName) {
-		descriptionName = newDescriptionName;
-	}
-
-	/**
-	 * @generated
-	 */
-	public String getResourceName() {
-		return resourceName;
-	}
-
-	/**
-	 * @generated
-	 */
-	public void setResourceName(String newResourceName) {
-		resourceName = newResourceName;
-	}
-
-	/**
-	 * @generated
-	 */
-	public LeafAttribute getAttribute() {
-		return attribute;
-	}
-
-	/**
-	 * @generated
-	 */
-	public void setAttribute(LeafAttribute newAttribute) {
-		attribute = newAttribute;
-	}
-
-	/**
-	 * @generated
-	 */
-	public List<Data> getData() {
-		if (data == null) {
-			data = new ArrayList<Data>();
-		}
-		return data;
-	}
-	
+	//	public List<Data> getData() {
+//		if (this.data == null) {
+//			this.data = new ArrayList<Data>();
+//		}
+//		return this.data;
+//	}
+//
 	public List<Data> updateData(){
 		return null;
 	}
 
-	/**
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (probeName: ");
-		result.append(probeName);
-		result.append(", descriptionName: ");
-		result.append(descriptionName);
-		result.append(", resourceName: ");
-		result.append(resourceName);
-		result.append(", data: ");
-		result.append(data);
-		result.append(')');
-		return result.toString();
+	public Timestamp getData() {
+		return data;
 	}
 
-} // Metric
+	public void setData(Timestamp data) {
+		this.data = data;
+	}
+
+	public String getDescriptionName() {
+		return this.descriptionName;
+	}
+
+	public void setDescriptionName(String descriptionName) {
+		this.descriptionName = descriptionName;
+	}
+
+	public String getProbeName() {
+		return this.probeName;
+	}
+
+	public void setProbeName(String probeName) {
+		this.probeName = probeName;
+	}
+
+	public String getResourceName() {
+		return this.resourceName;
+	}
+
+	public void setResourceName(String resourceName) {
+		this.resourceName = resourceName;
+	}
+
+	public ConfigurationProfile getConfigurationprofile() {
+		return this.configurationprofile;
+	}
+
+	public void setConfigurationprofile(ConfigurationProfile configurationprofile) {
+		this.configurationprofile = configurationprofile;
+	}
+
+	public Leafattribute getAttribute() {
+		return attribute;
+	}
+
+	public void setAttribute(Leafattribute attribute) {
+		this.attribute = attribute;
+	}
+
+}

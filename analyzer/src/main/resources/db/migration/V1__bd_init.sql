@@ -133,6 +133,9 @@ ALTER TABLE data ADD CONSTRAINT FK_Data_2 FOREIGN KEY (resourceId) REFERENCES re
 -- -- Table time was removed for normalization.
 -- ALTER TABLE Data ADD CONSTRAINT FK_Data_3 FOREIGN KEY (valueTime) REFERENCES Time (valueTime);
 
+
+-- -- Quality Model -- --
+
 DROP TABLE IF EXISTS historicaldata;
 DROP TABLE IF EXISTS attribute;
 DROP TABLE IF EXISTS preference;
@@ -169,29 +172,29 @@ CREATE TABLE preference (
 );
 
 CREATE TABLE leafattribute (
-    leafattributeId INT NOT NULL AUTO_INCREMENT,
+    attributeId INT NOT NULL,
     normalizationMin DOUBLE PRECISION,
     normalizationMax DOUBLE PRECISION,
     operator INT,
     numSamples INT,
     normalizationKind INT,
-    PRIMARY KEY (leafattributeId)
+    PRIMARY KEY (attributeId)
 );
 
 CREATE TABLE metric (
-    leafattributeId INT NOT NULL,
+    attributeId INT NOT NULL,
     configurationprofileId INT NOT NULL,
     probeName VARCHAR(1024),
     descriptionName VARCHAR(1024),
     resourceName VARCHAR(1024),
     data TIMESTAMP(6),
-    PRIMARY KEY (leafattributeId)
+    PRIMARY KEY (attributeId)
 );
 
 CREATE TABLE compositeattribute (
-    compositeattributeId INT NOT NULL AUTO_INCREMENT,
+    attributeId INT NOT NULL,
     operator INT,
-    PRIMARY KEY (compositeattributeId)
+    PRIMARY KEY (attributeId)
 );
 
 
@@ -201,7 +204,7 @@ ALTER TABLE preference ADD CONSTRAINT FK_Preference_0 FOREIGN KEY (configuration
 ALTER TABLE metric ADD CONSTRAINT FK_Metric_0 FOREIGN KEY (configurationprofileId) REFERENCES configurationprofile (configurationprofileId);
 
 ALTER TABLE preference ADD CONSTRAINT FK_Preference_1 FOREIGN KEY (attributeId) REFERENCES attribute (attributeId);
-ALTER TABLE metric ADD CONSTRAINT FK_Metric_1 FOREIGN KEY (leafattributeId) REFERENCES leafattribute (leafattributeId);
+ALTER TABLE metric ADD CONSTRAINT FK_Metric_1 FOREIGN KEY (attributeId) REFERENCES leafattribute (attributeId);
 
-ALTER TABLE attribute ADD CONSTRAINT FK_Attribute_0 FOREIGN KEY (compositeattributeId) REFERENCES compositeattribute (compositeattributeId);
+ALTER TABLE attribute ADD CONSTRAINT FK_Attribute_0 FOREIGN KEY (attributeId) REFERENCES compositeattribute (attributeId);
 

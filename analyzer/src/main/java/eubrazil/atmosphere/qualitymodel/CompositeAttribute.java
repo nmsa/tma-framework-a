@@ -1,121 +1,97 @@
-/**
- */
 package eubrazil.atmosphere.qualitymodel;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+
 /**
- * @generated
+ * The persistent class for the compositeattribute database table.
+ * 
  */
-public class CompositeAttribute extends Attribute {
-	/**
-	 * @generated
-	 */
-	protected List<Attribute> children;
+@Entity(name="compositeattribute")
+@NamedQuery(name="compositeattribute.findAll", query="SELECT c FROM compositeattribute c")
+public class CompositeAttribute extends Attribute implements Serializable {
 
-	/**
-	 * @generated
-	 */
-	protected static final AttributeAggregationOperator OPERATOR_EDEFAULT = AttributeAggregationOperator.NEUTRALITY;
+	private static final long serialVersionUID = -833533561010795503L;
 
-	/**
-	 * @generated
-	 */
-	protected AttributeAggregationOperator operator = OPERATOR_EDEFAULT;
+	@Enumerated(EnumType.ORDINAL)
+	private AttributeAggregationOperator operator = AttributeAggregationOperator.NEUTRALITY;
 
-	/**
-	 * @generated
-	 */
+	//bi-directional many-to-one association to Attribute
+	@OneToMany(mappedBy="compositeattribute")
+	private List<Attribute> children;
+
 	public CompositeAttribute() {
-		super();
 	}
 
-	/**
-	 * @generated
-	 */
-	public List<Attribute> getChildren() {
-		if (children == null) {
-			children = new ArrayList<Attribute>();
-		}
-		return children;
-	}
-
-	/**
-	 * @generated
-	 */
-	public AttributeAggregationOperator getOperator() {
-		return operator;
-	}
-
-	/**
-	 * @generated
-	 */
-	public void setOperator(AttributeAggregationOperator newOperator) {
-		operator = newOperator == null ? OPERATOR_EDEFAULT : newOperator;
-	}
-
-	/**
-	 * @generated
-	 */
 	protected double calculateNeutrality(ConfigurationProfile profile) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * @generated
-	 */
 	protected double calculateSimultaneity(ConfigurationProfile profile) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * @generated
-	 */
 	protected double calculateReplaceability(ConfigurationProfile profile) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (operator: ");
-		result.append(operator);
-		result.append(')');
-		return result.toString();
 	}
 	
-	@Override
 	public HistoricalData calculate(ConfigurationProfile profile) {
 		HistoricalData d = new HistoricalData();
 		d.setInstant(new Timestamp(System.currentTimeMillis()));
-		d.attribute = this;
-		
+		d.setAttribute(this);
+
 		switch (operator) {
 		case NEUTRALITY:
-			d.value = calculateNeutrality(profile);
+			d.setValue(calculateNeutrality(profile));
 			break;
 		case REPLACEABILITY:
-			d.value = calculateReplaceability(profile);
+			d.setValue(calculateReplaceability(profile));
 			break;
 		case SIMULTANEITY:
-			d.value = calculateSimultaneity(profile);
+			d.setValue(calculateSimultaneity(profile));
 			break;
 		default:
 			throw new UnsupportedOperationException();
 		}
-		
+
 		return d;
 	}
 
-} // CompositeAttribute
+	public AttributeAggregationOperator getOperator() {
+		return operator;
+	}
+
+	public void setOperator(AttributeAggregationOperator operator) {
+		this.operator = operator;
+	}
+
+	public List<Attribute> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<Attribute> children) {
+		this.children = children;
+	}
+
+	public Attribute addAttribute(Attribute attribute) {
+		getChildren().add(attribute);
+		attribute.setCompositeattribute(this);
+
+		return attribute;
+	}
+
+	public Attribute removeAttribute(Attribute attribute) {
+		getChildren().remove(attribute);
+		attribute.setCompositeattribute(null);
+
+		return attribute;
+	}
+
+}

@@ -1,97 +1,86 @@
-/**
- */
 package eubrazil.atmosphere.qualitymodel;
 
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+
+
 /**
- * @generated
+ * The persistent class for the preference database table.
+ * 
  */
-public class Preference {
-	/**
-	 * @generated
-	 */
-	protected static final double WEIGHT_EDEFAULT = 1.0;
+@Entity(name="preference")
+@NamedQuery(name="preference.findAll", query="SELECT p FROM preference p")
+public class Preference implements Serializable {
 
-	/**
-	 * @generated
-	 */
-	protected double weight = WEIGHT_EDEFAULT;
+	private static final long serialVersionUID = 4897045709573210431L;
 
-	/**
-	 * @generated
-	 */
-	protected Attribute attribute;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int attributeId;
 
-	/**
-	 * @generated
-	 */
-	protected static final double THRESHOLD_EDEFAULT = 1.0;
+	private double threshold;
 
-	/**
-	 * @generated
-	 */
-	protected double threshold = THRESHOLD_EDEFAULT;
+	private double weight;
 
-	/**
-	 * @generated
-	 */
+	//bi-directional many-to-one association to Configurationprofile
+	@ManyToOne
+	@JoinColumn(name="configurationprofileId")
+	private ConfigurationProfile configurationprofile;
+
+	//bi-directional one-to-one association to Attribute
+	@OneToOne
+	@JoinColumn(name="attributeId")
+	private Attribute attribute;
+
 	public Preference() {
-		super();
 	}
 
-	/**
-	 * @generated
-	 */
-	public double getWeight() {
-		return weight;
+	public int getAttributeId() {
+		return this.attributeId;
 	}
 
-	/**
-	 * @generated
-	 */
-	public void setWeight(double newWeight) {
-		weight = newWeight;
+	public void setAttributeId(int attributeId) {
+		this.attributeId = attributeId;
 	}
 
-	/**
-	 * @generated
-	 */
-	public Attribute getAttribute() {
-		return attribute;
-	}
-
-	/**
-	 * @generated
-	 */
-	public void setAttribute(Attribute newAttribute) {
-		attribute = newAttribute;
-	}
-
-	/**
-	 * @generated
-	 */
 	public double getThreshold() {
-		return threshold;
+		return this.threshold;
 	}
 
-	/**
-	 * @generated
-	 */
-	public void setThreshold(double newThreshold) {
-		threshold = newThreshold;
+	public void setThreshold(double threshold) {
+		this.threshold = threshold;
 	}
 
-	/**
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (weight: ");
-		result.append(weight);
-		result.append(", threshold: ");
-		result.append(threshold);
-		result.append(')');
-		return result.toString();
+	public double getWeight() {
+		return this.weight;
 	}
 
-} // Preference
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+
+	public ConfigurationProfile getConfigurationprofile() {
+		return this.configurationprofile;
+	}
+
+	public void setConfigurationprofile(ConfigurationProfile configurationprofile) {
+		this.configurationprofile = configurationprofile;
+	}
+
+	public Attribute getAttribute() {
+		return this.attribute;
+	}
+
+	public void setAttribute(Attribute attribute) {
+		this.attribute = attribute;
+	}
+
+}

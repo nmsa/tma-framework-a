@@ -1,99 +1,73 @@
-/**
- */
 package eubrazil.atmosphere.qualitymodel;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+
+
 /**
- * @generated
+ * The persistent class for the historicaldata database table.
+ * 
  */
-public class HistoricalData {
-	/**
-	 * @generated
-	 */
-	protected static final Timestamp INSTANT_EDEFAULT = null;
+@Entity(name="historicaldata")
+@NamedQuery(name="historicaldata.findAll", query="SELECT h FROM historicaldata h")
+public class HistoricalData implements Serializable {
 
-	/**
-	 * @generated
-	 */
-	protected Timestamp instant = INSTANT_EDEFAULT;
+	private static final long serialVersionUID = 467016496297144958L;
 
-	/**
-	 * @generated
-	 */
-	protected static final double VALUE_EDEFAULT = 0.0;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int attributeId;
 
-	/**
-	 * @generated
-	 */
-	protected double value = VALUE_EDEFAULT;
+	private Timestamp instant;
 
-	/**
-	 * @generated
-	 */
-	protected Attribute attribute;
+	private double value;
 
-	/**
-	 * @generated
-	 */
+	//bi-directional one-to-one association to Attribute
+	@OneToOne
+	@JoinColumn(name="attributeId")
+	private Attribute attribute;
+
 	public HistoricalData() {
-		super();
 	}
 
-	/**
-	 * @generated
-	 */
+	public int getAttributeId() {
+		return this.attributeId;
+	}
+
+	public void setAttributeId(int attributeId) {
+		this.attributeId = attributeId;
+	}
+
 	public Timestamp getInstant() {
-		return instant;
+		return this.instant;
 	}
 
-	/**
-	 * @generated
-	 */
-	public void setInstant(Timestamp newInstant) {
-		instant = newInstant;
+	public void setInstant(Timestamp instant) {
+		this.instant = instant;
 	}
 
-	/**
-	 * @generated
-	 */
 	public double getValue() {
-		return value;
+		return this.value;
 	}
 
-	/**
-	 * @generated
-	 */
-	public void setValue(double newValue) {
-		value = newValue;
+	public void setValue(double value) {
+		this.value = value;
 	}
 
-	/**
-	 * @generated
-	 */
 	public Attribute getAttribute() {
-		return attribute;
+		return this.attribute;
 	}
 
-	/**
-	 * @generated
-	 */
-	public void setAttribute(Attribute newAttribute) {
-		attribute = newAttribute;
+	public void setAttribute(Attribute attribute) {
+		this.attribute = attribute;
 	}
 
-	/**
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (instant: ");
-		result.append(instant);
-		result.append(", value: ");
-		result.append(value);
-		result.append(')');
-		return result.toString();
-	}
-
-} // HistoricalData
+}
