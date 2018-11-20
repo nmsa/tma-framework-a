@@ -1,13 +1,8 @@
 package eubrazil.atmosphere.repository;
 
-import java.util.List;
-
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import eubrazil.atmosphere.entity.Data;
 import eubrazil.atmosphere.entity.dashboard.Properties;
 
 @Repository
@@ -25,7 +20,7 @@ public interface KnowledgeRepository extends CrudRepository<Properties, Long> {
 	 * @param pageable
 	 * @return
 	 */
-	@Query(value="SELECT d FROM data d WHERE d.resource.resourceName = ?1 and d.probe.probeName = ?2 and d.description.descriptionName = ?3")
-	List<Data> getLimitedDataListByName(String resourceName, String probeName, String descriptionName, Pageable pageable);
+//	@Query(value="SELECT d FROM data d WHERE d.resource.resourceName = ?1 and d.probe.probeName = ?2 and d.description.descriptionName = ?3")
+//	List<Data> getLimitedDataListByName(String resourceName, String probeName, String descriptionName, Pageable pageable);
 	
 }

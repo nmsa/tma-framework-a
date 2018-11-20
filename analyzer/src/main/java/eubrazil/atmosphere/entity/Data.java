@@ -8,11 +8,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 
-import eubrazil.atmosphere.qualitymodel.Metric;
-
 
 /**
- * The persistent class for the data database table.
+ * The persistent class for the Data database table.
  * 
  */
 @Entity(name="data")
@@ -25,26 +23,12 @@ public class Data implements Serializable {
 
 	private double value;
 
-	//bi-directional many-to-one association to Description
-	@ManyToOne
-	@JoinColumn(name="descriptionId", insertable=false, updatable=false)
-	private Description description;
-
-	//bi-directional many-to-one association to Probe
-	@ManyToOne
-	@JoinColumn(name="probeId", insertable=false, updatable=false)
-	private Probe probe;
-
-	//bi-directional many-to-one association to Resource
-	@ManyToOne
-	@JoinColumn(name="resourceId", insertable=false, updatable=false)
-	private Resource resource;
-	
 	//bi-directional many-to-one association to Metric
 	@ManyToOne
-	@JoinColumn(name="attributeId", insertable=false, updatable=false)
+	@JoinColumn(name = "attributeId", insertable = false, updatable = false)
 	private Metric metric;
 
+	
 	public Data() {
 	}
 
@@ -62,30 +46,6 @@ public class Data implements Serializable {
 
 	public void setValue(double value) {
 		this.value = value;
-	}
-
-	public Description getDescription() {
-		return this.description;
-	}
-
-	public void setDescription(Description description) {
-		this.description = description;
-	}
-
-	public Probe getProbe() {
-		return this.probe;
-	}
-
-	public void setProbe(Probe probe) {
-		this.probe = probe;
-	}
-
-	public Resource getResource() {
-		return this.resource;
-	}
-
-	public void setResource(Resource resource) {
-		this.resource = resource;
 	}
 
 }

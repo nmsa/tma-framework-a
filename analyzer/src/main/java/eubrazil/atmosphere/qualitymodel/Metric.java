@@ -20,8 +20,8 @@ import eubrazil.atmosphere.entity.Data;
  * The persistent class for the metric database table.
  * 
  */
-@Entity(name="metric")
-@NamedQuery(name="metric.findAll", query="SELECT m FROM metric m")
+@Entity(name="metricqm")
+@NamedQuery(name="metricqm.findAll", query="SELECT m FROM metricqm m")
 public class Metric implements Serializable {
 
 	private static final long serialVersionUID = -4308693747910041479L;

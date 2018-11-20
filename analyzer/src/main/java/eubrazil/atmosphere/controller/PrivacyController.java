@@ -32,7 +32,6 @@ public class PrivacyController {
 	
 	@RequestMapping("/list")
 	public String list() {
-	    //Privacy p = this.repository.findAll().iterator().next();
 	    StringBuilder sb = new StringBuilder();
 	    Iterator<Privacy> ip = this.repository.findAll().iterator();
 	    while(ip.hasNext()){

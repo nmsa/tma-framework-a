@@ -1,37 +1,37 @@
 package eubrazil.atmosphere.entity;
 
 import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 
 /**
- * The persistent class for the configuration database table.
+ * The persistent class for the Configuration database table.
  * 
  */
 @Entity(name="configuration")
 @NamedQuery(name="configuration.findAll", query="SELECT c FROM configuration c")
 public class Configuration implements Serializable {
-
-	private static final long serialVersionUID = -3957332871685467946L;
+	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int configurationId;
+
 	private int actionId;
 
 	private String domain;
 
 	private String keyName;
 
-	//bi-directional one-to-one association to Action
-	@OneToOne
-	@JoinColumn(name="actionId")
-	private Action action;
-
 	public Configuration() {
+	}
+
+	public int getConfigurationId() {
+		return this.configurationId;
+	}
+
+	public void setConfigurationId(int configurationId) {
+		this.configurationId = configurationId;
 	}
 
 	public int getActionId() {
@@ -56,14 +56,6 @@ public class Configuration implements Serializable {
 
 	public void setKeyName(String keyName) {
 		this.keyName = keyName;
-	}
-
-	public Action getAction() {
-		return this.action;
-	}
-
-	public void setAction(Action action) {
-		this.action = action;
 	}
 
 }
