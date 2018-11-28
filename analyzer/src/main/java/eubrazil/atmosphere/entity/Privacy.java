@@ -62,7 +62,7 @@ public class Privacy implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Privacy [id=" + id + ", risk=" + risk + ", utility=" + utility + ", k=" + k + ", data_hora=" + data_hora
+		return "Privacy [id=" + id + ", risk=" + risk + ", utility=" + utility + ", k=" + k + ", date_time=" + data_hora
 				+ "]";
 	}
 	

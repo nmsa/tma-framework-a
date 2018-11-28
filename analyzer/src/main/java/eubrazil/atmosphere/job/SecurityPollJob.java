@@ -22,11 +22,11 @@ public class SecurityPollJob implements Job {
 	
 	@Override
 	public void execute(JobExecutionContext jobExecutionContext) {
-		LOGGER.info("SecurityPollJob executando..");
+		LOGGER.info("SecurityPollJob executing..");
 		
 		LOGGER.info("...");
 		
-		LOGGER.info("SecurityPollJob fim execução..");
+		LOGGER.info("SecurityPollJob end executing..");
 	}
 
 	@Bean(name = "jobBean2")

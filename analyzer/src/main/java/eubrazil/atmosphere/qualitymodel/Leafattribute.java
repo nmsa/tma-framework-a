@@ -42,6 +42,18 @@ public class Leafattribute extends Attribute implements Serializable {
 
 	public Leafattribute() {
 	}
+	
+	public Leafattribute(MetricNormalizationKind normalizationKind, double normalizationMax, double normalizationMin,
+			int numSamples, MetricAggregationOperator operator) {
+		super();
+		this.normalizationKind = normalizationKind;
+		this.normalizationMax = normalizationMax;
+		this.normalizationMin = normalizationMin;
+		this.numSamples = numSamples;
+		this.operator = operator;
+	}
+
+
 
 	@Override
 	public HistoricalData calculate(ConfigurationProfile profile) throws UndefinedMetricException {

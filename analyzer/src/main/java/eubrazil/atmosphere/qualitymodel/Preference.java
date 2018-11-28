@@ -43,6 +43,11 @@ public class Preference implements Serializable {
 	public Preference() {
 	}
 
+	public Preference(double threshold, double weight) {
+		this.threshold = threshold;
+		this.weight = weight;
+	}
+	
 	public int getAttributeId() {
 		return this.attributeId;
 	}

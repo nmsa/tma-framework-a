@@ -53,6 +53,13 @@ public class Metric implements Serializable {
 	public Metric() {
 	}
 
+	public Metric(String descriptionName, String probeName, String resourceName) {
+		super();
+		this.descriptionName = descriptionName;
+		this.probeName = probeName;
+		this.resourceName = resourceName;
+	}
+
 	public int getAttributeId() {
 		return attributeId;
 	}

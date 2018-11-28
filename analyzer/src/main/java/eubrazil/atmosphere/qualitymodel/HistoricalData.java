@@ -38,6 +38,12 @@ public class HistoricalData implements Serializable {
 	public HistoricalData() {
 	}
 
+	public HistoricalData(Timestamp instant, double value) {
+		super();
+		this.instant = instant;
+		this.value = value;
+	}
+
 	public int getAttributeId() {
 		return this.attributeId;
 	}
