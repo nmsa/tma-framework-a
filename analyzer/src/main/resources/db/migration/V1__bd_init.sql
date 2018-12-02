@@ -84,7 +84,6 @@ CREATE TABLE compositeattribute (
     PRIMARY KEY (attributeId)
 );
 
-
 ALTER TABLE historicaldata ADD CONSTRAINT FK_HistoricalData_0 FOREIGN KEY (attributeId) REFERENCES attribute (attributeId);
 
 ALTER TABLE preference ADD CONSTRAINT FK_Preference_0 FOREIGN KEY (configurationprofileId) REFERENCES configurationprofile (configurationprofileId);
@@ -94,6 +93,38 @@ ALTER TABLE preference ADD CONSTRAINT FK_Preference_1 FOREIGN KEY (attributeId) 
 ALTER TABLE metricqm ADD CONSTRAINT FK_Metricqm_1 FOREIGN KEY (attributeId) REFERENCES leafattribute (attributeId);
 
 ALTER TABLE attribute ADD CONSTRAINT FK_Attribute_0 FOREIGN KEY (attributeId) REFERENCES compositeattribute (attributeId);
+
+
+-- ------------------------------------------------------------------------------
+
+insert into compositeattribute values (1,1);
+insert into compositeattribute values (2,0);
+insert into compositeattribute values (3,0);
+
+insert into attribute values (1, 1, 'PRIVACY');
+insert into attribute values (2, 1, 'INFORMATIONLOSS');
+insert into attribute values (3, 1, 'REIDENTIFICATIONRISK');
+
+insert into configurationprofile values (1);
+insert into configurationprofile values (2);
+insert into configurationprofile values (3);
+
+insert into preference values (2, 1, 0.1, 0.7);
+insert into preference values (1, 2, 0.2, 0.05);
+insert into preference values (3, 3, 0.9, 0.05);
+
+insert into leafattribute values (2, 0.0, 1.0, 0, 1, 0);
+insert into leafattribute values (3, 0.0, 1.0, 0, 1, 1);
+
+insert into metricqm values (2,1,'probe Wildfly WSVD','n/a','n/a');
+insert into metricqm values (3,3,'probe Demo Java','n/a','n/a');
+
+insert into historicaldata values (1, now(), 0.1);
+insert into historicaldata values (2, now(), 0.2);
+insert into historicaldata values (3, now(), 0.3);
+
+-- ------------------------------------------------------------------------------
+
 
 -- ------------------------------------------------------------------------------
 -- ------------------------------------------------------------------------------
@@ -272,6 +303,8 @@ CREATE TABLE data (
     PRIMARY KEY (probeId,descriptionId,resourceId,valueTime)
 );
 
+
+
 ALTER TABLE action ADD CONSTRAINT FK_Action_0 FOREIGN KEY (actuatorId) REFERENCES actuator (actuatorId);
 ALTER TABLE action ADD CONSTRAINT FK_Action_1 FOREIGN KEY (resourceId) REFERENCES resource (resourceId);
 
@@ -280,7 +313,7 @@ ALTER TABLE configuration ADD CONSTRAINT FK_Configuration_0 FOREIGN KEY (actionI
 ALTER TABLE data ADD CONSTRAINT FK_Data_0 FOREIGN KEY (probeId) REFERENCES probe (probeId);
 ALTER TABLE data ADD CONSTRAINT FK_Data_1 FOREIGN KEY (descriptionId) REFERENCES description (descriptionId);
 ALTER TABLE data ADD CONSTRAINT FK_Data_2 FOREIGN KEY (resourceId) REFERENCES resource (resourceId);
-ALTER TABLE data ADD CONSTRAINT FK_Data_4 FOREIGN KEY (attributeId) REFERENCES metricqm (attributeId);
+-- ALTER TABLE data ADD CONSTRAINT FK_Data_4 FOREIGN KEY (attributeId) REFERENCES metricqm (attributeId);
 
 -- -- Table time was removed for normalization.
 -- ALTER TABLE Data ADD CONSTRAINT FK_Data_3 FOREIGN KEY (valueTime) REFERENCES Time (valueTime);
@@ -307,3 +340,101 @@ ALTER TABLE actionplan ADD CONSTRAINT FK_ActionPlan_1 FOREIGN KEY (actionId) REF
 
 ALTER TABLE configurationdata ADD CONSTRAINT FK_ConfigurationData_0 FOREIGN KEY (actionPlanId) REFERENCES actionplan (actionPlanId);
 ALTER TABLE configurationdata ADD CONSTRAINT FK_ConfigurationData_1 FOREIGN KEY (configurationId) REFERENCES configuration (configurationId);
+
+-- ------------------------------------------------------------------------------
+
+INSERT INTO description VALUES (1,'CPU_Usage','measurement','Mi'),
+(2,'Memory','measurement','Bytes'),
+(3,'Disk','event','n/a'),
+(4,'CPU_Usage','measurement','Mi'),
+(5,'Memory','measurement','Bytes'),
+(6,'Disk','event','n/a'),
+(7,'CPU_Usage','measurement','Mi'),
+(8,'Memory','measurement','Bytes'),
+(9,'Disk','event','n/a'),
+(10,'CPU_Usage','measurement','Mi'),
+(11,'Memory','measurement','Bytes'),
+(12,'Disk','event','n/a'),
+(13,'Memory','event','n/a'),
+(14,'CPU_Usage','measurement','Mi'),
+(15,'Memory','measurement','Bytes'),
+(16,'Disk','event','n/a'),
+(17,'CPU_Usage','measurement','Mi'),
+(18,'Memory','measurement','Bytes'),
+(19,'Disk','event','n/a'),
+(20,'CPU_Usage','measurement','Mi'),
+(21,'Memory','measurement','Bytes'),
+(22,'Disk','event','n/a'),
+(23,'CPU_Usage','measurement','Mi'),
+(24,'Memory','measurement','Bytes'),
+(25,'Disk','event','n/a'),
+(26,'Memory','event','n/a'),
+(27,'k','measurement','n/a'),
+(28,'riskP','measurement','n/a'),
+(29,'riskJ','measurement','n/a'),
+(30,'riskM','measurement','n/a'),
+(31,'lScore','measurement','n/a'),
+(32,'hScore','measurement','n/a');
+
+INSERT INTO probe VALUES (1,'probe Wildfly WSVD','n/a','n/a','n/a',NULL),
+(2,'probe MySQL WSVD','n/a','n/a','n/a',NULL),
+(3,'probe Demo Java','n/a','n/a','n/a',NULL),
+(4,'probe Demo Python','n/a','n/a','n/a',NULL),
+(5,'probe Docker','n/a','n/a','n/a',NULL),
+(6,'probe Kubernetes','n/a','n/a','n/a',NULL),
+(7,'probe PRIVaaS','n/a','n/a','n/a',NULL),
+(8,'probe PRIVaaS','n/a','n/a','n/a',NULL);
+
+INSERT INTO resource VALUES (1,'VM_VIRT_NODE','VM','n/a'),
+(2,'Pod Apache Flume','POD','n/a'),
+(3,'VM_VIRT_MASTER','VM','n/a'),
+(4,'Pod MySQL','POD','n/a'),
+(5,'Pod Apache Zookeeper','POD','n/a'),
+(6,'Pod Apache Kafka','POD','n/a'),
+(7,'Pod Monitor','POD','n/a'),
+(8,'anonymizator','VM','n/a');
+
+INSERT INTO data (probeId, descriptionId, resourceId, attributeId, valueTime, value) VALUES (8,27,8,2,'1995-12-11 18:34:41.000000',10),
+(8,27,8,3,'1995-12-12 07:13:25.000000',100),
+(8,27,8,2,'1995-12-12 13:21:03.000000',10),
+(8,27,8,2,'1995-12-12 18:39:44.000000',10),
+(8,27,8,2,'1995-12-12 22:52:08.000000',10),
+(8,27,8,3,'1995-12-13 03:16:21.000000',10),
+(8,27,8,3,'1995-12-13 17:31:17.000000',10),
+(8,28,8,3,'1995-12-11 18:34:41.000000',0.004545454545454545),
+(8,28,8,3,'1995-12-12 07:13:25.000000',0.0010070493454179255),
+(8,28,8,3,'1995-12-12 13:21:03.000000',0.05555555555555555),
+(8,28,8,3,'1995-12-12 18:39:44.000000',0.041666666666666664),
+(8,28,8,2,'1995-12-12 22:52:08.000000',0.07142857142857142),
+(8,28,8,2,'1995-12-13 03:16:21.000000',0.03225806451612903),
+(8,28,8,2,'1995-12-13 17:31:17.000000',0.005050505050505051),
+(8,29,8,2,'1995-12-11 18:34:41.000000',0.004545454545454545),
+(8,29,8,2,'1995-12-12 07:13:25.000000',0.0010070493454179255),
+(8,29,8,2,'1995-12-12 13:21:03.000000',0.05555555555555555),
+(8,29,8,3,'1995-12-12 18:39:44.000000',0.041666666666666664),
+(8,29,8,3,'1995-12-12 22:52:08.000000',0.07142857142857142),
+(8,29,8,3,'1995-12-13 03:16:21.000000',0.03225806451612903),
+(8,29,8,3,'1995-12-13 17:31:17.000000',0.005050505050505051),
+(8,30,8,3,'1995-12-11 18:34:41.000000',0.001358695652173913),
+(8,30,8,3,'1995-12-12 07:13:25.000000',0.00015355793740978472),
+(8,30,8,3,'1995-12-12 13:21:03.000000',0.0111731843575419),
+(8,30,8,2,'1995-12-12 18:39:44.000000',0.012987012987012988),
+(8,30,8,2,'1995-12-12 22:52:08.000000',0.0008909126905563256),
+(8,30,8,2,'1995-12-13 03:16:21.000000',0.005208333333333333),
+(8,30,8,2,'1995-12-13 17:31:17.000000',0.005050505050505051),
+(8,31,8,2,'1995-12-11 18:34:41.000000',0),
+(8,31,8,2,'1995-12-12 07:13:25.000000',0.5217272081421163),
+(8,31,8,2,'1995-12-12 13:21:03.000000',0),
+(8,31,8,3,'1995-12-12 18:39:44.000000',0),
+(8,31,8,3,'1995-12-12 22:52:08.000000',0.1508305756999999),
+(8,31,8,3,'1995-12-13 03:16:21.000000',0),
+(8,31,8,3,'1995-12-13 17:31:17.000000',1),
+(8,32,8,3,'1995-12-11 18:34:41.000000',0),
+(8,32,8,3,'1995-12-12 07:13:25.000000',0.5217272081421163),
+(8,32,8,3,'1995-12-12 13:21:03.000000',0),
+(8,32,8,2,'1995-12-12 18:39:44.000000',0),
+(8,32,8,2,'1995-12-12 22:52:08.000000',0.1508305756999999),
+(8,32,8,2,'1995-12-13 03:16:21.000000',0),
+(8,32,8,2,'1995-12-13 17:31:17.000000',1);
+
+-- ------------------------------------------------------------------------------
