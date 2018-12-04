@@ -97,31 +97,29 @@ ALTER TABLE attribute ADD CONSTRAINT FK_Attribute_0 FOREIGN KEY (attributeId) RE
 
 -- ------------------------------------------------------------------------------
 
-insert into compositeattribute values (1,1);
-insert into compositeattribute values (2,0);
-insert into compositeattribute values (3,0);
+insert into compositeattribute (attributeId, operator) values (1,1);
+insert into compositeattribute (attributeId, operator) values (2,1);
+insert into compositeattribute (attributeId, operator) values (3,1);
 
-insert into attribute values (1, 1, 'PRIVACY');
-insert into attribute values (2, 1, 'INFORMATIONLOSS');
-insert into attribute values (3, 1, 'REIDENTIFICATIONRISK');
+insert into attribute (attributeId, compositeattributeId, name) values (1, 1, 'PRIVACY');
+insert into attribute (attributeId, compositeattributeId, name) values (2, 1, 'INFORMATIONLOSS');
+insert into attribute (attributeId, compositeattributeId, name) values (3, 1, 'REIDENTIFICATIONRISK');
 
-insert into configurationprofile values (1);
-insert into configurationprofile values (2);
-insert into configurationprofile values (3);
+insert into configurationprofile (configurationprofileId) values (1);
 
-insert into preference values (2, 1, 0.1, 0.7);
-insert into preference values (1, 2, 0.2, 0.05);
-insert into preference values (3, 3, 0.9, 0.05);
+insert into preference (attributeId,configurationprofileId, weight, threshold) values (1, 1, 0.2, 0.05);
+insert into preference (attributeId,configurationprofileId, weight, threshold) values (2, 1, 0.1, 0.7);
+insert into preference (attributeId,configurationprofileId, weight, threshold) values (3, 1, 0.9, 0.05);
 
-insert into leafattribute values (2, 0.0, 1.0, 0, 1, 0);
-insert into leafattribute values (3, 0.0, 1.0, 0, 1, 1);
+insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (2, 0.0, 1.0, 0, 1, 0);
+insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (3, 0.0, 1.0, 0, 1, 1);
 
-insert into metricqm values (2,1,'probe Wildfly WSVD','n/a','n/a');
-insert into metricqm values (3,3,'probe Demo Java','n/a','n/a');
+insert into metricqm (attributeId, configurationprofileId, probeName, descriptionName, resourceName) values (2,1,'probe Wildfly WSVD','n/a','n/a');
+insert into metricqm (attributeId, configurationprofileId, probeName, descriptionName, resourceName) values (3,1,'probe Demo Java','n/a','n/a');
 
-insert into historicaldata values (1, now(), 0.1);
-insert into historicaldata values (2, now(), 0.2);
-insert into historicaldata values (3, now(), 0.3);
+insert into historicaldata (attributeId, instant, value) values (1, now(), 0.1);
+insert into historicaldata (attributeId, instant, value) values (2, now(), 0.2);
+insert into historicaldata (attributeId, instant, value) values (3, now(), 0.3);
 
 -- ------------------------------------------------------------------------------
 

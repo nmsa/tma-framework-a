@@ -47,6 +47,8 @@ public class PrivacyPollJob implements Job {
 //		}
 //		System.out.println("PrivacyPollJob end execution..");
 		
+		System.out.println("PrivacyPollJob executing..");
+		
 		// Creating quality model instancy for privacy
 		ConfigurationProfile configurationActor = new ConfigurationProfile();
 		Preference privacyPreference = new Preference(0.2, 0.05);
@@ -62,7 +64,7 @@ public class PrivacyPollJob implements Job {
 		
 		HistoricalData privacyHistoricalData = new HistoricalData();
 		
-		
+		System.out.println("PrivacyPollJob end execution..");
 		
 	}
 
