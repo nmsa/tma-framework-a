@@ -1,6 +1,7 @@
 package eubrazil.atmosphere.qualitymodel;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -15,13 +16,15 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.data.domain.PageRequest;
 
+import eubrazil.atmosphere.component.PrivacyComponent;
 import eubrazil.atmosphere.entity.Data;
 
 
 /**
  * The persistent class for the metric database table.
- * 
+ *
  */
 @Entity(name="metricqm")
 @NamedQuery(name="metricqm.findAll", query="SELECT m FROM metricqm m")
@@ -53,7 +56,7 @@ public class Metric implements Serializable {
 	//bi-directional many-to-one association to Data
 	@OneToMany(mappedBy="metric")
 	private List<Data> data;
-	
+
 	public Metric() {
 	}
 
@@ -64,23 +67,21 @@ public class Metric implements Serializable {
 		this.resourceName = resourceName;
 	}
 
+	public List<Data> updateData(int numSamples) {
+		this.data = PrivacyComponent.getInstance().getLimitedDataListByName(resourceName, probeName, descriptionName,
+				new PageRequest(0, numSamples));
+		if (this.data == null) {
+			this.data = new ArrayList<Data>();
+		}
+		return this.data;
+	}
+
 	public int getAttributeId() {
 		return attributeId;
 	}
 
 	public void setAttributeId(int attributeId) {
 		this.attributeId = attributeId;
-	}
-
-	//	public List<Data> getData() {
-//		if (this.data == null) {
-//			this.data = new ArrayList<Data>();
-//		}
-//		return this.data;
-//	}
-//
-	public List<Data> updateData(){
-		return null;
 	}
 
 	public String getDescriptionName() {
@@ -124,11 +125,20 @@ public class Metric implements Serializable {
 	}
 
 	public List<Data> getData() {
-		return data;
+		if (this.data == null) {
+			this.data = new ArrayList<Data>();
+		}
+		return this.data;
 	}
 
 	public void setData(List<Data> data) {
 		this.data = data;
+	}
+
+	@Override
+	public String toString() {
+		return "Metric [attributeId=" + attributeId + ", descriptionName=" + descriptionName + ", probeName="
+				+ probeName + ", resourceName=" + resourceName + "]";
 	}
 
 }

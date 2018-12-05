@@ -10,16 +10,12 @@ import eubrazil.atmosphere.qualitymodel.ConfigurationProfile;
 
 @Repository
 public interface ConfigurationProfileRepository extends CrudRepository<ConfigurationProfile, Long> {
-	
+
 	@Override
 	List<ConfigurationProfile> findAll();
-	
+
 	@Query(value="select cp from configurationprofile cp left join fetch cp.metrics left join fetch "
 			+ "cp.preferences where cp.configurationprofileId = 1")
     List<ConfigurationProfile> findPrinvacyInstance();
-	
-//	@Query(value="select cp from configurationprofile cp left join fetch cp.metrics m left join fetch "
-//			+ "cp.preferences p where cp.configurationprofileId = 1 and cp.configurationprofileId = "
-//			+ "m.configurationprofile.configurationprofileId and cp.configurationprofileId = "
-//			+ "p.configurationprofile.configurationprofileId")
+
 }

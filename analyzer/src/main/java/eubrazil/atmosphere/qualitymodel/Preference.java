@@ -14,7 +14,7 @@ import javax.persistence.OneToOne;
 
 /**
  * The persistent class for the preference database table.
- * 
+ *
  */
 @Entity(name="preference")
 @NamedQuery(name="preference.findAll", query="SELECT p FROM preference p")
@@ -47,7 +47,7 @@ public class Preference implements Serializable {
 		this.threshold = threshold;
 		this.weight = weight;
 	}
-	
+
 	public int getAttributeId() {
 		return this.attributeId;
 	}
@@ -86,6 +86,11 @@ public class Preference implements Serializable {
 
 	public void setAttribute(Attribute attribute) {
 		this.attribute = attribute;
+	}
+
+	@Override
+	public String toString() {
+		return "Preference [attributeId=" + attributeId + ", threshold=" + threshold + ", weight=" + weight + "]";
 	}
 
 }

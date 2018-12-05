@@ -6,7 +6,6 @@ import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
@@ -14,14 +13,7 @@ import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.stereotype.Component;
 
 import eubrazil.atmosphere.config.SchedulerConfig;
-import eubrazil.atmosphere.qualitymodel.ConfigurationProfile;
-import eubrazil.atmosphere.qualitymodel.HistoricalData;
-import eubrazil.atmosphere.qualitymodel.Leafattribute;
-import eubrazil.atmosphere.qualitymodel.Metric;
-import eubrazil.atmosphere.qualitymodel.MetricAggregationOperator;
-import eubrazil.atmosphere.qualitymodel.MetricNormalizationKind;
-import eubrazil.atmosphere.qualitymodel.Preference;
-import eubrazil.atmosphere.service.PrivacyService;
+import eubrazil.atmosphere.qualitymodel.initialize.PrivacyQualityModel;
 
 @Component
 @DisallowConcurrentExecution
@@ -29,8 +21,8 @@ public class PrivacyPollJob implements Job {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
-	@Autowired
-	private PrivacyService privacyService;
+//	@Autowired
+//	private PrivacyService privacyService;
 
 	@Override
 	public void execute(JobExecutionContext jobExecutionContext) {
@@ -46,26 +38,9 @@ public class PrivacyPollJob implements Job {
 //			e.printStackTrace();
 //		}
 //		System.out.println("PrivacyPollJob end execution..");
-		
-		System.out.println("PrivacyPollJob executing..");
-		
-		// Creating quality model instancy for privacy
-		ConfigurationProfile configurationActor = new ConfigurationProfile();
-		Preference privacyPreference = new Preference(0.2, 0.05);
-		Preference informationLossPreference = new Preference(0.1, 0.7);
-		Leafattribute informationLoss = new Leafattribute(MetricNormalizationKind.BENEFIT, 0.0, 1.0, 1,
-				MetricAggregationOperator.AVERAGE);
-		Preference reIdentificationRiskPreference = new Preference(0.9, 0.05);
-		Leafattribute reIdentificationRisk = new Leafattribute(MetricNormalizationKind.COST, 0.0, 1.0, 1,
-				MetricAggregationOperator.AVERAGE);
-		
-		Metric informationLossMetric = new Metric();
-		Metric reIdentificationRiskMetric = new Metric();
-		
-		HistoricalData privacyHistoricalData = new HistoricalData();
-		
-		System.out.println("PrivacyPollJob end execution..");
-		
+
+		PrivacyQualityModel.getInstance().getPrivacyInstance();
+
 	}
 
 	@Bean(name = "jobBean1")

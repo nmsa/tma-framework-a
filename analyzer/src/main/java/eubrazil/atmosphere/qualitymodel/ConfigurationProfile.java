@@ -16,7 +16,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  * The persistent class for the configurationprofile database table.
- * 
+ *
  */
 @Entity(name="configurationprofile")
 @NamedQuery(name="configurationprofile.findAll", query="SELECT c FROM configurationprofile c")
@@ -91,6 +91,12 @@ public class ConfigurationProfile implements Serializable {
 		preference.setConfigurationprofile(null);
 
 		return preference;
+	}
+
+	@Override
+	public String toString() {
+		return "ConfigurationProfile [configurationprofileId=" + configurationprofileId + ", metrics=" + metrics
+				+ ", preferences=" + preferences + "]";
 	}
 
 }

@@ -16,7 +16,7 @@ import eubrazil.atmosphere.exceptions.UndefinedMetricException;
 
 /**
  * The persistent class for the leafattribute database table.
- * 
+ *
  */
 @Entity(name="leafattribute")
 @NamedQuery(name="leafattribute.findAll", query="SELECT l FROM leafattribute l")
@@ -42,7 +42,7 @@ public class Leafattribute extends Attribute implements Serializable {
 
 	public Leafattribute() {
 	}
-	
+
 	public Leafattribute(MetricNormalizationKind normalizationKind, double normalizationMax, double normalizationMin,
 			int numSamples, MetricAggregationOperator operator) {
 		super();
@@ -52,8 +52,6 @@ public class Leafattribute extends Attribute implements Serializable {
 		this.numSamples = numSamples;
 		this.operator = operator;
 	}
-
-
 
 	@Override
 	public HistoricalData calculate(ConfigurationProfile profile) throws UndefinedMetricException {
@@ -95,7 +93,7 @@ public class Leafattribute extends Attribute implements Serializable {
 
 			if (metric.getAttribute().equals(this)) {
 				// The user-defined metric concerns the same leaf attribute (metric definition)
-				List<Data> data = metric.updateData();
+				List<Data> data = metric.updateData(this.numSamples);
 				amount += (double) data.size();
 				Iterator<Data> iterData = data.iterator();
 				while (iterData.hasNext()) {
@@ -118,7 +116,7 @@ public class Leafattribute extends Attribute implements Serializable {
 
 			if (metric.getAttribute().equals(this)) {
 				// The user-defined metric concerns the same leaf attribute (metric definition)
-				List<Data> data = metric.updateData();
+				List<Data> data = metric.updateData(this.numSamples);
 				Iterator<Data> iterData = data.iterator();
 				while (iterData.hasNext()) {
 					Data measure = iterData.next();
@@ -139,7 +137,7 @@ public class Leafattribute extends Attribute implements Serializable {
 
 			if (metric.getAttribute().equals(this)) {
 				// The user-defined metric concerns the same leaf attribute (metric definition)
-				List<Data> data = metric.updateData();
+				List<Data> data = metric.updateData(this.numSamples);
 				Iterator<Data> iterData = data.iterator();
 				while (iterData.hasNext()) {
 					Data measure = iterData.next();
@@ -160,7 +158,7 @@ public class Leafattribute extends Attribute implements Serializable {
 
 			if (metric.getAttribute().equals(this)) {
 				// The user-defined metric concerns the same leaf attribute (metric definition)
-				List<Data> data = metric.updateData();
+				List<Data> data = metric.updateData(this.numSamples);
 				Iterator<Data> iterData = data.iterator();
 				while (iterData.hasNext()) {
 					Data measure = iterData.next();
@@ -219,5 +217,5 @@ public class Leafattribute extends Attribute implements Serializable {
 	public void setMetric(Metric metric) {
 		this.metric = metric;
 	}
-	
+
 }
