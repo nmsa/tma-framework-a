@@ -13,6 +13,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import eubrazil.atmosphere.entity.Data;
 
 
@@ -44,6 +47,7 @@ public class Metric implements Serializable {
 	//bi-directional one-to-one association to Leafattribute
 	@OneToOne
 	@JoinColumn(name="attributeId")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private Leafattribute attribute;
 
 	//bi-directional many-to-one association to Data

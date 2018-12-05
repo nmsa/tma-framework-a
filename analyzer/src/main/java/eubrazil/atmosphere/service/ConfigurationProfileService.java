@@ -16,7 +16,7 @@ public class ConfigurationProfileService {
 	private ConfigurationProfileRepository repository;
 	
 	public ConfigurationProfile getPrivacyInstance() {
-		List<ConfigurationProfile> configProfileList = this.repository.findAll();
+		List<ConfigurationProfile> configProfileList = this.repository.findPrinvacyInstance();
 		if (ListUtils.isNotEmpty(configProfileList)) {
 			return ListUtils.getFirstElement(configProfileList);
 		}

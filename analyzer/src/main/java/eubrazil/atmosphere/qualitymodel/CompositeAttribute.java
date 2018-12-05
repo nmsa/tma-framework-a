@@ -10,6 +10,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 /**
  * The persistent class for the compositeattribute database table.
  * 
@@ -25,6 +28,7 @@ public class CompositeAttribute extends Attribute implements Serializable {
 
 	//bi-directional many-to-one association to Attribute
 	@OneToMany(mappedBy="compositeattribute")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Attribute> children;
 
 	public CompositeAttribute() {

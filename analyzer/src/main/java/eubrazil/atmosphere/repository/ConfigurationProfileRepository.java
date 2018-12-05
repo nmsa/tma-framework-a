@@ -2,6 +2,7 @@ package eubrazil.atmosphere.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +14,12 @@ public interface ConfigurationProfileRepository extends CrudRepository<Configura
 	@Override
 	List<ConfigurationProfile> findAll();
 	
+	@Query(value="select cp from configurationprofile cp left join fetch cp.metrics left join fetch "
+			+ "cp.preferences where cp.configurationprofileId = 1")
+    List<ConfigurationProfile> findPrinvacyInstance();
+	
+//	@Query(value="select cp from configurationprofile cp left join fetch cp.metrics m left join fetch "
+//			+ "cp.preferences p where cp.configurationprofileId = 1 and cp.configurationprofileId = "
+//			+ "m.configurationprofile.configurationprofileId and cp.configurationprofileId = "
+//			+ "p.configurationprofile.configurationprofileId")
 }

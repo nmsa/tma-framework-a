@@ -1,7 +1,7 @@
 package eubrazil.atmosphere.qualitymodel;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 
 /**
@@ -27,11 +30,13 @@ public class ConfigurationProfile implements Serializable {
 
 	//bi-directional many-to-one association to Metric
 	@OneToMany(mappedBy="configurationprofile")
-	private List<Metric> metrics;
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private Set<Metric> metrics;
 
 	//bi-directional many-to-one association to Preference
 	@OneToMany(mappedBy="configurationprofile")
-	private List<Preference> preferences;
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private Set<Preference> preferences;
 
 	public ConfigurationProfile() {
 	}
@@ -44,11 +49,11 @@ public class ConfigurationProfile implements Serializable {
 		this.configurationprofileId = configurationprofileId;
 	}
 
-	public List<Metric> getMetrics() {
-		return this.metrics;
+	public Set<Metric> getMetrics() {
+		return metrics;
 	}
 
-	public void setMetrics(List<Metric> metrics) {
+	public void setMetrics(Set<Metric> metrics) {
 		this.metrics = metrics;
 	}
 
@@ -66,11 +71,11 @@ public class ConfigurationProfile implements Serializable {
 		return metric;
 	}
 
-	public List<Preference> getPreferences() {
-		return this.preferences;
+	public Set<Preference> getPreferences() {
+		return preferences;
 	}
 
-	public void setPreferences(List<Preference> preferences) {
+	public void setPreferences(Set<Preference> preferences) {
 		this.preferences = preferences;
 	}
 
