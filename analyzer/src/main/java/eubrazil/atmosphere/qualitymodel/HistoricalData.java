@@ -76,4 +76,9 @@ public class HistoricalData implements Serializable {
 		this.attribute = attribute;
 	}
 
+	@Override
+	public String toString() {
+		return "HistoricalData [instant=" + instant + ", value=" + value + ", attribute=" + attribute + "]";
+	}
+
 }

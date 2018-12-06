@@ -53,8 +53,8 @@ public class Leafattribute extends Attribute implements Serializable {
 		this.operator = operator;
 	}
 
-	@Override
-	public HistoricalData calculate(ConfigurationProfile profile) throws UndefinedMetricException {
+	
+	public HistoricalData calculate(ConfigurationProfile profile, List<Data> data) throws UndefinedMetricException {
 
 		if (profile == null || profile.getMetrics().isEmpty())
 			throw new UndefinedMetricException("No defined metric for leaf atribute " + this.getName());
@@ -65,16 +65,16 @@ public class Leafattribute extends Attribute implements Serializable {
 
 		switch (operator) {
 		case AVERAGE:
-			d.setValue(calculateAverage(profile));
+			d.setValue(calculateAverage(profile, data));
 			break;
 		case MINIMUM:
-			d.setValue(calculateMinimum(profile));
+			d.setValue(calculateMinimum(profile, data));
 			break;
 		case MAXIMUM:
-			d.setValue(calculateMaximum(profile));
+			d.setValue(calculateMaximum(profile, data));
 			break;
 		case SUM:
-			d.setValue(calculateSum(profile));
+			d.setValue(calculateSum(profile, data));
 			break;
 		default:
 			throw new UnsupportedOperationException();
@@ -83,7 +83,7 @@ public class Leafattribute extends Attribute implements Serializable {
 		return d;
 	}
 
-	protected double calculateAverage(ConfigurationProfile profile) {
+	protected double calculateAverage(ConfigurationProfile profile, List<Data> data) {
 
 		double average = 0;
 		double amount = 0;
@@ -93,7 +93,6 @@ public class Leafattribute extends Attribute implements Serializable {
 
 			if (metric.getAttribute().equals(this)) {
 				// The user-defined metric concerns the same leaf attribute (metric definition)
-				List<Data> data = metric.updateData(this.numSamples);
 				amount += (double) data.size();
 				Iterator<Data> iterData = data.iterator();
 				while (iterData.hasNext()) {
@@ -107,7 +106,7 @@ public class Leafattribute extends Attribute implements Serializable {
 		return average / amount;
 	}
 
-	protected double calculateMinimum(ConfigurationProfile profile) {
+	protected double calculateMinimum(ConfigurationProfile profile, List<Data> data) {
 
 		double minimum = 0;
 		Iterator<Metric> iterMetric = profile.getMetrics().iterator();
@@ -116,7 +115,6 @@ public class Leafattribute extends Attribute implements Serializable {
 
 			if (metric.getAttribute().equals(this)) {
 				// The user-defined metric concerns the same leaf attribute (metric definition)
-				List<Data> data = metric.updateData(this.numSamples);
 				Iterator<Data> iterData = data.iterator();
 				while (iterData.hasNext()) {
 					Data measure = iterData.next();
@@ -129,7 +127,7 @@ public class Leafattribute extends Attribute implements Serializable {
 		return minimum;
 	}
 
-	protected double calculateMaximum(ConfigurationProfile profile) {
+	protected double calculateMaximum(ConfigurationProfile profile, List<Data> data) {
 		double maximum = 0;
 		Iterator<Metric> iterMetric = profile.getMetrics().iterator();
 		while (iterMetric.hasNext()) {
@@ -137,7 +135,6 @@ public class Leafattribute extends Attribute implements Serializable {
 
 			if (metric.getAttribute().equals(this)) {
 				// The user-defined metric concerns the same leaf attribute (metric definition)
-				List<Data> data = metric.updateData(this.numSamples);
 				Iterator<Data> iterData = data.iterator();
 				while (iterData.hasNext()) {
 					Data measure = iterData.next();
@@ -150,7 +147,7 @@ public class Leafattribute extends Attribute implements Serializable {
 		return maximum;
 	}
 
-	protected double calculateSum(ConfigurationProfile profile) {
+	protected double calculateSum(ConfigurationProfile profile, List<Data> data) {
 		double sum = 0;
 		Iterator<Metric> iterMetric = profile.getMetrics().iterator();
 		while (iterMetric.hasNext()) {
@@ -158,7 +155,6 @@ public class Leafattribute extends Attribute implements Serializable {
 
 			if (metric.getAttribute().equals(this)) {
 				// The user-defined metric concerns the same leaf attribute (metric definition)
-				List<Data> data = metric.updateData(this.numSamples);
 				Iterator<Data> iterData = data.iterator();
 				while (iterData.hasNext()) {
 					Data measure = iterData.next();

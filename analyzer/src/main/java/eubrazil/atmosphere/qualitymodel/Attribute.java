@@ -1,6 +1,7 @@
 package eubrazil.atmosphere.qualitymodel;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
+import eubrazil.atmosphere.entity.Data;
 import eubrazil.atmosphere.exceptions.UndefinedMetricException;
 
 /**
@@ -45,7 +47,7 @@ public abstract class Attribute implements Serializable {
 	@OneToOne(mappedBy="attribute")
 	private Preference preference;
 
-	public abstract HistoricalData calculate(ConfigurationProfile user) throws UndefinedMetricException;
+	public abstract HistoricalData calculate(ConfigurationProfile user, List<Data> data) throws UndefinedMetricException;
 	
 	public Attribute() {
 	}

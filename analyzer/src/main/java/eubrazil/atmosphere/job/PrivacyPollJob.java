@@ -1,19 +1,30 @@
 package eubrazil.atmosphere.job;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.stereotype.Component;
 
 import eubrazil.atmosphere.config.SchedulerConfig;
+import eubrazil.atmosphere.entity.Data;
+import eubrazil.atmosphere.exceptions.UndefinedMetricException;
+import eubrazil.atmosphere.qualitymodel.ConfigurationProfile;
+import eubrazil.atmosphere.qualitymodel.Leafattribute;
+import eubrazil.atmosphere.qualitymodel.Metric;
 import eubrazil.atmosphere.qualitymodel.initialize.PrivacyQualityModel;
+import eubrazil.atmosphere.service.PrivacyService;
 
 @Component
 @DisallowConcurrentExecution
@@ -23,7 +34,10 @@ public class PrivacyPollJob implements Job {
 
 //	@Autowired
 //	private PrivacyService privacyService;
-
+	
+	@Autowired
+	private PrivacyService privacyService;
+	
 	@Override
 	public void execute(JobExecutionContext jobExecutionContext) {
 //		System.out.println("PrivacyPollJob executing..");
@@ -37,10 +51,26 @@ public class PrivacyPollJob implements Job {
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
-//		System.out.println("PrivacyPollJob end execution..");
+		System.out.println("PrivacyPollJob execution..");
 
-		PrivacyQualityModel.getInstance().getPrivacyInstance();
-
+		ConfigurationProfile configurationProfile = PrivacyQualityModel.getPrivacyInstance().getConfigurationProfile();
+		Iterator<Metric> it = configurationProfile.getMetrics().iterator();
+		while (it.hasNext()) {
+			Metric metric = it.next();
+			Leafattribute leaf = metric.getAttribute();
+			System.out.println(leaf);
+			try {
+				System.out.println("updating data list");
+				List<Data> dataList = this.privacyService.getLimitedDataListByName(metric.getResourceName(),
+						metric.getProbeName(), metric.getDescriptionName(), new PageRequest(0, leaf.getNumSamples()));
+				System.out.println("calculate...");
+				System.out.println(leaf.calculate(configurationProfile, dataList));
+			} catch (UndefinedMetricException e) {
+				System.out.println("Error invoking method calculate: " + e);
+			}
+		}
+		
+		System.out.println("PrivacyPollJob end execution..");
 	}
 
 	@Bean(name = "jobBean1")

@@ -16,9 +16,7 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.springframework.data.domain.PageRequest;
 
-import eubrazil.atmosphere.component.PrivacyComponent;
 import eubrazil.atmosphere.entity.Data;
 
 
@@ -66,16 +64,7 @@ public class Metric implements Serializable {
 		this.probeName = probeName;
 		this.resourceName = resourceName;
 	}
-
-	public List<Data> updateData(int numSamples) {
-		this.data = PrivacyComponent.getInstance().getLimitedDataListByName(resourceName, probeName, descriptionName,
-				new PageRequest(0, numSamples));
-		if (this.data == null) {
-			this.data = new ArrayList<Data>();
-		}
-		return this.data;
-	}
-
+	
 	public int getAttributeId() {
 		return attributeId;
 	}

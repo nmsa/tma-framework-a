@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import eubrazil.atmosphere.entity.Data;
+
 /**
  * The persistent class for the compositeattribute database table.
  * 
@@ -46,7 +48,7 @@ public class CompositeAttribute extends Attribute implements Serializable {
 		throw new UnsupportedOperationException();
 	}
 	
-	public HistoricalData calculate(ConfigurationProfile profile) {
+	public HistoricalData calculate(ConfigurationProfile profile, List<Data> data) {
 		HistoricalData d = new HistoricalData();
 		d.setInstant(new Timestamp(System.currentTimeMillis()));
 		d.setAttribute(this);

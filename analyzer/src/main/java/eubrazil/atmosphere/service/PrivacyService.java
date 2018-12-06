@@ -15,12 +15,6 @@ import eubrazil.atmosphere.repository.PrivacyRepository;
 @Service
 public class PrivacyService {
 
-	private static final PrivacyService INSTANCE = new PrivacyService();
-
-	public static PrivacyService getInstance() {
-		return INSTANCE;
-	}
-
 	@Autowired
 	private PrivacyRepository privacyRepository;
 

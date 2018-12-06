@@ -11,32 +11,42 @@ import eubrazil.atmosphere.service.ConfigurationProfileService;
 @Component
 public class PrivacyQualityModel {
 
-	private static final PrivacyQualityModel INSTANCE = new PrivacyQualityModel();
-
+	private static PrivacyQualityModel instance = new PrivacyQualityModel();
+	
 	@Autowired
 	private ConfigurationProfileService configProfileService;
 
 	private ConfigurationProfile configurationProfile = null;
-
-	public static PrivacyQualityModel getInstance() {
-		return INSTANCE;
-	}
-
+	
 	private PrivacyQualityModel() {
 	}
 
 	@PostConstruct
 	public void init() {
-		System.out.println("Initializing privacy instance...");
+		System.out.println("-------------------------------------------------------");
+		System.out.println("------------Initializing privacy instance--------------");
+		System.out.println("-------------------------------------------------------");
 
-		configurationProfile = configProfileService.getPrivacyInstance();
-		System.out.println(configurationProfile);
+		this.configurationProfile = configProfileService.getPrivacyInstance();
+		System.out.println(this.configurationProfile);
+		instance.setConfigurationProfile(configurationProfile);
+		
 
-		System.out.println("Privacy instance initialized...");
+		System.out.println("-------------------------------------------------------");
+		System.out.println("------------Privacy instance initialized------------");
+		System.out.println("-------------------------------------------------------");
 	}
 
-	public ConfigurationProfile getPrivacyInstance() {
+	public static PrivacyQualityModel getPrivacyInstance() {
+		return instance;
+	}
+	
+	public ConfigurationProfile getConfigurationProfile() {
 		return configurationProfile;
+	}
+
+	public void setConfigurationProfile(ConfigurationProfile configurationProfile) {
+		this.configurationProfile = configurationProfile;
 	}
 
 }
