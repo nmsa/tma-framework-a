@@ -24,7 +24,7 @@ import eubrazil.atmosphere.qualitymodel.ConfigurationProfile;
 import eubrazil.atmosphere.qualitymodel.Leafattribute;
 import eubrazil.atmosphere.qualitymodel.Metric;
 import eubrazil.atmosphere.qualitymodel.initialize.PrivacyQualityModel;
-import eubrazil.atmosphere.service.PrivacyService;
+import eubrazil.atmosphere.service.MetricService;
 
 @Component
 @DisallowConcurrentExecution
@@ -36,7 +36,7 @@ public class PrivacyPollJob implements Job {
 //	private PrivacyService privacyService;
 	
 	@Autowired
-	private PrivacyService privacyService;
+	private MetricService metricService;
 	
 	@Override
 	public void execute(JobExecutionContext jobExecutionContext) {
@@ -61,9 +61,10 @@ public class PrivacyPollJob implements Job {
 			System.out.println(leaf);
 			try {
 				System.out.println("updating data list");
-				List<Data> dataList = this.privacyService.getLimitedDataListByName(metric.getResourceName(),
+				System.out.println("Resource name: " + metric.getResourceName());
+				List<Data> dataList = metricService.getLimitedDataListByName(metric.getResourceName(),
 						metric.getProbeName(), metric.getDescriptionName(), new PageRequest(0, leaf.getNumSamples()));
-				System.out.println("calculate...");
+				System.out.println("Data list: " + dataList);
 				System.out.println(leaf.calculate(configurationProfile, dataList));
 			} catch (UndefinedMetricException e) {
 				System.out.println("Error invoking method calculate: " + e);

@@ -8,11 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
+import eubrazil.atmosphere.commons.utils.ListUtils;
 import eubrazil.atmosphere.entity.Data;
 
 /**
@@ -29,15 +27,20 @@ public class CompositeAttribute extends Attribute implements Serializable {
 	private AttributeAggregationOperator operator = AttributeAggregationOperator.NEUTRALITY;
 
 	//bi-directional many-to-one association to Attribute
-	@OneToMany(mappedBy="compositeattribute")
-	@LazyCollection(LazyCollectionOption.FALSE)
+	//@OneToMany(mappedBy="compositeattribute")
+	//@LazyCollection(LazyCollectionOption.FALSE)
+	@Transient
 	private List<Attribute> children;
 
 	public CompositeAttribute() {
 	}
 
 	protected double calculateNeutrality(ConfigurationProfile profile) {
-		throw new UnsupportedOperationException();
+		double score = 0.0;
+		if (ListUtils.isNotEmpty(this.children)) {
+			
+		}
+		return score;
 	}
 
 	protected double calculateSimultaneity(ConfigurationProfile profile) {
@@ -86,18 +89,18 @@ public class CompositeAttribute extends Attribute implements Serializable {
 		this.children = children;
 	}
 
-	public Attribute addAttribute(Attribute attribute) {
-		getChildren().add(attribute);
-		attribute.setCompositeattribute(this);
-
-		return attribute;
-	}
-
-	public Attribute removeAttribute(Attribute attribute) {
-		getChildren().remove(attribute);
-		attribute.setCompositeattribute(null);
-
-		return attribute;
-	}
+//	public Attribute addAttribute(Attribute attribute) {
+//		getChildren().add(attribute);
+//		attribute.setCompositeattribute(this);
+//
+//		return attribute;
+//	}
+//
+//	public Attribute removeAttribute(Attribute attribute) {
+//		getChildren().remove(attribute);
+//		attribute.setCompositeattribute(null);
+//
+//		return attribute;
+//	}
 
 }

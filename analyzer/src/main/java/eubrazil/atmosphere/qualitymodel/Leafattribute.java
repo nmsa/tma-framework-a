@@ -103,6 +103,9 @@ public class Leafattribute extends Attribute implements Serializable {
 			}
 		}
 
+		System.out.println("average: " + average);
+		System.out.println("amount: " + amount);
+		
 		return average / amount;
 	}
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import eubrazil.atmosphere.commons.utils.ListUtils;
 import eubrazil.atmosphere.entity.Data;
 import eubrazil.atmosphere.entity.Privacy;
+import eubrazil.atmosphere.qualitymodel.HistoricalData;
 import eubrazil.atmosphere.repository.DataRepository;
 import eubrazil.atmosphere.repository.PrivacyRepository;
 
@@ -31,7 +32,15 @@ public class PrivacyService {
 
 	public List<Data> getLimitedDataListByName(String resourceName, String probeName, String descriptionName,
 			Pageable numSamples) {
+		System.out.println("resourceName: " + resourceName);
+		System.out.println("probeName: " + probeName);
+		System.out.println("descriptionName: " + descriptionName);
+		System.out.println("numSamples: " + numSamples);
 		return this.dataRepository.getLimitedDataListByName(resourceName, probeName, descriptionName, numSamples);
+	}
+	
+	public HistoricalData getLastHitoricalDataByChild() {
+		return new HistoricalData(); // TODO - Implementar busca na base
 	}
 
 }

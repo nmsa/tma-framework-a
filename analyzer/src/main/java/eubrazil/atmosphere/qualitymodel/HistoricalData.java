@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
@@ -23,7 +22,7 @@ public class HistoricalData implements Serializable {
 	private static final long serialVersionUID = 467016496297144958L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue
 	private int attributeId;
 
 	private Timestamp instant;

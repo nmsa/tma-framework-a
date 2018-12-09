@@ -5,12 +5,9 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
@@ -29,15 +26,15 @@ public abstract class Attribute implements Serializable {
 	private static final long serialVersionUID = 4884416721621562261L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue
 	private int attributeId;
 
 	private String name;
 
 	//bi-directional many-to-one association to Compositeattribute
-	@ManyToOne
-	@JoinColumn(name="compositeattributeId")
-	private CompositeAttribute compositeattribute;
+//	@ManyToOne
+//	@JoinColumn(name="compositeattributeId")
+//	private CompositeAttribute compositeattribute;
 
 	//bi-directional one-to-one association to Historicaldata
 	@OneToOne(mappedBy="attribute")
@@ -68,13 +65,13 @@ public abstract class Attribute implements Serializable {
 		this.name = name;
 	}
 
-	public CompositeAttribute getCompositeattribute() {
-		return this.compositeattribute;
-	}
-
-	public void setCompositeattribute(CompositeAttribute compositeattribute) {
-		this.compositeattribute = compositeattribute;
-	}
+//	public CompositeAttribute getCompositeattribute() {
+//		return this.compositeattribute;
+//	}
+//
+//	public void setCompositeattribute(CompositeAttribute compositeattribute) {
+//		this.compositeattribute = compositeattribute;
+//	}
 
 	public HistoricalData getHistoricaldata() {
 		return this.historicaldata;

@@ -34,9 +34,24 @@ DROP TABLE IF EXISTS compositeattribute;
 
 CREATE TABLE attribute (
     attributeId INT NOT NULL AUTO_INCREMENT,
-    compositeattributeId INT NOT NULL,
     name VARCHAR(1024),
     primary key(attributeId)  
+);
+
+CREATE TABLE compositeattribute (
+    attributeId INT NOT NULL,
+    operator INT,
+    PRIMARY KEY (attributeId)
+);
+
+CREATE TABLE leafattribute (
+    attributeId INT NOT NULL,
+    normalizationMin DOUBLE PRECISION,
+    normalizationMax DOUBLE PRECISION,
+    operator INT,
+    numSamples INT,
+    normalizationKind INT,
+    PRIMARY KEY (attributeId)
 );
 
 CREATE TABLE historicaldata (
@@ -59,28 +74,12 @@ CREATE TABLE preference (
     PRIMARY KEY (attributeId)
 );
 
-CREATE TABLE leafattribute (
-    attributeId INT NOT NULL,
-    normalizationMin DOUBLE PRECISION,
-    normalizationMax DOUBLE PRECISION,
-    operator INT,
-    numSamples INT,
-    normalizationKind INT,
-    PRIMARY KEY (attributeId)
-);
-
 CREATE TABLE metricqm (
     attributeId INT NOT NULL,
     configurationprofileId INT NOT NULL,
     probeName VARCHAR(1024),
     descriptionName VARCHAR(1024),
     resourceName VARCHAR(1024),
-    PRIMARY KEY (attributeId)
-);
-
-CREATE TABLE compositeattribute (
-    attributeId INT NOT NULL,
-    operator INT,
     PRIMARY KEY (attributeId)
 );
 
@@ -92,27 +91,27 @@ ALTER TABLE metricqm ADD CONSTRAINT FK_Metricqm_0 FOREIGN KEY (configurationprof
 ALTER TABLE preference ADD CONSTRAINT FK_Preference_1 FOREIGN KEY (attributeId) REFERENCES attribute (attributeId);
 ALTER TABLE metricqm ADD CONSTRAINT FK_Metricqm_1 FOREIGN KEY (attributeId) REFERENCES leafattribute (attributeId);
 
-ALTER TABLE attribute ADD CONSTRAINT FK_Attribute_0 FOREIGN KEY (attributeId) REFERENCES compositeattribute (attributeId);
+--ALTER TABLE attribute ADD CONSTRAINT FK_Attribute_0 FOREIGN KEY (attributeId) REFERENCES compositeattribute (attributeId);
 
 
 -- ------------------------------------------------------------------------------
 
-insert into compositeattribute (attributeId, operator) values (1,1);
-insert into compositeattribute (attributeId, operator) values (2,1);
-insert into compositeattribute (attributeId, operator) values (3,1);
+insert into attribute (attributeId, name) values (1, 'PRIVACY');
+insert into attribute (attributeId, name) values (2, 'INFORMATIONLOSS');
+insert into attribute (attributeId, name) values (3, 'REIDENTIFICATIONRISK');
 
-insert into attribute (attributeId, compositeattributeId, name) values (1, 1, 'PRIVACY');
-insert into attribute (attributeId, compositeattributeId, name) values (2, 1, 'INFORMATIONLOSS');
-insert into attribute (attributeId, compositeattributeId, name) values (3, 1, 'REIDENTIFICATIONRISK');
+insert into compositeattribute (attributeId, operator) values (1,1);
+--insert into compositeattribute (attributeId, operator) values (2,1);
+--insert into compositeattribute (attributeId, operator) values (3,1);
+
+insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (2, 0.0, 1.0, 0, 1, 0);
+insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (3, 0.0, 1.0, 0, 1, 1);
 
 insert into configurationprofile (configurationprofileId) values (1);
 
 insert into preference (attributeId,configurationprofileId, weight, threshold) values (1, 1, 0.2, 0.05);
 insert into preference (attributeId,configurationprofileId, weight, threshold) values (2, 1, 0.1, 0.7);
 insert into preference (attributeId,configurationprofileId, weight, threshold) values (3, 1, 0.9, 0.05);
-
-insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (2, 0.0, 1.0, 0, 1, 0);
-insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (3, 0.0, 1.0, 0, 1, 1);
 
 insert into metricqm (attributeId, configurationprofileId, probeName, descriptionName, resourceName) values (2,1,'probe Wildfly WSVD','n/a','n/a');
 insert into metricqm (attributeId, configurationprofileId, probeName, descriptionName, resourceName) values (3,1,'probe Demo Java','n/a','n/a');
@@ -392,7 +391,8 @@ INSERT INTO resource VALUES (1,'VM_VIRT_NODE','VM','n/a'),
 (7,'Pod Monitor','POD','n/a'),
 (8,'anonymizator','VM','n/a');
 
-INSERT INTO data (probeId, descriptionId, resourceId, attributeId, valueTime, value) VALUES (8,27,8,2,'1995-12-11 18:34:41.000000',10),
+INSERT INTO data (probeId, descriptionId, resourceId, attributeId, valueTime, value) VALUES 
+(8,27,8,2,'1995-12-11 18:34:41.000000',10),
 (8,27,8,3,'1995-12-12 07:13:25.000000',100),
 (8,27,8,2,'1995-12-12 13:21:03.000000',10),
 (8,27,8,2,'1995-12-12 18:39:44.000000',10),

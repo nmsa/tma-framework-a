@@ -5,7 +5,6 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -25,7 +24,7 @@ public class ConfigurationProfile implements Serializable {
 	private static final long serialVersionUID = 726009967174063732L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue
 	private int configurationprofileId;
 
 	//bi-directional many-to-one association to Metric

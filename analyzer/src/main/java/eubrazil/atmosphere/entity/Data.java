@@ -25,7 +25,7 @@ public class Data implements Serializable {
 
 	//bi-directional many-to-one association to Metric
 	@ManyToOne
-	@JoinColumn(name = "attributeId", insertable = false, updatable = false)
+	@JoinColumn(name="attributeId", insertable = false, updatable = false)
 	private eubrazil.atmosphere.qualitymodel.Metric metric;
 
 	
