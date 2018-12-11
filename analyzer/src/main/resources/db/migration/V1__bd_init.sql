@@ -104,8 +104,8 @@ insert into compositeattribute (attributeId, operator) values (1,1);
 --insert into compositeattribute (attributeId, operator) values (2,1);
 --insert into compositeattribute (attributeId, operator) values (3,1);
 
-insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (2, 0.0, 1.0, 0, 1, 0);
-insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (3, 0.0, 1.0, 0, 1, 1);
+insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (2, 0.0, 1.0, 0, 2, 0);
+insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (3, 0.0, 1.0, 0, 2, 1);
 
 insert into configurationprofile (configurationprofileId) values (1);
 
@@ -310,7 +310,7 @@ ALTER TABLE configuration ADD CONSTRAINT FK_Configuration_0 FOREIGN KEY (actionI
 ALTER TABLE data ADD CONSTRAINT FK_Data_0 FOREIGN KEY (probeId) REFERENCES probe (probeId);
 ALTER TABLE data ADD CONSTRAINT FK_Data_1 FOREIGN KEY (descriptionId) REFERENCES description (descriptionId);
 ALTER TABLE data ADD CONSTRAINT FK_Data_2 FOREIGN KEY (resourceId) REFERENCES resource (resourceId);
--- ALTER TABLE data ADD CONSTRAINT FK_Data_4 FOREIGN KEY (attributeId) REFERENCES metricqm (attributeId);
+ALTER TABLE data ADD CONSTRAINT FK_Data_4 FOREIGN KEY (attributeId) REFERENCES metricqm (attributeId);
 
 -- -- Table time was removed for normalization.
 -- ALTER TABLE Data ADD CONSTRAINT FK_Data_3 FOREIGN KEY (valueTime) REFERENCES Time (valueTime);
@@ -422,6 +422,7 @@ INSERT INTO data (probeId, descriptionId, resourceId, attributeId, valueTime, va
 (8,30,8,2,'1995-12-13 17:31:17.000000',0.005050505050505051),
 (8,31,8,2,'1995-12-11 18:34:41.000000',0),
 (8,31,8,2,'1995-12-12 07:13:25.000000',0.5217272081421163),
+(8,31,8,2,'1996-12-12 07:13:25.000000',0.5217272081421163),
 (8,31,8,2,'1995-12-12 13:21:03.000000',0),
 (8,31,8,3,'1995-12-12 18:39:44.000000',0),
 (8,31,8,3,'1995-12-12 22:52:08.000000',0.1508305756999999),

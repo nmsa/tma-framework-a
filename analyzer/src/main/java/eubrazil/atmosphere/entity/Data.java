@@ -48,4 +48,9 @@ public class Data implements Serializable {
 		this.value = value;
 	}
 
+	@Override
+	public String toString() {
+		return "Data [id=" + id + ", value=" + value + "]";
+	}
+
 }

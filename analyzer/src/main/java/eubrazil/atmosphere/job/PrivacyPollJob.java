@@ -64,7 +64,7 @@ public class PrivacyPollJob implements Job {
 				System.out.println("Resource name: " + metric.getResourceName());
 				List<Data> dataList = metricService.getLimitedDataListByName(metric.getResourceName(),
 						metric.getProbeName(), metric.getDescriptionName(), new PageRequest(0, leaf.getNumSamples()));
-				System.out.println("Data list: " + dataList);
+				System.out.println("Data list: " + dataList.toString());
 				System.out.println(leaf.calculate(configurationProfile, dataList));
 			} catch (UndefinedMetricException e) {
 				System.out.println("Error invoking method calculate: " + e);
