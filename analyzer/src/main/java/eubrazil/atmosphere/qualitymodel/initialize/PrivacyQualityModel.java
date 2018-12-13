@@ -30,7 +30,6 @@ public class PrivacyQualityModel {
 		this.configurationProfile = configProfileService.getPrivacyInstance();
 		System.out.println(this.configurationProfile);
 		instance.setConfigurationProfile(configurationProfile);
-		
 
 		System.out.println("-------------------------------------------------------");
 		System.out.println("------------Privacy instance initialized------------");

@@ -3,12 +3,16 @@ package eubrazil.atmosphere.qualitymodel;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.NamedQuery;
-import javax.persistence.Transient;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import eubrazil.atmosphere.commons.utils.ListUtils;
 import eubrazil.atmosphere.entity.Data;
@@ -26,11 +30,10 @@ public class CompositeAttribute extends Attribute implements Serializable {
 	@Enumerated(EnumType.ORDINAL)
 	private AttributeAggregationOperator operator = AttributeAggregationOperator.NEUTRALITY;
 
-	//bi-directional many-to-one association to Attribute
-	//@OneToMany(mappedBy="compositeattribute")
-	//@LazyCollection(LazyCollectionOption.FALSE)
-	@Transient
-	private List<Attribute> children;
+	// bi-directional many-to-one association to Attribute
+	@OneToMany(mappedBy="compositeattribute")
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private Set<Attribute> children;
 
 	public CompositeAttribute() {
 	}
@@ -81,26 +84,26 @@ public class CompositeAttribute extends Attribute implements Serializable {
 		this.operator = operator;
 	}
 
-	public List<Attribute> getChildren() {
+	public Set<Attribute> getChildren() {
 		return children;
 	}
 
-	public void setChildren(List<Attribute> children) {
+	public void setChildren(Set<Attribute> children) {
 		this.children = children;
 	}
 
-//	public Attribute addAttribute(Attribute attribute) {
-//		getChildren().add(attribute);
-//		attribute.setCompositeattribute(this);
-//
-//		return attribute;
-//	}
-//
-//	public Attribute removeAttribute(Attribute attribute) {
-//		getChildren().remove(attribute);
-//		attribute.setCompositeattribute(null);
-//
-//		return attribute;
-//	}
+	public Attribute addAttribute(Attribute attribute) {
+		getChildren().add(attribute);
+		attribute.setCompositeattribute(this);
+
+		return attribute;
+	}
+
+	public Attribute removeAttribute(Attribute attribute) {
+		getChildren().remove(attribute);
+		attribute.setCompositeattribute(null);
+
+		return attribute;
+	}
 
 }

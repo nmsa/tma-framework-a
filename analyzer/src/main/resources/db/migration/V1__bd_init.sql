@@ -34,6 +34,7 @@ DROP TABLE IF EXISTS compositeattribute;
 
 CREATE TABLE attribute (
     attributeId INT NOT NULL AUTO_INCREMENT,
+    compositeattributeId INT NOT NULL,
     name VARCHAR(1024),
     primary key(attributeId)  
 );
@@ -91,18 +92,18 @@ ALTER TABLE metricqm ADD CONSTRAINT FK_Metricqm_0 FOREIGN KEY (configurationprof
 ALTER TABLE preference ADD CONSTRAINT FK_Preference_1 FOREIGN KEY (attributeId) REFERENCES attribute (attributeId);
 ALTER TABLE metricqm ADD CONSTRAINT FK_Metricqm_1 FOREIGN KEY (attributeId) REFERENCES leafattribute (attributeId);
 
---ALTER TABLE attribute ADD CONSTRAINT FK_Attribute_0 FOREIGN KEY (attributeId) REFERENCES compositeattribute (attributeId);
+ALTER TABLE attribute ADD CONSTRAINT FK_Attribute_0 FOREIGN KEY (compositeattributeId) REFERENCES compositeattribute (attributeId);
 
 
 -- ------------------------------------------------------------------------------
 
-insert into attribute (attributeId, name) values (1, 'PRIVACY');
-insert into attribute (attributeId, name) values (2, 'INFORMATIONLOSS');
-insert into attribute (attributeId, name) values (3, 'REIDENTIFICATIONRISK');
-
 insert into compositeattribute (attributeId, operator) values (1,1);
 --insert into compositeattribute (attributeId, operator) values (2,1);
 --insert into compositeattribute (attributeId, operator) values (3,1);
+
+insert into attribute (attributeId, compositeattributeId, name) values (1, 1, 'PRIVACY');
+insert into attribute (attributeId, compositeattributeId, name) values (2, 1, 'INFORMATIONLOSS');
+insert into attribute (attributeId, compositeattributeId, name) values (3, 1, 'REIDENTIFICATIONRISK');
 
 insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (2, 0.0, 1.0, 0, 2, 0);
 insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (3, 0.0, 1.0, 0, 2, 1);

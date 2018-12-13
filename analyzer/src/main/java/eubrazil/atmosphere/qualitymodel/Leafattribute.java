@@ -53,7 +53,6 @@ public class Leafattribute extends Attribute implements Serializable {
 		this.operator = operator;
 	}
 
-	
 	public HistoricalData calculate(ConfigurationProfile profile, List<Data> data) throws UndefinedMetricException {
 
 		if (profile == null || profile.getMetrics().isEmpty())

@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
@@ -31,11 +33,6 @@ public abstract class Attribute implements Serializable {
 
 	private String name;
 
-	//bi-directional many-to-one association to Compositeattribute
-//	@ManyToOne
-//	@JoinColumn(name="compositeattributeId")
-//	private CompositeAttribute compositeattribute;
-
 	//bi-directional one-to-one association to Historicaldata
 	@OneToOne(mappedBy="attribute")
 	private HistoricalData historicaldata;
@@ -44,6 +41,11 @@ public abstract class Attribute implements Serializable {
 	@OneToOne(mappedBy="attribute")
 	private Preference preference;
 
+	//bi-directional many-to-one association to Compositeattribute
+	@ManyToOne
+	@JoinColumn(name="compositeattributeId")
+	private CompositeAttribute compositeattribute;
+	
 	public abstract HistoricalData calculate(ConfigurationProfile user, List<Data> data) throws UndefinedMetricException;
 	
 	public Attribute() {
@@ -65,13 +67,13 @@ public abstract class Attribute implements Serializable {
 		this.name = name;
 	}
 
-//	public CompositeAttribute getCompositeattribute() {
-//		return this.compositeattribute;
-//	}
-//
-//	public void setCompositeattribute(CompositeAttribute compositeattribute) {
-//		this.compositeattribute = compositeattribute;
-//	}
+	public CompositeAttribute getCompositeattribute() {
+		return this.compositeattribute;
+	}
+
+	public void setCompositeattribute(CompositeAttribute compositeattribute) {
+		this.compositeattribute = compositeattribute;
+	}
 
 	public HistoricalData getHistoricaldata() {
 		return this.historicaldata;
@@ -87,6 +89,12 @@ public abstract class Attribute implements Serializable {
 
 	public void setPreference(Preference preference) {
 		this.preference = preference;
+	}
+
+	@Override
+	public String toString() {
+		return "Attribute [attributeId=" + attributeId + ", name=" + name + ", historicaldata=" + historicaldata
+				+ ", preference=" + preference + ", compositeattribute=" + compositeattribute + "]";
 	}
 
 }
