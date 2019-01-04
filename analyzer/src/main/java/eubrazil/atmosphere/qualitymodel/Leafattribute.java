@@ -23,7 +23,7 @@ import eubrazil.atmosphere.exceptions.UndefinedMetricException;
 public class Leafattribute extends Attribute implements Serializable {
 
 	private static final long serialVersionUID = 5498567272022007160L;
-
+	
 	@Enumerated(EnumType.ORDINAL)
 	private MetricNormalizationKind normalizationKind = MetricNormalizationKind.BENEFIT;
 
@@ -43,9 +43,10 @@ public class Leafattribute extends Attribute implements Serializable {
 	public Leafattribute() {
 	}
 
-	public Leafattribute(MetricNormalizationKind normalizationKind, double normalizationMax, double normalizationMin,
+	public Leafattribute(int attributeId, MetricNormalizationKind normalizationKind, double normalizationMax, double normalizationMin,
 			int numSamples, MetricAggregationOperator operator) {
 		super();
+		setAttributeId(attributeId);
 		this.normalizationKind = normalizationKind;
 		this.normalizationMax = normalizationMax;
 		this.normalizationMin = normalizationMin;
@@ -53,10 +54,11 @@ public class Leafattribute extends Attribute implements Serializable {
 		this.operator = operator;
 	}
 
-	public HistoricalData calculate(ConfigurationProfile profile, List<Data> data) throws UndefinedMetricException {
+	public HistoricalData calculate(ConfigurationProfile profile) throws UndefinedMetricException {
 
-		if (profile == null || profile.getMetrics().isEmpty())
+		if (profile == null || profile.getMetrics().isEmpty()) {
 			throw new UndefinedMetricException("No defined metric for leaf atribute " + this.getName());
+		}
 
 		HistoricalData d = new HistoricalData();
 		d.setInstant(new Timestamp(System.currentTimeMillis()));
@@ -64,16 +66,16 @@ public class Leafattribute extends Attribute implements Serializable {
 
 		switch (operator) {
 		case AVERAGE:
-			d.setValue(calculateAverage(profile, data));
+			d.setValue(calculateAverage(profile));
 			break;
 		case MINIMUM:
-			d.setValue(calculateMinimum(profile, data));
+			d.setValue(calculateMinimum(profile));
 			break;
 		case MAXIMUM:
-			d.setValue(calculateMaximum(profile, data));
+			d.setValue(calculateMaximum(profile));
 			break;
 		case SUM:
-			d.setValue(calculateSum(profile, data));
+			d.setValue(calculateSum(profile));
 			break;
 		default:
 			throw new UnsupportedOperationException();
@@ -82,33 +84,36 @@ public class Leafattribute extends Attribute implements Serializable {
 		return d;
 	}
 
-	protected double calculateAverage(ConfigurationProfile profile, List<Data> data) {
-
+	protected double calculateAverage(ConfigurationProfile profile) {
+		System.out.println("calculateAverage...");
 		double average = 0;
 		double amount = 0;
 		Iterator<Metric> iterMetric = profile.getMetrics().iterator();
 		while (iterMetric.hasNext()) {
 			Metric metric = iterMetric.next();
+			
+			//System.out.println("metric: " + metric);
 
 			if (metric.getAttribute().equals(this)) {
 				// The user-defined metric concerns the same leaf attribute (metric definition)
+				List<Data> data = metric.updateData();
+				System.out.println(data);
 				amount += (double) data.size();
 				Iterator<Data> iterData = data.iterator();
 				while (iterData.hasNext()) {
 					Data measure = iterData.next();
 					average += measure.getValue();
 				}
-
 			}
 		}
-
+		
 		System.out.println("average: " + average);
 		System.out.println("amount: " + amount);
 		
 		return average / amount;
 	}
 
-	protected double calculateMinimum(ConfigurationProfile profile, List<Data> data) {
+	protected double calculateMinimum(ConfigurationProfile profile) {
 
 		double minimum = 0;
 		Iterator<Metric> iterMetric = profile.getMetrics().iterator();
@@ -117,6 +122,7 @@ public class Leafattribute extends Attribute implements Serializable {
 
 			if (metric.getAttribute().equals(this)) {
 				// The user-defined metric concerns the same leaf attribute (metric definition)
+				List<Data> data = metric.updateData();
 				Iterator<Data> iterData = data.iterator();
 				while (iterData.hasNext()) {
 					Data measure = iterData.next();
@@ -129,7 +135,7 @@ public class Leafattribute extends Attribute implements Serializable {
 		return minimum;
 	}
 
-	protected double calculateMaximum(ConfigurationProfile profile, List<Data> data) {
+	protected double calculateMaximum(ConfigurationProfile profile) {
 		double maximum = 0;
 		Iterator<Metric> iterMetric = profile.getMetrics().iterator();
 		while (iterMetric.hasNext()) {
@@ -137,6 +143,7 @@ public class Leafattribute extends Attribute implements Serializable {
 
 			if (metric.getAttribute().equals(this)) {
 				// The user-defined metric concerns the same leaf attribute (metric definition)
+				List<Data> data = metric.updateData();
 				Iterator<Data> iterData = data.iterator();
 				while (iterData.hasNext()) {
 					Data measure = iterData.next();
@@ -149,7 +156,7 @@ public class Leafattribute extends Attribute implements Serializable {
 		return maximum;
 	}
 
-	protected double calculateSum(ConfigurationProfile profile, List<Data> data) {
+	protected double calculateSum(ConfigurationProfile profile) {
 		double sum = 0;
 		Iterator<Metric> iterMetric = profile.getMetrics().iterator();
 		while (iterMetric.hasNext()) {
@@ -157,6 +164,7 @@ public class Leafattribute extends Attribute implements Serializable {
 
 			if (metric.getAttribute().equals(this)) {
 				// The user-defined metric concerns the same leaf attribute (metric definition)
+				List<Data> data = metric.updateData();
 				Iterator<Data> iterData = data.iterator();
 				while (iterData.hasNext()) {
 					Data measure = iterData.next();
@@ -214,6 +222,53 @@ public class Leafattribute extends Attribute implements Serializable {
 
 	public void setMetric(Metric metric) {
 		this.metric = metric;
+	}
+
+	@Override
+	public HistoricalData getHistoricaldata() {
+		
+		// Busca último (instant) HistoricalData(HD) que aponte para o filho corrente
+		
+		// Caso não encontre em HistoricalData, busca os últimos numSamples de Data que aponte para o filho corrente. 
+		
+		return null;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((normalizationKind == null) ? 0 : normalizationKind.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(normalizationMax);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(normalizationMin);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + numSamples;
+		result = prime * result + ((operator == null) ? 0 : operator.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Leafattribute other = (Leafattribute) obj;
+		if (normalizationKind != other.normalizationKind)
+			return false;
+		if (Double.doubleToLongBits(normalizationMax) != Double.doubleToLongBits(other.normalizationMax))
+			return false;
+		if (Double.doubleToLongBits(normalizationMin) != Double.doubleToLongBits(other.normalizationMin))
+			return false;
+		if (numSamples != other.numSamples)
+			return false;
+		if (operator != other.operator)
+			return false;
+		return true;
 	}
 
 }

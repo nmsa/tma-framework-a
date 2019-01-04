@@ -13,7 +13,6 @@ import javax.persistence.OneToOne;
 
 /**
  * The persistent class for the preference database table.
- *
  */
 @Entity(name="preference")
 @NamedQuery(name="preference.findAll", query="SELECT p FROM preference p")
@@ -42,17 +41,10 @@ public class Preference implements Serializable {
 	public Preference() {
 	}
 
-	public Preference(double threshold, double weight) {
+	public Preference(int attributeId, double threshold, double weight) {
+		this.attributeId = attributeId;
 		this.threshold = threshold;
 		this.weight = weight;
-	}
-
-	public int getAttributeId() {
-		return this.attributeId;
-	}
-
-	public void setAttributeId(int attributeId) {
-		this.attributeId = attributeId;
 	}
 
 	public double getThreshold() {
@@ -89,7 +81,38 @@ public class Preference implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Preference [attributeId=" + attributeId + ", threshold=" + threshold + ", weight=" + weight + "]";
+		return "Preference [threshold=" + threshold + ", weight=" + weight + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + attributeId;
+		long temp;
+		temp = Double.doubleToLongBits(threshold);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(weight);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Preference other = (Preference) obj;
+		if (attributeId != other.attributeId)
+			return false;
+		if (Double.doubleToLongBits(threshold) != Double.doubleToLongBits(other.threshold))
+			return false;
+		if (Double.doubleToLongBits(weight) != Double.doubleToLongBits(other.weight))
+			return false;
+		return true;
 	}
 
 }

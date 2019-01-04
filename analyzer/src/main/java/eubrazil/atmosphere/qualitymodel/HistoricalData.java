@@ -13,7 +13,6 @@ import javax.persistence.OneToOne;
 
 /**
  * The persistent class for the historicaldata database table.
- * 
  */
 @Entity(name="historicaldata")
 @NamedQuery(name="historicaldata.findAll", query="SELECT h FROM historicaldata h")

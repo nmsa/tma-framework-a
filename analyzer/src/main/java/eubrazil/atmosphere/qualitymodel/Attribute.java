@@ -1,7 +1,6 @@
 package eubrazil.atmosphere.qualitymodel;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
-import eubrazil.atmosphere.entity.Data;
 import eubrazil.atmosphere.exceptions.UndefinedMetricException;
 
 /**
@@ -41,12 +39,12 @@ public abstract class Attribute implements Serializable {
 	@OneToOne(mappedBy="attribute")
 	private Preference preference;
 
-	//bi-directional many-to-one association to Compositeattribute
+	//bi-directional many-to-one association to compositeattribute
 	@ManyToOne
 	@JoinColumn(name="compositeattributeId")
 	private CompositeAttribute compositeattribute;
 	
-	public abstract HistoricalData calculate(ConfigurationProfile user, List<Data> data) throws UndefinedMetricException;
+	public abstract HistoricalData calculate(ConfigurationProfile user) throws UndefinedMetricException;
 	
 	public Attribute() {
 	}
@@ -75,9 +73,7 @@ public abstract class Attribute implements Serializable {
 		this.compositeattribute = compositeattribute;
 	}
 
-	public HistoricalData getHistoricaldata() {
-		return this.historicaldata;
-	}
+	public abstract HistoricalData getHistoricaldata();
 
 	public void setHistoricaldata(HistoricalData historicaldata) {
 		this.historicaldata = historicaldata;
@@ -90,6 +86,12 @@ public abstract class Attribute implements Serializable {
 	public void setPreference(Preference preference) {
 		this.preference = preference;
 	}
+
+	@Override
+	public abstract int hashCode();
+
+	@Override
+	public abstract boolean equals(Object obj);
 
 	@Override
 	public String toString() {

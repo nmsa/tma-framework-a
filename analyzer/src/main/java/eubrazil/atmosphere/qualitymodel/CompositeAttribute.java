@@ -2,8 +2,8 @@ package eubrazil.atmosphere.qualitymodel;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,11 +15,10 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import eubrazil.atmosphere.commons.utils.ListUtils;
-import eubrazil.atmosphere.entity.Data;
+import eubrazil.atmosphere.exceptions.UndefinedMetricException;
 
 /**
  * The persistent class for the compositeattribute database table.
- * 
  */
 @Entity(name="compositeattribute")
 @NamedQuery(name="compositeattribute.findAll", query="SELECT c FROM compositeattribute c")
@@ -33,7 +32,7 @@ public class CompositeAttribute extends Attribute implements Serializable {
 	// bi-directional many-to-one association to Attribute
 	@OneToMany(mappedBy="compositeattribute")
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private Set<Attribute> children;
+	private List<Attribute> children;
 
 	public CompositeAttribute() {
 	}
@@ -41,20 +40,62 @@ public class CompositeAttribute extends Attribute implements Serializable {
 	protected double calculateNeutrality(ConfigurationProfile profile) {
 		double score = 0.0;
 		if (ListUtils.isNotEmpty(this.children)) {
-			
+//			System.out.println("children :" + children);
+			for (Attribute child : children) {
+				Preference childPref = profile.getPreference(child);
+				System.out.println("childPref: " + childPref);
+				try {
+					System.out.println("child calculate: " + child.calculate(profile).getValue());
+					System.out.println("preference weight for child: " + childPref.getWeight());
+					score += child.calculate(profile).getValue() * childPref.getWeight();
+				} catch (UndefinedMetricException e) {
+					e.printStackTrace();
+				}
+			}
 		}
+		System.out.println("Score Neutrality: " + score);
 		return score;
 	}
 
 	protected double calculateSimultaneity(ConfigurationProfile profile) {
-		throw new UnsupportedOperationException();
+		double score = 0.0;
+		if (ListUtils.isNotEmpty(this.children)) {
+			for (Attribute child : children) {
+				Preference childPref = profile.getPreference(child);
+				try {
+					double scoreAux = child.calculate(profile).getValue() * childPref.getWeight();
+					if (scoreAux < childPref.getThreshold()) {
+						score = 0.0;
+						break;
+					}
+					score += scoreAux;
+				} catch (UndefinedMetricException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return score;
 	}
 
 	protected double calculateReplaceability(ConfigurationProfile profile) {
-		throw new UnsupportedOperationException();
+		double score = 0.0;
+		if (ListUtils.isNotEmpty(this.children)) {
+			for (Attribute child : children) {
+				Preference childPref = profile.getPreference(child);
+				try {
+					double scoreAux = child.calculate(profile).getValue() * childPref.getWeight();
+					if (scoreAux > childPref.getThreshold()) {
+						score += scoreAux;
+					}
+				} catch (UndefinedMetricException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return score;
 	}
 	
-	public HistoricalData calculate(ConfigurationProfile profile, List<Data> data) {
+	public HistoricalData calculate(ConfigurationProfile profile) {
 		HistoricalData d = new HistoricalData();
 		d.setInstant(new Timestamp(System.currentTimeMillis()));
 		d.setAttribute(this);
@@ -73,6 +114,11 @@ public class CompositeAttribute extends Attribute implements Serializable {
 			throw new UnsupportedOperationException();
 		}
 
+		// Armazena o score calculado em HistoricalDate
+//		PrivacyService privacyService = SpringContextBridge.services().getPrivacyService();
+//		d.setAttributeId(this.getAttributeId());
+//		privacyService.save(d);
+		
 		return d;
 	}
 
@@ -84,11 +130,14 @@ public class CompositeAttribute extends Attribute implements Serializable {
 		this.operator = operator;
 	}
 
-	public Set<Attribute> getChildren() {
+	public List<Attribute> getChildren() {
+		if (children == null) {
+			children = new ArrayList<Attribute>();
+		}
 		return children;
 	}
 
-	public void setChildren(Set<Attribute> children) {
+	public void setChildren(List<Attribute> children) {
 		this.children = children;
 	}
 
@@ -104,6 +153,34 @@ public class CompositeAttribute extends Attribute implements Serializable {
 		attribute.setCompositeattribute(null);
 
 		return attribute;
+	}
+
+	@Override
+	public HistoricalData getHistoricaldata() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((operator == null) ? 0 : operator.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CompositeAttribute other = (CompositeAttribute) obj;
+		if (operator != other.operator)
+			return false;
+		return true;
 	}
 
 }

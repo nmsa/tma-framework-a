@@ -13,10 +13,10 @@ import eubrazil.atmosphere.entity.Data;
 public interface DataRepository extends CrudRepository<Data, Long> {
 
 	/**
-	 * Search data list from knowledgedb by resource/probe/description name limited to @param pageable.
+	 * Search data list from knowledgedb by resource/probe/description id limited to @param pageable.
 	 *
 	 * Example of pageable usage:
-	 * getLimitedDataListByName (..., new PageableRequest (0,10)); // limits search results to 10 items
+	 * getLimitedDataListById (..., new PageRequest (0,10)); // limits search results to 10 items
 	 *
 	 * @param resourceName
 	 * @param probeName
@@ -24,7 +24,7 @@ public interface DataRepository extends CrudRepository<Data, Long> {
 	 * @param pageable
 	 * @return
 	 */
-	@Query(value="SELECT d FROM data d WHERE d.metric.resourceName = ?1 and d.metric.probeName = ?2 and d.metric.descriptionName = ?3")
-	List<Data> getLimitedDataListByName(String resourceName, String probeName, String descriptionName, Pageable numSamples);
+	@Query(value="SELECT d FROM data d WHERE d.id.probeId = ?1 and d.id.descriptionId = ?2 and d.id.resourceId = ?3 order by d.id.valueTime desc")
+	List<Data> getLimitedDataListById(Integer probeId, Integer descriptionId, Integer resourceId, Pageable numSamples);
 
 }

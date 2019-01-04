@@ -33,55 +33,55 @@ DROP TABLE IF EXISTS leafattribute;
 DROP TABLE IF EXISTS compositeattribute;
 
 CREATE TABLE attribute (
-    attributeId INT NOT NULL AUTO_INCREMENT,
-    compositeattributeId INT NOT NULL,
-    name VARCHAR(1024),
-    primary key(attributeId)  
+   attributeId INT NOT NULL AUTO_INCREMENT,
+   compositeattributeId INT NOT NULL,
+   name VARCHAR(1024),
+   primary key(attributeId)  
 );
 
 CREATE TABLE compositeattribute (
-    attributeId INT NOT NULL,
-    operator INT,
-    PRIMARY KEY (attributeId)
+   attributeId INT NOT NULL,
+   operator INT,
+   PRIMARY KEY (attributeId)
 );
 
 CREATE TABLE leafattribute (
-    attributeId INT NOT NULL,
-    normalizationMin DOUBLE PRECISION,
-    normalizationMax DOUBLE PRECISION,
-    operator INT,
-    numSamples INT,
-    normalizationKind INT,
-    PRIMARY KEY (attributeId)
+   attributeId INT NOT NULL,
+   normalizationMin DOUBLE PRECISION,
+   normalizationMax DOUBLE PRECISION,
+   operator INT,
+   numSamples INT,
+   normalizationKind INT,
+   PRIMARY KEY (attributeId)
 );
 
 CREATE TABLE historicaldata (
-    attributeId INT NOT NULL,
-    instant TIMESTAMP(6),
-    value DOUBLE PRECISION,
-    PRIMARY KEY (attributeId)
+   attributeId INT NOT NULL,
+   instant TIMESTAMP(6),
+   value DOUBLE PRECISION,
+   PRIMARY KEY (attributeId)
 );
 
 CREATE TABLE configurationprofile (
-    configurationprofileId INT NOT NULL AUTO_INCREMENT,
-    PRIMARY KEY (configurationprofileId)
+   configurationprofileId INT NOT NULL AUTO_INCREMENT,
+   PRIMARY KEY (configurationprofileId)
 );
 
 CREATE TABLE preference (
-    attributeId INT NOT NULL,
-    configurationprofileId INT NOT NULL,
-    weight DOUBLE PRECISION,
-    threshold DOUBLE PRECISION,
-    PRIMARY KEY (attributeId)
+   attributeId INT NOT NULL,
+   configurationprofileId INT NOT NULL,
+   weight DOUBLE PRECISION,
+   threshold DOUBLE PRECISION,
+   PRIMARY KEY (attributeId)
 );
 
 CREATE TABLE metricqm (
-    attributeId INT NOT NULL,
-    configurationprofileId INT NOT NULL,
-    probeName VARCHAR(1024),
-    descriptionName VARCHAR(1024),
-    resourceName VARCHAR(1024),
-    PRIMARY KEY (attributeId)
+   attributeId INT NOT NULL,
+   configurationprofileId INT NOT NULL,
+   probeName VARCHAR(1024),
+   descriptionName VARCHAR(1024),
+   resourceName VARCHAR(1024),
+   PRIMARY KEY (attributeId)
 );
 
 ALTER TABLE historicaldata ADD CONSTRAINT FK_HistoricalData_0 FOREIGN KEY (attributeId) REFERENCES attribute (attributeId);
@@ -98,15 +98,13 @@ ALTER TABLE attribute ADD CONSTRAINT FK_Attribute_0 FOREIGN KEY (compositeattrib
 -- ------------------------------------------------------------------------------
 
 insert into compositeattribute (attributeId, operator) values (1,1);
---insert into compositeattribute (attributeId, operator) values (2,1);
---insert into compositeattribute (attributeId, operator) values (3,1);
 
 insert into attribute (attributeId, compositeattributeId, name) values (1, 1, 'PRIVACY');
 insert into attribute (attributeId, compositeattributeId, name) values (2, 1, 'INFORMATIONLOSS');
 insert into attribute (attributeId, compositeattributeId, name) values (3, 1, 'REIDENTIFICATIONRISK');
 
-insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (2, 0.0, 1.0, 0, 2, 0);
-insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (3, 0.0, 1.0, 0, 2, 1);
+insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (2, 0.0, 1.0, 0, 1, 0);
+insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (3, 0.0, 1.0, 0, 1, 1);
 
 insert into configurationprofile (configurationprofileId) values (1);
 
@@ -114,12 +112,12 @@ insert into preference (attributeId,configurationprofileId, weight, threshold) v
 insert into preference (attributeId,configurationprofileId, weight, threshold) values (2, 1, 0.1, 0.7);
 insert into preference (attributeId,configurationprofileId, weight, threshold) values (3, 1, 0.9, 0.05);
 
-insert into metricqm (attributeId, configurationprofileId, probeName, descriptionName, resourceName) values (2,1,'probe Wildfly WSVD','n/a','n/a');
-insert into metricqm (attributeId, configurationprofileId, probeName, descriptionName, resourceName) values (3,1,'probe Demo Java','n/a','n/a');
+insert into metricqm (attributeId, configurationprofileId, probeName, descriptionName, resourceName) values (2,1,'probe PRIVaaS','n/a','anonymizator');
+insert into metricqm (attributeId, configurationprofileId, probeName, descriptionName, resourceName) values (3,1,'probe PRIVaaS','n/a','anonymizator');
 
-insert into historicaldata (attributeId, instant, value) values (1, now(), 0.1);
-insert into historicaldata (attributeId, instant, value) values (2, now(), 0.2);
-insert into historicaldata (attributeId, instant, value) values (3, now(), 0.3);
+-- insert into historicaldata (attributeId, instant, value) values (1, now(), 0.1);
+-- insert into historicaldata (attributeId, instant, value) values (2, now(), 0.2);
+-- insert into historicaldata (attributeId, instant, value) values (3, now(), 0.3);
 
 -- ------------------------------------------------------------------------------
 
@@ -295,13 +293,10 @@ CREATE TABLE data (
     probeId INT NOT NULL,
     descriptionId INT NOT NULL,
     resourceId INT NOT NULL,
-    attributeId INT NOT NULL,
     valueTime TIMESTAMP(6) NOT NULL,
     value DOUBLE PRECISION,
     PRIMARY KEY (probeId,descriptionId,resourceId,valueTime)
 );
-
-
 
 ALTER TABLE action ADD CONSTRAINT FK_Action_0 FOREIGN KEY (actuatorId) REFERENCES actuator (actuatorId);
 ALTER TABLE action ADD CONSTRAINT FK_Action_1 FOREIGN KEY (resourceId) REFERENCES resource (resourceId);
@@ -311,7 +306,6 @@ ALTER TABLE configuration ADD CONSTRAINT FK_Configuration_0 FOREIGN KEY (actionI
 ALTER TABLE data ADD CONSTRAINT FK_Data_0 FOREIGN KEY (probeId) REFERENCES probe (probeId);
 ALTER TABLE data ADD CONSTRAINT FK_Data_1 FOREIGN KEY (descriptionId) REFERENCES description (descriptionId);
 ALTER TABLE data ADD CONSTRAINT FK_Data_2 FOREIGN KEY (resourceId) REFERENCES resource (resourceId);
-ALTER TABLE data ADD CONSTRAINT FK_Data_4 FOREIGN KEY (attributeId) REFERENCES metricqm (attributeId);
 
 -- -- Table time was removed for normalization.
 -- ALTER TABLE Data ADD CONSTRAINT FK_Data_3 FOREIGN KEY (valueTime) REFERENCES Time (valueTime);
@@ -392,49 +386,49 @@ INSERT INTO resource VALUES (1,'VM_VIRT_NODE','VM','n/a'),
 (7,'Pod Monitor','POD','n/a'),
 (8,'anonymizator','VM','n/a');
 
-INSERT INTO data (probeId, descriptionId, resourceId, attributeId, valueTime, value) VALUES 
-(8,27,8,2,'1995-12-11 18:34:41.000000',10),
-(8,27,8,3,'1995-12-12 07:13:25.000000',100),
-(8,27,8,2,'1995-12-12 13:21:03.000000',10),
-(8,27,8,2,'1995-12-12 18:39:44.000000',10),
-(8,27,8,2,'1995-12-12 22:52:08.000000',10),
-(8,27,8,3,'1995-12-13 03:16:21.000000',10),
-(8,27,8,3,'1995-12-13 17:31:17.000000',10),
-(8,28,8,3,'1995-12-11 18:34:41.000000',0.004545454545454545),
-(8,28,8,3,'1995-12-12 07:13:25.000000',0.0010070493454179255),
-(8,28,8,3,'1995-12-12 13:21:03.000000',0.05555555555555555),
-(8,28,8,3,'1995-12-12 18:39:44.000000',0.041666666666666664),
-(8,28,8,2,'1995-12-12 22:52:08.000000',0.07142857142857142),
-(8,28,8,2,'1995-12-13 03:16:21.000000',0.03225806451612903),
-(8,28,8,2,'1995-12-13 17:31:17.000000',0.005050505050505051),
-(8,29,8,2,'1995-12-11 18:34:41.000000',0.004545454545454545),
-(8,29,8,2,'1995-12-12 07:13:25.000000',0.0010070493454179255),
-(8,29,8,2,'1995-12-12 13:21:03.000000',0.05555555555555555),
-(8,29,8,3,'1995-12-12 18:39:44.000000',0.041666666666666664),
-(8,29,8,3,'1995-12-12 22:52:08.000000',0.07142857142857142),
-(8,29,8,3,'1995-12-13 03:16:21.000000',0.03225806451612903),
-(8,29,8,3,'1995-12-13 17:31:17.000000',0.005050505050505051),
-(8,30,8,3,'1995-12-11 18:34:41.000000',0.001358695652173913),
-(8,30,8,3,'1995-12-12 07:13:25.000000',0.00015355793740978472),
-(8,30,8,3,'1995-12-12 13:21:03.000000',0.0111731843575419),
-(8,30,8,2,'1995-12-12 18:39:44.000000',0.012987012987012988),
-(8,30,8,2,'1995-12-12 22:52:08.000000',0.0008909126905563256),
-(8,30,8,2,'1995-12-13 03:16:21.000000',0.005208333333333333),
-(8,30,8,2,'1995-12-13 17:31:17.000000',0.005050505050505051),
-(8,31,8,2,'1995-12-11 18:34:41.000000',0),
-(8,31,8,2,'1995-12-12 07:13:25.000000',0.5217272081421163),
-(8,31,8,2,'1996-12-12 07:13:25.000000',0.5217272081421163),
-(8,31,8,2,'1995-12-12 13:21:03.000000',0),
-(8,31,8,3,'1995-12-12 18:39:44.000000',0),
-(8,31,8,3,'1995-12-12 22:52:08.000000',0.1508305756999999),
-(8,31,8,3,'1995-12-13 03:16:21.000000',0),
-(8,31,8,3,'1995-12-13 17:31:17.000000',1),
-(8,32,8,3,'1995-12-11 18:34:41.000000',0),
-(8,32,8,3,'1995-12-12 07:13:25.000000',0.5217272081421163),
-(8,32,8,3,'1995-12-12 13:21:03.000000',0),
-(8,32,8,2,'1995-12-12 18:39:44.000000',0),
-(8,32,8,2,'1995-12-12 22:52:08.000000',0.1508305756999999),
-(8,32,8,2,'1995-12-13 03:16:21.000000',0),
-(8,32,8,2,'1995-12-13 17:31:17.000000',1);
+INSERT INTO data (probeId, descriptionId, resourceId, valueTime, value) VALUES 
+(8,27,8,'1995-12-11 18:34:41.000000',10),
+(8,27,8,'1995-12-12 07:13:25.000000',100),
+(8,27,8,'1995-12-12 13:21:03.000000',10),
+(8,27,8,'1995-12-12 18:39:44.000000',10),
+(8,27,8,'1995-12-12 22:52:08.000000',10),
+(8,27,8,'1995-12-13 03:16:21.000000',10),
+(8,27,8,'1995-12-13 17:31:17.000000',10),
+(8,28,8,'1995-12-11 18:34:41.000000',0.004545454545454545),
+(8,28,8,'1995-12-12 07:13:25.000000',0.0010070493454179255),
+(8,28,8,'1995-12-12 13:21:03.000000',0.05555555555555555),
+(8,28,8,'1995-12-12 18:39:44.000000',0.041666666666666664),
+(8,28,8,'1995-12-12 22:52:08.000000',0.07142857142857142),
+(8,28,8,'1995-12-13 03:16:21.000000',0.03225806451612903),
+(8,28,8,'1995-12-13 17:31:17.000000',0.005050505050505051),
+(8,29,8,'1995-12-11 18:34:41.000000',0.004545454545454545),
+(8,29,8,'1995-12-12 07:13:25.000000',0.0010070493454179255),
+(8,29,8,'1995-12-12 13:21:03.000000',0.05555555555555555),
+(8,29,8,'1995-12-12 18:39:44.000000',0.041666666666666664),
+(8,29,8,'1995-12-12 22:52:08.000000',0.07142857142857142),
+(8,29,8,'1995-12-13 03:16:21.000000',0.03225806451612903),
+(8,29,8,'1995-12-13 17:31:17.000000',0.005050505050505051),
+(8,30,8,'1995-12-11 18:34:41.000000',0.001358695652173913),
+(8,30,8,'1995-12-12 07:13:25.000000',0.00015355793740978472),
+(8,30,8,'1995-12-12 13:21:03.000000',0.0111731843575419),
+(8,30,8,'1995-12-12 18:39:44.000000',0.012987012987012988),
+(8,30,8,'1995-12-12 22:52:08.000000',0.0008909126905563256),
+(8,30,8,'1995-12-13 03:16:21.000000',0.005208333333333333),
+(8,30,8,'1995-12-13 17:31:17.000000',0.005050505050505051),
+(8,31,8,'1995-12-11 18:34:41.000000',0),
+(8,31,8,'1995-12-12 07:13:25.000000',0.5217272081421163),
+(8,31,8,'1996-12-12 07:13:25.000000',0.5217272081421163),
+(8,31,8,'1995-12-12 13:21:03.000000',0),
+(8,31,8,'1995-12-12 18:39:44.000000',0),
+(8,31,8,'1995-12-12 22:52:08.000000',0.1508305756999999),
+(8,31,8,'1995-12-13 03:16:21.000000',0),
+(8,31,8,'1995-12-13 17:31:17.000000',1),
+(8,32,8,'1995-12-11 18:34:41.000000',0),
+(8,32,8,'1995-12-12 07:13:25.000000',0.5217272081421163),
+(8,32,8,'1995-12-12 13:21:03.000000',0),
+(8,32,8,'1995-12-12 18:39:44.000000',0),
+(8,32,8,'1995-12-12 22:52:08.000000',0.1508305756999999),
+(8,32,8,'1995-12-13 03:16:21.000000',0),
+(8,32,8,'1995-12-13 17:31:17.000000',1);
 
 -- ------------------------------------------------------------------------------

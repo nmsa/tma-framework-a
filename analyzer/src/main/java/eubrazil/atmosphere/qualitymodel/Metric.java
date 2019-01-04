@@ -1,6 +1,5 @@
 package eubrazil.atmosphere.qualitymodel;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,25 +9,24 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.data.domain.PageRequest;
 
 import eubrazil.atmosphere.entity.Data;
+import eubrazil.atmosphere.service.spec.PrivacyService;
 
 
 /**
  * The persistent class for the metric database table.
- *
  */
 @Entity(name="metricqm")
 @NamedQuery(name="metricqm.findAll", query="SELECT m FROM metricqm m")
-public class Metric implements Serializable {
-
-	private static final long serialVersionUID = -4308693747910041479L;
-
+public class Metric {
+	
 	@Id
 	@GeneratedValue
 	private int attributeId;
@@ -51,18 +49,9 @@ public class Metric implements Serializable {
 	private Leafattribute attribute;
 
 	//bi-directional many-to-one association to Data
-	@OneToMany(mappedBy="metric")
+//	@OneToMany(mappedBy="metricId")
+	@Transient
 	private List<Data> data;
-
-	public Metric() {
-	}
-
-	public Metric(String descriptionName, String probeName, String resourceName) {
-		super();
-		this.descriptionName = descriptionName;
-		this.probeName = probeName;
-		this.resourceName = resourceName;
-	}
 	
 	public int getAttributeId() {
 		return attributeId;
@@ -123,10 +112,16 @@ public class Metric implements Serializable {
 		this.data = data;
 	}
 
+	public List<Data> updateData() {
+		PrivacyService privacyService = SpringContextBridge.services().getPrivacyService();
+		return privacyService.getLimitedDataListById(new Integer(8), new Integer(32), new Integer(8),
+				new PageRequest(0, this.attribute.getNumSamples()));
+	}
+	
 	@Override
 	public String toString() {
-		return "Metric [attributeId=" + attributeId + ", descriptionName=" + descriptionName + ", probeName="
-				+ probeName + ", resourceName=" + resourceName + "]";
+		return "Metric [descriptionName=" + descriptionName + ", probeName=" + probeName + ", resourceName="
+				+ resourceName + "]";
 	}
 
 }
