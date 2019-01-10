@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
-
 /**
  * The persistent class for the historicaldata database table.
  */
@@ -22,7 +21,7 @@ public class HistoricalData implements Serializable {
 
 	@Id
 	@GeneratedValue
-	private int attributeId;
+	private int historicalDataId;
 
 	private Timestamp instant;
 
@@ -42,12 +41,12 @@ public class HistoricalData implements Serializable {
 		this.value = value;
 	}
 
-	public int getAttributeId() {
-		return this.attributeId;
+	public int getHistoricalDataId() {
+		return historicalDataId;
 	}
 
-	public void setAttributeId(int attributeId) {
-		this.attributeId = attributeId;
+	public void setHistoricalDataId(int historicalDataId) {
+		this.historicalDataId = historicalDataId;
 	}
 
 	public Timestamp getInstant() {
@@ -76,7 +75,8 @@ public class HistoricalData implements Serializable {
 
 	@Override
 	public String toString() {
-		return "HistoricalData [instant=" + instant + ", value=" + value + ", attribute=" + attribute + "]";
+		return "HistoricalData [historicalDataId=" + historicalDataId + ", instant=" + instant + ", value=" + value
+				+ ", attribute=" + attribute + "]";
 	}
 
 }

@@ -56,10 +56,11 @@ CREATE TABLE leafattribute (
 );
 
 CREATE TABLE historicaldata (
-   attributeId INT NOT NULL,
+   historicalDataId INT NOT NULL AUTO_INCREMENT,
    instant TIMESTAMP(6),
    value DOUBLE PRECISION,
-   PRIMARY KEY (attributeId)
+   attributeId INT NOT NULL,
+   PRIMARY KEY (historicalDataId, instant)
 );
 
 CREATE TABLE configurationprofile (

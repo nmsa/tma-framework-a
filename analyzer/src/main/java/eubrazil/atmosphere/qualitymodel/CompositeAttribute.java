@@ -16,6 +16,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import eubrazil.atmosphere.commons.utils.ListUtils;
 import eubrazil.atmosphere.exceptions.UndefinedMetricException;
+import eubrazil.atmosphere.service.spec.PrivacyService;
 
 /**
  * The persistent class for the compositeattribute database table.
@@ -43,10 +44,10 @@ public class CompositeAttribute extends Attribute implements Serializable {
 //			System.out.println("children :" + children);
 			for (Attribute child : children) {
 				Preference childPref = profile.getPreference(child);
-				System.out.println("childPref: " + childPref);
+//				System.out.println("childPref: " + childPref);
 				try {
-					System.out.println("child calculate: " + child.calculate(profile).getValue());
-					System.out.println("preference weight for child: " + childPref.getWeight());
+//					System.out.println("child calculate: " + child.calculate(profile).getValue());
+//					System.out.println("preference weight for child: " + childPref.getWeight());
 					score += child.calculate(profile).getValue() * childPref.getWeight();
 				} catch (UndefinedMetricException e) {
 					e.printStackTrace();
@@ -98,7 +99,8 @@ public class CompositeAttribute extends Attribute implements Serializable {
 	public HistoricalData calculate(ConfigurationProfile profile) {
 		HistoricalData d = new HistoricalData();
 		d.setInstant(new Timestamp(System.currentTimeMillis()));
-		d.setAttribute(this);
+		d.setHistoricalDataId(profile.getPreference(this).getAttribute().getAttributeId());
+		d.setAttribute(profile.getPreference(this).getAttribute());
 
 		switch (operator) {
 		case NEUTRALITY:
@@ -115,9 +117,9 @@ public class CompositeAttribute extends Attribute implements Serializable {
 		}
 
 		// Armazena o score calculado em HistoricalDate
-//		PrivacyService privacyService = SpringContextBridge.services().getPrivacyService();
-//		d.setAttributeId(this.getAttributeId());
-//		privacyService.save(d);
+		PrivacyService privacyService = SpringContextBridge.services().getPrivacyService();
+		System.out.println(d);
+		privacyService.save(d);
 		
 		return d;
 	}

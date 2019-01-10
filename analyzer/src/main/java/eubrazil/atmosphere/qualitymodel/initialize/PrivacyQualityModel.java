@@ -50,6 +50,7 @@ public class PrivacyQualityModel {
 					pref.getWeight());
 			
 			if (pref.getAttribute() instanceof CompositeAttribute) {
+				privacy.setAttributeId(pref.getAttribute().getAttributeId());
 				newPreference.setAttribute(privacy);
 			} else {
 				Leafattribute leaf = (Leafattribute) pref.getAttribute();
