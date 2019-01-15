@@ -3,9 +3,8 @@ package eubrazil.atmosphere.qualitymodel;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -19,11 +18,14 @@ public class HistoricalData implements Serializable {
 
 	private static final long serialVersionUID = 467016496297144958L;
 
-	@Id
-	@GeneratedValue
-	private int historicalDataId;
-
-	private Timestamp instant;
+//	@Id
+//	@GeneratedValue
+//	private int historicalDataId;
+//
+//	private Timestamp instant;
+	
+	@EmbeddedId
+	private HistoricalDataPK id;
 
 	private double value;
 
@@ -37,24 +39,16 @@ public class HistoricalData implements Serializable {
 
 	public HistoricalData(Timestamp instant, double value) {
 		super();
-		this.instant = instant;
+		this.setInstant(instant);
 		this.value = value;
 	}
 
-	public int getHistoricalDataId() {
-		return historicalDataId;
+	public HistoricalDataPK getId() {
+		return id;
 	}
 
-	public void setHistoricalDataId(int historicalDataId) {
-		this.historicalDataId = historicalDataId;
-	}
-
-	public Timestamp getInstant() {
-		return this.instant;
-	}
-
-	public void setInstant(Timestamp instant) {
-		this.instant = instant;
+	public void setId(HistoricalDataPK id) {
+		this.id = id;
 	}
 
 	public double getValue() {
@@ -73,10 +67,23 @@ public class HistoricalData implements Serializable {
 		this.attribute = attribute;
 	}
 
+	public void setInstant(java.util.Date instant) {
+		if (this.id == null) {
+			this.id = new HistoricalDataPK();
+		}
+		this.id.setInstant(instant);
+	}
+	
+	public void setHistoricalDataId(int historicalDataId) {
+		if (this.id == null) {
+			this.id = new HistoricalDataPK();
+		}
+		this.id.setHistoricalDataId(historicalDataId);
+	}
+	
 	@Override
 	public String toString() {
-		return "HistoricalData [historicalDataId=" + historicalDataId + ", instant=" + instant + ", value=" + value
-				+ ", attribute=" + attribute + "]";
+		return "HistoricalData [id=" + id + ", value=" + value + ", attribute=" + attribute + "]";
 	}
-
+	
 }

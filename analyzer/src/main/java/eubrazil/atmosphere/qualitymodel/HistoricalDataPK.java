@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -12,7 +14,8 @@ public class HistoricalDataPK implements Serializable {
 
 	private static final long serialVersionUID = -5121472907336677308L;
 
-	@Column(name="historicalDataId", insertable=false, updatable=false)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="historicalDataId")
 	private int historicalDataId;
 	
 	@Temporal(TemporalType.TIMESTAMP)

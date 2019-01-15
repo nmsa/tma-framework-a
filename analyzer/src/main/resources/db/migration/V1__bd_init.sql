@@ -57,7 +57,7 @@ CREATE TABLE leafattribute (
 
 CREATE TABLE historicaldata (
    historicalDataId INT NOT NULL AUTO_INCREMENT,
-   instant TIMESTAMP(6),
+   instant TIMESTAMP(6) NOT NULL,
    value DOUBLE PRECISION,
    attributeId INT NOT NULL,
    PRIMARY KEY (historicalDataId, instant)
@@ -104,8 +104,8 @@ insert into attribute (attributeId, compositeattributeId, name) values (1, 1, 'P
 insert into attribute (attributeId, compositeattributeId, name) values (2, 1, 'INFORMATIONLOSS');
 insert into attribute (attributeId, compositeattributeId, name) values (3, 1, 'REIDENTIFICATIONRISK');
 
-insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (2, 0.0, 1.0, 0, 1, 0);
-insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (3, 0.0, 1.0, 0, 1, 1);
+insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (2, 0.0, 1.0, 0, 2, 0);
+insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (3, 0.0, 1.0, 0, 2, 1);
 
 insert into configurationprofile (configurationprofileId) values (1);
 
@@ -114,7 +114,7 @@ insert into preference (attributeId,configurationprofileId, weight, threshold) v
 insert into preference (attributeId,configurationprofileId, weight, threshold) values (3, 1, 0.9, 0.05);
 
 insert into metricqm (attributeId, configurationprofileId, probeName, descriptionName, resourceName) values (2,1,'probe PRIVaaS','n/a','anonymizator');
-insert into metricqm (attributeId, configurationprofileId, probeName, descriptionName, resourceName) values (3,1,'probe PRIVaaS','n/a','anonymizator');
+insert into metricqm (attributeId, configurationprofileId, probeName, descriptionName, resourceName) values (3,1,'probe PRIVaaS','measurement','anonymizator');
 
 -- insert into historicaldata (attributeId, instant, value) values (1, now(), 0.1);
 -- insert into historicaldata (attributeId, instant, value) values (2, now(), 0.2);

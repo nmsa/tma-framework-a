@@ -62,7 +62,6 @@ public class Leafattribute extends Attribute implements Serializable {
 
 		HistoricalData d = new HistoricalData();
 		d.setInstant(new Timestamp(System.currentTimeMillis()));
-		d.setHistoricalDataId(profile.getPreference(this).getAttribute().getAttributeId());
 		d.setAttribute(this);
 
 		switch (operator) {

@@ -114,7 +114,7 @@ public class Metric {
 
 	public List<Data> updateData() {
 		PrivacyService privacyService = SpringContextBridge.services().getPrivacyService();
-		return privacyService.getLimitedDataListById(new Integer(8), new Integer(32), new Integer(8),
+		return privacyService.getLimitedDataListById(new Integer(8), new Integer(30), new Integer(8),
 				new PageRequest(0, this.attribute.getNumSamples()));
 	}
 	

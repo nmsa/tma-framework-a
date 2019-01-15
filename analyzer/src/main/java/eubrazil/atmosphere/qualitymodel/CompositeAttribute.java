@@ -99,7 +99,6 @@ public class CompositeAttribute extends Attribute implements Serializable {
 	public HistoricalData calculate(ConfigurationProfile profile) {
 		HistoricalData d = new HistoricalData();
 		d.setInstant(new Timestamp(System.currentTimeMillis()));
-		d.setHistoricalDataId(profile.getPreference(this).getAttribute().getAttributeId());
 		d.setAttribute(profile.getPreference(this).getAttribute());
 
 		switch (operator) {
@@ -116,9 +115,9 @@ public class CompositeAttribute extends Attribute implements Serializable {
 			throw new UnsupportedOperationException();
 		}
 
-		// Armazena o score calculado em HistoricalDate
+		// Stores calculated score in HistoricalDate
 		PrivacyService privacyService = SpringContextBridge.services().getPrivacyService();
-		System.out.println(d);
+//		System.out.println(d);
 		privacyService.save(d);
 		
 		return d;
