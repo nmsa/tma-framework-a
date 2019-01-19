@@ -1,4 +1,4 @@
-package eubrazil.atmosphere.service;
+package eubrazil.atmosphere.service.impl;
 
 import java.util.List;
 
@@ -6,22 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import eubrazil.atmosphere.commons.utils.ListUtils;
 import eubrazil.atmosphere.entity.Data;
-import eubrazil.atmosphere.entity.Privacy;
 import eubrazil.atmosphere.qualitymodel.ConfigurationProfile;
 import eubrazil.atmosphere.qualitymodel.HistoricalData;
 import eubrazil.atmosphere.repository.ConfigurationProfileRepository;
 import eubrazil.atmosphere.repository.DataRepository;
 import eubrazil.atmosphere.repository.HistoricalDataRepository;
-import eubrazil.atmosphere.repository.PrivacyRepository;
-import eubrazil.atmosphere.service.spec.PrivacyService;
+import eubrazil.atmosphere.service.TrustworthinessService;
 
 @Service
-public class PrivacyServiceImpl implements PrivacyService {
-
-	@Autowired
-	private PrivacyRepository privacyRepository;
+public class TrustworthinessServiceImpl implements TrustworthinessService {
 
 	@Autowired
 	private DataRepository dataRepository;
@@ -43,15 +37,6 @@ public class PrivacyServiceImpl implements PrivacyService {
 	}
 	
 	@Override
-	public Privacy getLastMeasure() {
-		List<Privacy> privacyList = this.privacyRepository.getLastMeasure();
-		if (ListUtils.isNotEmpty(privacyList)) {
-			return ListUtils.getFirstElement(privacyList);
-		}
-		return null;
-	}
-	
-	@Override
 	public void save(HistoricalData historicalData) {
 		historicalDataRepository.save(historicalData);
 	}
@@ -59,10 +44,6 @@ public class PrivacyServiceImpl implements PrivacyService {
 	@Override
 	public List<ConfigurationProfile> findPrinvacyInstance() {
 		return configurationProfileRepository.findPrinvacyInstance();
-	}
-	
-	public HistoricalData getLastHitoricalDataByChild() {
-		return new HistoricalData(); // TODO - Implementar busca na base
 	}
 
 }

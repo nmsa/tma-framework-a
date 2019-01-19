@@ -6,8 +6,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
-import eubrazil.atmosphere.service.spec.PrivacyService;
-import eubrazil.atmosphere.service.spec.SpringContextBridgedServices;
+import eubrazil.atmosphere.service.SpringContextBridgedServices;
+import eubrazil.atmosphere.service.TrustworthinessService;
 
 @Component
 public class SpringContextBridge implements SpringContextBridgedServices, ApplicationContextAware {
@@ -15,7 +15,7 @@ public class SpringContextBridge implements SpringContextBridgedServices, Applic
 	private static ApplicationContext applicationContext;
 
 	@Autowired
-	private PrivacyService privacyService; //Autowire the PrivacyService
+	private TrustworthinessService trustworthinessService; // Autowire the TrustworthinessService
 
 	@SuppressWarnings("static-access")
 	@Override
@@ -27,10 +27,9 @@ public class SpringContextBridge implements SpringContextBridgedServices, Applic
 		return applicationContext.getBean(SpringContextBridgedServices.class);
 	}
 
-	
 	@Override
-	public PrivacyService getPrivacyService() {
-		return privacyService;
+	public TrustworthinessService getTrustworthinessService() {
+		return trustworthinessService;
 	}
 
 }

@@ -13,28 +13,30 @@ import eubrazil.atmosphere.qualitymodel.ConfigurationProfile;
 import eubrazil.atmosphere.qualitymodel.Leafattribute;
 import eubrazil.atmosphere.qualitymodel.Metric;
 import eubrazil.atmosphere.qualitymodel.Preference;
-import eubrazil.atmosphere.service.spec.PrivacyService;
+import eubrazil.atmosphere.service.TrustworthinessService;
 
 @Component
-public class PrivacyQualityModel {
+public class TrustworthinessQualityModel {
 
-	private static PrivacyQualityModel instance = new PrivacyQualityModel();
+	private static TrustworthinessQualityModel instance = new TrustworthinessQualityModel();
 
 	private ConfigurationProfile configurationActor = null;
 	
 	@Autowired
-	private PrivacyService privacyService;
+	private TrustworthinessService trustworthinessService;
 	
-	private PrivacyQualityModel() {
+	private TrustworthinessQualityModel() {
 	}
 
 	@PostConstruct
 	public void init() {
 		System.out.println("-------------------------------------------------------");
-		System.out.println("------------Initializing privacy instance--------------");
+		System.out.println("---------Initializing trustworthiness instance---------");
 		System.out.println("-------------------------------------------------------");
 		
-		List<ConfigurationProfile> configProfileList = privacyService.findPrinvacyInstance();
+		//TODO Load Config profile active = true;
+		
+		List<ConfigurationProfile> configProfileList = trustworthinessService.findPrinvacyInstance();
 		
 		ConfigurationProfile configurationActorBD = null;
 		if (ListUtils.isNotEmpty(configProfileList)) {
@@ -85,62 +87,12 @@ public class PrivacyQualityModel {
 		
 		instance.setConfigurationActor(configurationActor);
 		
-//		// ConfigurationProfile
-//		configurationActor = new ConfigurationProfile();
-//		
-//		// Preferences
-//		Preference privacyPreference = new Preference(0.2, 0.05);
-//		Preference informationLossPreference = new Preference(0.1, 0.7);
-//		Preference reIdentificationRiskPreference = new Preference(0.9, 0.05);
-//
-//		// Metrics
-//		Metric informationLossMetric = new Metric(); //("n/a", "probe PRIVaaS","anonymizator");
-//		informationLossMetric.setDescriptionName("n/a");
-//		informationLossMetric.setProbeName("probe PRIVaaS");
-//		informationLossMetric.setResourceName("anonymizator");
-//		Metric reIdentificationRiskMetric = new Metric(); //("n/a", "probe PRIVaaS","anonymizator");
-//		reIdentificationRiskMetric.setDescriptionName("n/a");
-//		reIdentificationRiskMetric.setProbeName("probe PRIVaaS");
-//		reIdentificationRiskMetric.setResourceName("anonymizator");
-//		
-//		// HistoricalData
-//		HistoricalData privacyHistoricalData = new HistoricalData(); // TODO: busca dados no banco?
-//		
-//		// LeafAttributes
-//		Leafattribute informationLoss = new Leafattribute(MetricNormalizationKind.BENEFIT, 1.0, 0.0, 1,
-//				MetricAggregationOperator.AVERAGE);
-//		Leafattribute reIdentificationRisk = new Leafattribute(MetricNormalizationKind.COST, 1.0, 0.0, 1,
-//				MetricAggregationOperator.AVERAGE);
-//		
-//		informationLossMetric.setAttribute(informationLoss);
-//		reIdentificationRiskMetric.setAttribute(reIdentificationRisk);
-//		
-//		// CompositeAttribute
-//		CompositeAttribute privacy = new CompositeAttribute();
-//		
-//		privacyPreference.setAttribute(privacy);
-//		
-//		privacy.addAttribute(informationLoss);
-//		privacy.addAttribute(reIdentificationRisk);
-//		
-//		informationLossPreference.setAttribute(informationLoss);
-//		reIdentificationRiskPreference.setAttribute(reIdentificationRisk);
-//		
-//		configurationActor.addPreference(privacyPreference);
-//		configurationActor.addPreference(informationLossPreference);
-//		configurationActor.addPreference(reIdentificationRiskPreference);
-//		
-//		configurationActor.addMetric(informationLossMetric);
-//		configurationActor.addMetric(reIdentificationRiskMetric);
-//		
-//		instance.setConfigurationActor(configurationActor);
-		
 		System.out.println("-------------------------------------------------------");
-		System.out.println("--------------Privacy instance initialized-------------");
+		System.out.println("---------Trustworthiness instance inicialized----------");
 		System.out.println("-------------------------------------------------------");
 	}
 
-	public static PrivacyQualityModel getPrivacyInstance() {
+	public static TrustworthinessQualityModel getPrivacyInstance() {
 		return instance;
 	}
 

@@ -17,7 +17,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.data.domain.PageRequest;
 
 import eubrazil.atmosphere.entity.Data;
-import eubrazil.atmosphere.service.spec.PrivacyService;
+import eubrazil.atmosphere.service.TrustworthinessService;
 
 
 /**
@@ -113,7 +113,7 @@ public class Metric {
 	}
 
 	public List<Data> updateData() {
-		PrivacyService privacyService = SpringContextBridge.services().getPrivacyService();
+		TrustworthinessService privacyService = SpringContextBridge.services().getTrustworthinessService();
 		return privacyService.getLimitedDataListById(new Integer(8), new Integer(30), new Integer(8),
 				new PageRequest(0, this.attribute.getNumSamples()));
 	}

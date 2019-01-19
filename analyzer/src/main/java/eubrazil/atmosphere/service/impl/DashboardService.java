@@ -1,4 +1,4 @@
-package eubrazil.atmosphere.service;
+package eubrazil.atmosphere.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

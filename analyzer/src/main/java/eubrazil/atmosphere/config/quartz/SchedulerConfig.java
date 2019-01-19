@@ -1,4 +1,4 @@
-package eubrazil.atmosphere.config;
+package eubrazil.atmosphere.config.quartz;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,8 +16,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-
-import eubrazil.atmosphere.config.quartz.AutowiringSpringBeanJobFactory;
 
 @Configuration
 public class SchedulerConfig {

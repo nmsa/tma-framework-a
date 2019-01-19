@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import eubrazil.atmosphere.entity.dashboard.Properties;
 import eubrazil.atmosphere.entity.dashboard.PropertiesJsonMap;
-import eubrazil.atmosphere.service.DashboardService;
+import eubrazil.atmosphere.service.impl.DashboardService;
 
 /**
 * <p>DashboardController.java</p>
@@ -24,7 +24,7 @@ import eubrazil.atmosphere.service.DashboardService;
 @Controller
 public class DashboardController {
 
-public static final Logger LOGGER = LoggerFactory.getLogger(PrivacyController.class); 
+public static final Logger LOGGER = LoggerFactory.getLogger(DashboardController.class); 
 	
 	@Autowired
 	private DashboardService dashBoardService;
@@ -41,4 +41,5 @@ public static final Logger LOGGER = LoggerFactory.getLogger(PrivacyController.cl
 		newProp.toString();
 	}
 	
+	// GET properties
 }

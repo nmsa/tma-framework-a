@@ -31,6 +31,8 @@ public class ConfigurationProfile implements Serializable {
 	@Id
 	@GeneratedValue
 	private int configurationprofileId;
+	
+	//TODO boolean active = false;
 
 	//bi-directional many-to-one association to Metric
 	@OneToMany(mappedBy="configurationprofile", fetch = FetchType.EAGER)

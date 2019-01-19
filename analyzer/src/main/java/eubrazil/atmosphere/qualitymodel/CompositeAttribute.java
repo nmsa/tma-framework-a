@@ -16,7 +16,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import eubrazil.atmosphere.commons.utils.ListUtils;
 import eubrazil.atmosphere.exceptions.UndefinedMetricException;
-import eubrazil.atmosphere.service.spec.PrivacyService;
+import eubrazil.atmosphere.service.TrustworthinessService;
 
 /**
  * The persistent class for the compositeattribute database table.
@@ -116,8 +116,8 @@ public class CompositeAttribute extends Attribute implements Serializable {
 		}
 
 		// Stores calculated score in HistoricalDate
-		PrivacyService privacyService = SpringContextBridge.services().getPrivacyService();
-//		System.out.println(d);
+		TrustworthinessService privacyService = SpringContextBridge.services().getTrustworthinessService();
+		// System.out.println(d);
 		privacyService.save(d);
 		
 		return d;
@@ -154,12 +154,6 @@ public class CompositeAttribute extends Attribute implements Serializable {
 		attribute.setCompositeattribute(null);
 
 		return attribute;
-	}
-
-	@Override
-	public HistoricalData getHistoricaldata() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

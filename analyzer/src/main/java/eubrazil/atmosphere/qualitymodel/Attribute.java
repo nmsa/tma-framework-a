@@ -73,8 +73,6 @@ public abstract class Attribute implements Serializable {
 		this.compositeattribute = compositeattribute;
 	}
 
-	public abstract HistoricalData getHistoricaldata();
-
 	public void setHistoricaldata(HistoricalData historicaldata) {
 		this.historicaldata = historicaldata;
 	}

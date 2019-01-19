@@ -85,19 +85,14 @@ public class Leafattribute extends Attribute implements Serializable {
 	}
 
 	protected double calculateAverage(ConfigurationProfile profile) {
-//		System.out.println("calculateAverage...");
 		double average = 0;
 		double amount = 0;
 		Iterator<Metric> iterMetric = profile.getMetrics().iterator();
 		while (iterMetric.hasNext()) {
 			Metric metric = iterMetric.next();
-			
-			//System.out.println("metric: " + metric);
-
 			if (metric.getAttribute().equals(this)) {
 				// The user-defined metric concerns the same leaf attribute (metric definition)
 				List<Data> data = metric.updateData();
-//				System.out.println(data);
 				amount += (double) data.size();
 				Iterator<Data> iterData = data.iterator();
 				while (iterData.hasNext()) {
@@ -106,9 +101,6 @@ public class Leafattribute extends Attribute implements Serializable {
 				}
 			}
 		}
-		
-//		System.out.println("average: " + average);
-//		System.out.println("amount: " + amount);
 		
 		return average / amount;
 	}
@@ -222,16 +214,6 @@ public class Leafattribute extends Attribute implements Serializable {
 
 	public void setMetric(Metric metric) {
 		this.metric = metric;
-	}
-
-	@Override
-	public HistoricalData getHistoricaldata() {
-		
-		// Busca último (instant) HistoricalData(HD) que aponte para o filho corrente
-		
-		// Caso não encontre em HistoricalData, busca os últimos numSamples de Data que aponte para o filho corrente. 
-		
-		return null;
 	}
 
 	@Override
