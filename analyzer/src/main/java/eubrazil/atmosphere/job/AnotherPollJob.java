@@ -12,21 +12,25 @@ import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.stereotype.Component;
 
-import eubrazil.atmosphere.config.SchedulerConfig;
+import eubrazil.atmosphere.config.quartz.SchedulerConfig;
 
+/**
+ * AnotherPollJob - If we need to create another job to run at a different frequency
+ * @author JorgeLuiz
+ */
 @Component
 @DisallowConcurrentExecution
-public class SecurityPollJob implements Job {
+public class AnotherPollJob implements Job {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
 	public void execute(JobExecutionContext jobExecutionContext) {
-		LOGGER.info("SecurityPollJob executando..");
+		LOGGER.info("AnotherPollJob - executing..");
 		
 		LOGGER.info("...");
 		
-		LOGGER.info("SecurityPollJob fim execução..");
+		LOGGER.info("AnotherPollJob - end of execution..");
 	}
 
 	@Bean(name = "jobBean2")

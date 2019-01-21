@@ -4,42 +4,30 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 
 
 /**
- * The persistent class for the action database table.
+ * The persistent class for the Action database table.
  * 
  */
 @Entity(name="action")
 @NamedQuery(name="action.findAll", query="SELECT a FROM action a")
 public class Action implements Serializable {
-
-	private static final long serialVersionUID = -6724051405118187323L;
+	
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int actionId;
 
 	private String actionName;
 
-	//bi-directional many-to-one association to Actuator
-	@ManyToOne
-	@JoinColumn(name="actuatorId")
-	private Actuator actuator;
+	private int actuatorId;
 
-	//bi-directional many-to-one association to Resource
-	@ManyToOne
-	@JoinColumn(name="resourceId")
-	private Resource resource;
-
-	//bi-directional one-to-one association to Configuration
-	@OneToOne(mappedBy="action")
-	private Configuration configuration;
+	private int resourceId;
 
 	public Action() {
 	}
@@ -60,28 +48,20 @@ public class Action implements Serializable {
 		this.actionName = actionName;
 	}
 
-	public Actuator getActuator() {
-		return this.actuator;
+	public int getActuatorId() {
+		return this.actuatorId;
 	}
 
-	public void setActuator(Actuator actuator) {
-		this.actuator = actuator;
+	public void setActuatorId(int actuatorId) {
+		this.actuatorId = actuatorId;
 	}
 
-	public Resource getResource() {
-		return this.resource;
+	public int getResourceId() {
+		return this.resourceId;
 	}
 
-	public void setResource(Resource resource) {
-		this.resource = resource;
-	}
-
-	public Configuration getConfiguration() {
-		return this.configuration;
-	}
-
-	public void setConfiguration(Configuration configuration) {
-		this.configuration = configuration;
+	public void setResourceId(int resourceId) {
+		this.resourceId = resourceId;
 	}
 
 }

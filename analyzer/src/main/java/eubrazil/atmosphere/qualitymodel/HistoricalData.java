@@ -1,99 +1,89 @@
-/**
- */
 package eubrazil.atmosphere.qualitymodel;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+
 /**
- * @generated
+ * The persistent class for the historicaldata database table.
  */
-public class HistoricalData {
-	/**
-	 * @generated
-	 */
-	protected static final Timestamp INSTANT_EDEFAULT = null;
+@Entity(name="historicaldata")
+@NamedQuery(name="historicaldata.findAll", query="SELECT h FROM historicaldata h")
+public class HistoricalData implements Serializable {
 
-	/**
-	 * @generated
-	 */
-	protected Timestamp instant = INSTANT_EDEFAULT;
+	private static final long serialVersionUID = 467016496297144958L;
 
-	/**
-	 * @generated
-	 */
-	protected static final double VALUE_EDEFAULT = 0.0;
+//	@Id
+//	@GeneratedValue
+//	private int historicalDataId;
+//
+//	private Timestamp instant;
+	
+	@EmbeddedId
+	private HistoricalDataPK id;
 
-	/**
-	 * @generated
-	 */
-	protected double value = VALUE_EDEFAULT;
+	private double value;
 
-	/**
-	 * @generated
-	 */
-	protected Attribute attribute;
+	//bi-directional one-to-one association to Attribute
+	@OneToOne
+	@JoinColumn(name="attributeId")
+	private Attribute attribute;
 
-	/**
-	 * @generated
-	 */
 	public HistoricalData() {
+	}
+
+	public HistoricalData(Timestamp instant, double value) {
 		super();
+		this.setInstant(instant);
+		this.value = value;
 	}
 
-	/**
-	 * @generated
-	 */
-	public Timestamp getInstant() {
-		return instant;
+	public HistoricalDataPK getId() {
+		return id;
 	}
 
-	/**
-	 * @generated
-	 */
-	public void setInstant(Timestamp newInstant) {
-		instant = newInstant;
+	public void setId(HistoricalDataPK id) {
+		this.id = id;
 	}
 
-	/**
-	 * @generated
-	 */
 	public double getValue() {
-		return value;
+		return this.value;
 	}
 
-	/**
-	 * @generated
-	 */
-	public void setValue(double newValue) {
-		value = newValue;
+	public void setValue(double value) {
+		this.value = value;
 	}
 
-	/**
-	 * @generated
-	 */
 	public Attribute getAttribute() {
-		return attribute;
+		return this.attribute;
 	}
 
-	/**
-	 * @generated
-	 */
-	public void setAttribute(Attribute newAttribute) {
-		attribute = newAttribute;
+	public void setAttribute(Attribute attribute) {
+		this.attribute = attribute;
 	}
 
-	/**
-	 * @generated
-	 */
+	public void setInstant(java.util.Date instant) {
+		if (this.id == null) {
+			this.id = new HistoricalDataPK();
+		}
+		this.id.setInstant(instant);
+	}
+	
+	public void setHistoricalDataId(int historicalDataId) {
+		if (this.id == null) {
+			this.id = new HistoricalDataPK();
+		}
+		this.id.setHistoricalDataId(historicalDataId);
+	}
+	
 	@Override
 	public String toString() {
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (instant: ");
-		result.append(instant);
-		result.append(", value: ");
-		result.append(value);
-		result.append(')');
-		return result.toString();
+		return "HistoricalData [id=" + id + ", value=" + value + ", attribute=" + attribute + "]";
 	}
-
-} // HistoricalData
+	
+}

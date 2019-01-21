@@ -1,149 +1,127 @@
-/**
- */
 package eubrazil.atmosphere.qualitymodel;
-
-import eubrazil.atmosphere.entity.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.data.domain.PageRequest;
+
+import eubrazil.atmosphere.entity.Data;
+import eubrazil.atmosphere.service.TrustworthinessService;
+
+
 /**
- * @generated
+ * The persistent class for the metric database table.
  */
+@Entity(name="metricqm")
+@NamedQuery(name="metricqm.findAll", query="SELECT m FROM metricqm m")
 public class Metric {
-	/**
-	 * @generated
-	 */
-	protected static final String PROBE_NAME_EDEFAULT = null;
+	
+	@Id
+	@GeneratedValue
+	private int attributeId;
 
-	/**
-	 * @generated
-	 */
-	protected String probeName = PROBE_NAME_EDEFAULT;
+	private String descriptionName;
 
-	/**
-	 * @generated
-	 */
-	protected static final String DESCRIPTION_NAME_EDEFAULT = null;
+	private String probeName;
 
-	/**
-	 * @generated
-	 */
-	protected String descriptionName = DESCRIPTION_NAME_EDEFAULT;
+	private String resourceName;
 
-	/**
-	 * @generated
-	 */
-	protected static final String RESOURCE_NAME_EDEFAULT = null;
+	//bi-directional many-to-one association to Configurationprofile
+	@ManyToOne
+	@JoinColumn(name="configurationprofileId")
+	private ConfigurationProfile configurationprofile;
 
-	/**
-	 * @generated
-	 */
-	protected String resourceName = RESOURCE_NAME_EDEFAULT;
+	//bi-directional one-to-one association to Leafattribute
+	@OneToOne
+	@JoinColumn(name="attributeId")
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private Leafattribute attribute;
 
-	/**
-	 * @generated
-	 */
-	protected LeafAttribute attribute;
-
-	/**
-	 * @generated
-	 */
-	protected List<Data> data;
-
-	/**
-	 * @generated
-	 */
-	public Metric() {
-		super();
+	//bi-directional many-to-one association to Data
+//	@OneToMany(mappedBy="metricId")
+	@Transient
+	private List<Data> data;
+	
+	public int getAttributeId() {
+		return attributeId;
 	}
 
-	/**
-	 * @generated
-	 */
-	public String getProbeName() {
-		return probeName;
+	public void setAttributeId(int attributeId) {
+		this.attributeId = attributeId;
 	}
 
-	/**
-	 * @generated
-	 */
-	public void setProbeName(String newProbeName) {
-		probeName = newProbeName;
-	}
-
-	/**
-	 * @generated
-	 */
 	public String getDescriptionName() {
-		return descriptionName;
+		return this.descriptionName;
 	}
 
-	/**
-	 * @generated
-	 */
-	public void setDescriptionName(String newDescriptionName) {
-		descriptionName = newDescriptionName;
+	public void setDescriptionName(String descriptionName) {
+		this.descriptionName = descriptionName;
 	}
 
-	/**
-	 * @generated
-	 */
+	public String getProbeName() {
+		return this.probeName;
+	}
+
+	public void setProbeName(String probeName) {
+		this.probeName = probeName;
+	}
+
 	public String getResourceName() {
-		return resourceName;
+		return this.resourceName;
 	}
 
-	/**
-	 * @generated
-	 */
-	public void setResourceName(String newResourceName) {
-		resourceName = newResourceName;
+	public void setResourceName(String resourceName) {
+		this.resourceName = resourceName;
 	}
 
-	/**
-	 * @generated
-	 */
-	public LeafAttribute getAttribute() {
+	public ConfigurationProfile getConfigurationprofile() {
+		return this.configurationprofile;
+	}
+
+	public void setConfigurationprofile(ConfigurationProfile configurationprofile) {
+		this.configurationprofile = configurationprofile;
+	}
+
+	public Leafattribute getAttribute() {
 		return attribute;
 	}
 
-	/**
-	 * @generated
-	 */
-	public void setAttribute(LeafAttribute newAttribute) {
-		attribute = newAttribute;
+	public void setAttribute(Leafattribute attribute) {
+		this.attribute = attribute;
 	}
 
-	/**
-	 * @generated
-	 */
 	public List<Data> getData() {
-		if (data == null) {
-			data = new ArrayList<Data>();
+		if (this.data == null) {
+			this.data = new ArrayList<Data>();
 		}
-		return data;
+		return this.data;
+	}
+
+	public void setData(List<Data> data) {
+		this.data = data;
+	}
+
+	public List<Data> updateData() {
+		TrustworthinessService privacyService = SpringContextBridge.services().getTrustworthinessService();
+		return privacyService.getLimitedDataListById(new Integer(8), new Integer(30), new Integer(8),
+				new PageRequest(0, this.attribute.getNumSamples()));
 	}
 	
-	public List<Data> updateData(){
-		return null;
-	}
-
-	/**
-	 * @generated
-	 */
 	@Override
 	public String toString() {
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (probeName: ");
-		result.append(probeName);
-		result.append(", descriptionName: ");
-		result.append(descriptionName);
-		result.append(", resourceName: ");
-		result.append(resourceName);
-		result.append(", data: ");
-		result.append(data);
-		result.append(')');
-		return result.toString();
+		return "Metric [descriptionName=" + descriptionName + ", probeName=" + probeName + ", resourceName="
+				+ resourceName + "]";
 	}
 
-} // Metric
+}

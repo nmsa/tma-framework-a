@@ -8,13 +8,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * The primary key class for the data database table.
+ * The primary key class for the Data database table.
  * 
  */
 @Embeddable
 public class DataPK implements Serializable {
-
-	private static final long serialVersionUID = 3943277327598587689L;
+	//default serial version id, required for serializable classes.
+	private static final long serialVersionUID = 1L;
 
 	@Column(name="probeId", insertable=false, updatable=false)
 	private int probeId;

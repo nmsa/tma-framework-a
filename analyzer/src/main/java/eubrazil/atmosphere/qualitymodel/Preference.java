@@ -1,97 +1,118 @@
-/**
- */
 package eubrazil.atmosphere.qualitymodel;
 
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+
+
 /**
- * @generated
+ * The persistent class for the preference database table.
  */
-public class Preference {
-	/**
-	 * @generated
-	 */
-	protected static final double WEIGHT_EDEFAULT = 1.0;
+@Entity(name="preference")
+@NamedQuery(name="preference.findAll", query="SELECT p FROM preference p")
+public class Preference implements Serializable {
 
-	/**
-	 * @generated
-	 */
-	protected double weight = WEIGHT_EDEFAULT;
+	private static final long serialVersionUID = 4897045709573210431L;
 
-	/**
-	 * @generated
-	 */
-	protected Attribute attribute;
+	@Id
+	@GeneratedValue
+	private int attributeId;
 
-	/**
-	 * @generated
-	 */
-	protected static final double THRESHOLD_EDEFAULT = 1.0;
+	private double threshold;
 
-	/**
-	 * @generated
-	 */
-	protected double threshold = THRESHOLD_EDEFAULT;
+	private double weight;
 
-	/**
-	 * @generated
-	 */
+	//bi-directional many-to-one association to Configurationprofile
+	@ManyToOne
+	@JoinColumn(name="configurationprofileId")
+	private ConfigurationProfile configurationprofile;
+
+	//bi-directional one-to-one association to Attribute
+	@OneToOne
+	@JoinColumn(name="attributeId")
+	private Attribute attribute;
+
 	public Preference() {
-		super();
 	}
 
-	/**
-	 * @generated
-	 */
-	public double getWeight() {
-		return weight;
+	public Preference(int attributeId, double threshold, double weight) {
+		this.attributeId = attributeId;
+		this.threshold = threshold;
+		this.weight = weight;
 	}
 
-	/**
-	 * @generated
-	 */
-	public void setWeight(double newWeight) {
-		weight = newWeight;
-	}
-
-	/**
-	 * @generated
-	 */
-	public Attribute getAttribute() {
-		return attribute;
-	}
-
-	/**
-	 * @generated
-	 */
-	public void setAttribute(Attribute newAttribute) {
-		attribute = newAttribute;
-	}
-
-	/**
-	 * @generated
-	 */
 	public double getThreshold() {
-		return threshold;
+		return this.threshold;
 	}
 
-	/**
-	 * @generated
-	 */
-	public void setThreshold(double newThreshold) {
-		threshold = newThreshold;
+	public void setThreshold(double threshold) {
+		this.threshold = threshold;
 	}
 
-	/**
-	 * @generated
-	 */
+	public double getWeight() {
+		return this.weight;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+
+	public ConfigurationProfile getConfigurationprofile() {
+		return this.configurationprofile;
+	}
+
+	public void setConfigurationprofile(ConfigurationProfile configurationprofile) {
+		this.configurationprofile = configurationprofile;
+	}
+
+	public Attribute getAttribute() {
+		return this.attribute;
+	}
+
+	public void setAttribute(Attribute attribute) {
+		this.attribute = attribute;
+	}
+
 	@Override
 	public String toString() {
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (weight: ");
-		result.append(weight);
-		result.append(", threshold: ");
-		result.append(threshold);
-		result.append(')');
-		return result.toString();
+		return "Preference [threshold=" + threshold + ", weight=" + weight + "]";
 	}
 
-} // Preference
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + attributeId;
+		long temp;
+		temp = Double.doubleToLongBits(threshold);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(weight);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Preference other = (Preference) obj;
+		if (attributeId != other.attributeId)
+			return false;
+		if (Double.doubleToLongBits(threshold) != Double.doubleToLongBits(other.threshold))
+			return false;
+		if (Double.doubleToLongBits(weight) != Double.doubleToLongBits(other.weight))
+			return false;
+		return true;
+	}
+
+}
