@@ -119,7 +119,7 @@ public class CompositeAttribute extends Attribute implements Serializable {
 
 		// Stores calculated score in HistoricalDate
 		TrustworthinessService privacyService = SpringContextBridge.services().getTrustworthinessService();
-		System.out.println(d);
+		//System.out.println(d);
 		privacyService.save(d);
 		
 		return d;
