@@ -29,10 +29,6 @@ public class TrustworthinessServiceImpl implements TrustworthinessService {
 	@Override
 	public List<Data> getLimitedDataListById(Integer probeId, Integer descriptionId, Integer resourceId,
 			Pageable numSamples) {
-		System.out.println("probeId: " + probeId);
-		System.out.println("descriptionId: " + descriptionId);
-		System.out.println("resourceId: " + resourceId);
-		System.out.println("numSamples: " + numSamples);
 		return dataRepository.getLimitedDataListById(probeId, descriptionId, resourceId, numSamples);
 	}
 	
@@ -42,8 +38,8 @@ public class TrustworthinessServiceImpl implements TrustworthinessService {
 	}
 	
 	@Override
-	public List<ConfigurationProfile> findPrinvacyInstance() {
-		return configurationProfileRepository.findPrinvacyInstance();
+	public List<ConfigurationProfile> findPrivacyInstance() {
+		return configurationProfileRepository.findPrivacyInstance();
 	}
 
 }

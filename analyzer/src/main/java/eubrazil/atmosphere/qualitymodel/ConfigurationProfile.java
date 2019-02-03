@@ -1,9 +1,7 @@
 package eubrazil.atmosphere.qualitymodel;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -44,7 +42,7 @@ public class ConfigurationProfile implements Serializable {
 	@OneToMany(mappedBy="configurationprofile", fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SUBSELECT)
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Preference> preferences;
+	private Set<Preference> preferences;
 
 	public ConfigurationProfile() {
 	}
@@ -82,9 +80,9 @@ public class ConfigurationProfile implements Serializable {
 		return metric;
 	}
 
-	public List<Preference> getPreferences() {
+	public Set<Preference> getPreferences() {
 		if (preferences == null) {
-			preferences = new ArrayList<Preference>();
+			preferences = new HashSet<Preference>();
 		}
 		return preferences;
 	}
@@ -98,7 +96,7 @@ public class ConfigurationProfile implements Serializable {
 		return null;
 	}
 
-	public void setPreferences(List<Preference> preferences) {
+	public void setPreferences(Set<Preference> preferences) {
 		this.preferences = preferences;
 	}
 
@@ -118,8 +116,7 @@ public class ConfigurationProfile implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ConfigurationProfile [configurationprofileId=" + configurationprofileId + ", metrics=" + metrics
-				+ ", preferences=" + preferences + "]";
+		return "ConfigurationProfile [metrics=" + metrics + ", preferences=" + preferences + "]";
 	}
 
 }

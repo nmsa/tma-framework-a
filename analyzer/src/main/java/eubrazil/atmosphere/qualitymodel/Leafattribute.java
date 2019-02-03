@@ -90,6 +90,7 @@ public class Leafattribute extends Attribute implements Serializable {
 		Iterator<Metric> iterMetric = profile.getMetrics().iterator();
 		while (iterMetric.hasNext()) {
 			Metric metric = iterMetric.next();
+			
 			if (metric.getAttribute().equals(this)) {
 				// The user-defined metric concerns the same leaf attribute (metric definition)
 				List<Data> data = metric.updateData();
@@ -101,12 +102,11 @@ public class Leafattribute extends Attribute implements Serializable {
 				}
 			}
 		}
-		
+
 		return average / amount;
 	}
 
 	protected double calculateMinimum(ConfigurationProfile profile) {
-
 		double minimum = 0;
 		Iterator<Metric> iterMetric = profile.getMetrics().iterator();
 		while (iterMetric.hasNext()) {
@@ -215,11 +215,19 @@ public class Leafattribute extends Attribute implements Serializable {
 	public void setMetric(Metric metric) {
 		this.metric = metric;
 	}
+	
+	@Override
+	public String toString() {
+		return "Leafattribute [normalizationKind=" + normalizationKind + ", normalizationMax=" + normalizationMax
+				+ ", normalizationMin=" + normalizationMin + ", numSamples=" + numSamples + ", operator=" + operator
+				+ ", metric=" + metric + "]";
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((metric == null) ? 0 : metric.hashCode());
 		result = prime * result + ((normalizationKind == null) ? 0 : normalizationKind.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(normalizationMax);
@@ -240,6 +248,11 @@ public class Leafattribute extends Attribute implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Leafattribute other = (Leafattribute) obj;
+		if (metric == null) {
+			if (other.metric != null)
+				return false;
+		} else if (!metric.equals(other.metric))
+			return false;
 		if (normalizationKind != other.normalizationKind)
 			return false;
 		if (Double.doubleToLongBits(normalizationMax) != Double.doubleToLongBits(other.normalizationMax))

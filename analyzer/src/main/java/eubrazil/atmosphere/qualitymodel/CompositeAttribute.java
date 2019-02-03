@@ -8,9 +8,12 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -31,7 +34,8 @@ public class CompositeAttribute extends Attribute implements Serializable {
 	private AttributeAggregationOperator operator = AttributeAggregationOperator.NEUTRALITY;
 
 	// bi-directional many-to-one association to Attribute
-	@OneToMany(mappedBy="compositeattribute")
+	@OneToMany(mappedBy="compositeattribute", fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SUBSELECT)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Attribute> children;
 
@@ -40,17 +44,15 @@ public class CompositeAttribute extends Attribute implements Serializable {
 
 	protected double calculateNeutrality(ConfigurationProfile profile) {
 		double score = 0.0;
-		if (ListUtils.isNotEmpty(this.children)) {
-//			System.out.println("children :" + children);
+		if (ListUtils.isNotEmpty(children)) {
 			for (Attribute child : children) {
-				Preference childPref = profile.getPreference(child);
-//				System.out.println("childPref: " + childPref);
-				try {
-//					System.out.println("child calculate: " + child.calculate(profile).getValue());
-//					System.out.println("preference weight for child: " + childPref.getWeight());
-					score += child.calculate(profile).getValue() * childPref.getWeight();
-				} catch (UndefinedMetricException e) {
-					e.printStackTrace();
+				if (child instanceof Leafattribute) {
+					Preference childPref = profile.getPreference(child);
+					try {
+						score += child.calculate(profile).getValue() * childPref.getWeight();
+					} catch (UndefinedMetricException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
@@ -117,7 +119,7 @@ public class CompositeAttribute extends Attribute implements Serializable {
 
 		// Stores calculated score in HistoricalDate
 		TrustworthinessService privacyService = SpringContextBridge.services().getTrustworthinessService();
-		// System.out.println(d);
+		System.out.println(d);
 		privacyService.save(d);
 		
 		return d;
@@ -159,7 +161,7 @@ public class CompositeAttribute extends Attribute implements Serializable {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
 		result = prime * result + ((operator == null) ? 0 : operator.hashCode());
 		return result;
 	}
@@ -168,7 +170,7 @@ public class CompositeAttribute extends Attribute implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
@@ -176,6 +178,11 @@ public class CompositeAttribute extends Attribute implements Serializable {
 		if (operator != other.operator)
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "CompositeAttribute [operator=" + operator + "]";
 	}
 
 }
