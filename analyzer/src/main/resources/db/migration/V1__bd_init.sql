@@ -84,14 +84,14 @@ ALTER TABLE attribute ADD CONSTRAINT FK_Attribute_0 FOREIGN KEY (compositeattrib
 
 -- ------------------------------------------------------------------------------
 
-insert into compositeattribute (attributeId, operator) values (1,1);
+insert into compositeattribute (attributeId, operator) values (1,0);
 
 insert into attribute (attributeId, compositeattributeId, name) values (1, 1, 'PRIVACY');
 insert into attribute (attributeId, compositeattributeId, name) values (2, 1, 'INFORMATIONLOSS');
 insert into attribute (attributeId, compositeattributeId, name) values (3, 1, 'REIDENTIFICATIONRISK');
 
-insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (2, 0.0, 1.0, 0, 2, 0);
-insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (3, 0.0, 1.0, 0, 2, 1);
+insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (2, 0.0, 1.0, 0, 1, 0);
+insert into leafattribute (attributeId, normalizationMin, normalizationMax, operator, numSamples, normalizationKind) values (3, 0.0, 1.0, 0, 1, 1);
 
 insert into configurationprofile (configurationprofileId) values (1);
 
@@ -101,10 +101,6 @@ insert into preference (attributeId,configurationprofileId, weight, threshold) v
 
 insert into metricqm (attributeId, configurationprofileId, probeName, descriptionName, resourceName) values (2,1,'probe PRIVaaS','n/a','anonymizator');
 insert into metricqm (attributeId, configurationprofileId, probeName, descriptionName, resourceName) values (3,1,'probe PRIVaaS','measurement','anonymizator');
-
--- insert into historicaldata (attributeId, instant, value) values (1, now(), 0.1);
--- insert into historicaldata (attributeId, instant, value) values (2, now(), 0.2);
--- insert into historicaldata (attributeId, instant, value) values (3, now(), 0.3);
 
 -- ------------------------------------------------------------------------------
 

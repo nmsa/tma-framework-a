@@ -15,6 +15,6 @@ public interface TrustworthinessService {
 
 	public void save(HistoricalData historicalData);
 
-	public List<ConfigurationProfile> findPrinvacyInstance();
+	public List<ConfigurationProfile> findPrivacyInstance();
 
 }

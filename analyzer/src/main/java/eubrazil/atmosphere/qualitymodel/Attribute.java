@@ -86,10 +86,44 @@ public abstract class Attribute implements Serializable {
 	}
 
 	@Override
-	public abstract int hashCode();
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + attributeId;
+		result = prime * result + ((compositeattribute == null) ? 0 : compositeattribute.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((preference == null) ? 0 : preference.hashCode());
+		return result;
+	}
 
 	@Override
-	public abstract boolean equals(Object obj);
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Attribute other = (Attribute) obj;
+		if (attributeId != other.attributeId)
+			return false;
+		if (compositeattribute == null) {
+			if (other.compositeattribute != null)
+				return false;
+		} else if (!compositeattribute.equals(other.compositeattribute))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (preference == null) {
+			if (other.preference != null)
+				return false;
+		} else if (!preference.equals(other.preference))
+			return false;
+		return true;
+	}
 
 	@Override
 	public String toString() {
