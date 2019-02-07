@@ -40,6 +40,11 @@ public class HistoricalDataPK implements Serializable {
 	public void setInstant(java.util.Date instant) {
 		this.instant = instant;
 	}
+	
+	@Override
+	public String toString() {
+		return "HistoricalDataPK [instant=" + instant + "]";
+	}
 
 	@Override
 	public int hashCode() {

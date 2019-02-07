@@ -114,6 +114,7 @@ public class Metric {
 
 	public List<Data> updateData() {
 		TrustworthinessService privacyService = SpringContextBridge.services().getTrustworthinessService();
+		// TODO - Verify how to get and pass parameters for this method (for now it is hard coded)
 		return privacyService.getLimitedDataListById(new Integer(8), new Integer(30), new Integer(8),
 				new PageRequest(0, this.attribute.getNumSamples()));
 	}
