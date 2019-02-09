@@ -46,7 +46,7 @@ public class CompositeAttribute extends Attribute implements Serializable {
 		double score = 0.0;
 		if (ListUtils.isNotEmpty(children)) {
 			for (Attribute child : children) {
-				if (child instanceof Leafattribute) {
+				if (!child.equals(this)) {
 					Preference childPref = profile.getPreference(child);
 					try {
 						score += child.calculate(profile).getValue() * childPref.getWeight();
@@ -64,16 +64,18 @@ public class CompositeAttribute extends Attribute implements Serializable {
 		double score = 0.0;
 		if (ListUtils.isNotEmpty(this.children)) {
 			for (Attribute child : children) {
-				Preference childPref = profile.getPreference(child);
-				try {
-					double scoreAux = child.calculate(profile).getValue() * childPref.getWeight();
-					if (scoreAux < childPref.getThreshold()) {
-						score = 0.0;
-						break;
+				if (!child.equals(this)) {
+					Preference childPref = profile.getPreference(child);
+					try {
+						double scoreAux = child.calculate(profile).getValue() * childPref.getWeight();
+						if (scoreAux < childPref.getThreshold()) {
+							score = 0.0;
+							break;
+						}
+						score += scoreAux;
+					} catch (UndefinedMetricException e) {
+						e.printStackTrace();
 					}
-					score += scoreAux;
-				} catch (UndefinedMetricException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -84,14 +86,16 @@ public class CompositeAttribute extends Attribute implements Serializable {
 		double score = 0.0;
 		if (ListUtils.isNotEmpty(this.children)) {
 			for (Attribute child : children) {
-				Preference childPref = profile.getPreference(child);
-				try {
-					double scoreAux = child.calculate(profile).getValue() * childPref.getWeight();
-					if (scoreAux > childPref.getThreshold()) {
-						score += scoreAux;
+				if (!child.equals(this)) {
+					Preference childPref = profile.getPreference(child);
+					try {
+						double scoreAux = child.calculate(profile).getValue() * childPref.getWeight();
+						if (scoreAux > childPref.getThreshold()) {
+							score += scoreAux;
+						}
+					} catch (UndefinedMetricException e) {
+						e.printStackTrace();
 					}
-				} catch (UndefinedMetricException e) {
-					e.printStackTrace();
 				}
 			}
 		}
