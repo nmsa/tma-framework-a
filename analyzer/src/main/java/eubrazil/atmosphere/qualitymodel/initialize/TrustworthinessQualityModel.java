@@ -13,6 +13,10 @@ import eubrazil.atmosphere.commons.utils.ListUtils;
 import eubrazil.atmosphere.qualitymodel.ConfigurationProfile;
 import eubrazil.atmosphere.service.TrustworthinessService;
 
+/**
+ * Initializing Trustworthiness Quality Model on application startup
+ * @author JorgeLuiz
+ */
 @Component
 public class TrustworthinessQualityModel {
 
@@ -37,11 +41,14 @@ public class TrustworthinessQualityModel {
 		//TODO Load Config profile active = true;
 		List<ConfigurationProfile> configProfileList = trustworthinessService.findPrivacyInstance();
 		
-		ConfigurationProfile configurationActorBD = null;
-		if (ListUtils.isNotEmpty(configProfileList)) {
-			configurationActorBD =  ListUtils.getFirstElement(configProfileList);
-			LOGGER.info("TrustworthinessQualityModel (init method) - ConfigurationProfile: " + configurationActorBD);
+		if (ListUtils.isEmpty(configProfileList)) {
+			LOGGER.error("Quality Model for privacy not defined in the database.");
+			return;
 		}
+		
+		ConfigurationProfile configurationActorBD =  ListUtils.getFirstElement(configProfileList);
+		LOGGER.info("TrustworthinessQualityModel (init method) - ConfigurationProfile: " + configurationActorBD);
+		
 		
 		instance.setConfigurationActor(configurationActorBD);
 

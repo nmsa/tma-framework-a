@@ -19,6 +19,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  * The persistent class for the configurationprofile database table.
+ * @author JorgeLuiz
  */
 @Entity(name="configurationprofile")
 @NamedQuery(name="configurationprofile.findAll", query="SELECT c FROM configurationprofile c")

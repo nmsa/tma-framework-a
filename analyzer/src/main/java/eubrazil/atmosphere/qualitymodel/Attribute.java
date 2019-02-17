@@ -1,8 +1,11 @@
 package eubrazil.atmosphere.qualitymodel;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -10,13 +13,14 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import eubrazil.atmosphere.exceptions.UndefinedMetricException;
+import eubrazil.atmosphere.exceptions.UndefinedException;
 
 /**
  * The persistent class for the attribute database table.
- * 
+ * @author JorgeLuiz
  */
 @Entity(name="attribute")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -31,12 +35,12 @@ public abstract class Attribute implements Serializable {
 
 	private String name;
 
-	//bi-directional one-to-one association to Historicaldata
-	@OneToOne(mappedBy="attribute")
-	private HistoricalData historicaldata;
+	//bi-directional one-to-many association to Historicaldata
+	@OneToMany (mappedBy="attribute", fetch = FetchType.LAZY)
+	private List<HistoricalData> historicaldata;
 
 	//bi-directional one-to-one association to Preference
-	@OneToOne(mappedBy="attribute")
+	@OneToOne(mappedBy="attribute", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Preference preference;
 
 	//bi-directional many-to-one association to compositeattribute
@@ -44,7 +48,7 @@ public abstract class Attribute implements Serializable {
 	@JoinColumn(name="compositeattributeId")
 	private CompositeAttribute compositeattribute;
 	
-	public abstract HistoricalData calculate(ConfigurationProfile user) throws UndefinedMetricException;
+	public abstract HistoricalData calculate(ConfigurationProfile user) throws UndefinedException;
 	
 	public Attribute() {
 	}
@@ -73,7 +77,11 @@ public abstract class Attribute implements Serializable {
 		this.compositeattribute = compositeattribute;
 	}
 
-	public void setHistoricaldata(HistoricalData historicaldata) {
+	public List<HistoricalData> getHistoricaldata() {
+		return historicaldata;
+	}
+
+	public void setHistoricaldata(List<HistoricalData> historicaldata) {
 		this.historicaldata = historicaldata;
 	}
 

@@ -9,6 +9,10 @@ import org.springframework.stereotype.Component;
 import eubrazil.atmosphere.service.SpringContextBridgedServices;
 import eubrazil.atmosphere.service.TrustworthinessService;
 
+/**
+ * Autowire the TrustworthinessService
+ * @author JorgeLuiz
+ */
 @Component
 public class SpringContextBridge implements SpringContextBridgedServices, ApplicationContextAware {
 

@@ -2,6 +2,7 @@ package eubrazil.atmosphere.qualitymodel;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,6 +14,7 @@ import javax.persistence.OneToOne;
 
 /**
  * The persistent class for the preference database table.
+ * @author JorgeLuiz
  */
 @Entity(name="preference")
 @NamedQuery(name="preference.findAll", query="SELECT p FROM preference p")
@@ -34,7 +36,7 @@ public class Preference implements Serializable {
 	private ConfigurationProfile configurationprofile;
 
 	//bi-directional one-to-one association to Attribute
-	@OneToOne
+	@OneToOne (cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name="attributeId")
 	private Attribute attribute;
 
@@ -88,7 +90,7 @@ public class Preference implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + attributeId;
+		result = prime * result + ((attribute == null) ? 0 : attribute.getAttributeId());
 		long temp;
 		temp = Double.doubleToLongBits(threshold);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -106,7 +108,10 @@ public class Preference implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Preference other = (Preference) obj;
-		if (attributeId != other.attributeId)
+		if (attribute == null) {
+			if (other.attribute != null)
+				return false;
+		} else if (!attribute.equals(other.attribute))
 			return false;
 		if (Double.doubleToLongBits(threshold) != Double.doubleToLongBits(other.threshold))
 			return false;

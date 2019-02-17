@@ -15,8 +15,8 @@ import eubrazil.atmosphere.entity.dashboard.PropertiesJsonMap;
 import eubrazil.atmosphere.service.impl.DashboardService;
 
 /**
-* <p>DashboardController.java</p>
-* @author Jorge Luiz
+* Dashboard Controller
+* @author JorgeLuiz
 * @version 1.0
  */
 @RestController

@@ -1,5 +1,9 @@
 package eubrazil.atmosphere.qualitymodel;
 
+/**
+ * Attribute aggregation operator enumeration
+ * @author JorgeLuiz
+ */
 public enum AttributeAggregationOperator {
 	
 	NEUTRALITY(0, "NEUTRALITY"), SIMULTANEITY(1, "SIMULTANEITY"), REPLACEABILITY(2, "REPLACEABILITY");

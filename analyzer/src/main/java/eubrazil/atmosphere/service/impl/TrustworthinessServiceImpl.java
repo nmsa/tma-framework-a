@@ -14,6 +14,10 @@ import eubrazil.atmosphere.repository.DataRepository;
 import eubrazil.atmosphere.repository.HistoricalDataRepository;
 import eubrazil.atmosphere.service.TrustworthinessService;
 
+/**
+ * Implementation of trustworthiness services
+ * @author JorgeLuiz
+ */
 @Service
 public class TrustworthinessServiceImpl implements TrustworthinessService {
 

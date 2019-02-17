@@ -4,6 +4,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Useful methods for calculations related to List
+ * @author JorgeLuiz
+ */
 public class ListUtils {
 
 	private ListUtils() {}

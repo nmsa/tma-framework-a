@@ -6,11 +6,12 @@ import java.sql.Timestamp;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 
 /**
  * The persistent class for the historicaldata database table.
+ * @author JorgeLuiz
  */
 @Entity(name="historicaldata")
 @NamedQuery(name="historicaldata.findAll", query="SELECT h FROM historicaldata h")
@@ -23,8 +24,8 @@ public class HistoricalData implements Serializable {
 
 	private double value;
 
-	//bi-directional one-to-one association to Attribute
-	@OneToOne
+	//bi-directional many-to-one association to Attribute
+	@ManyToOne
 	@JoinColumn(name="attributeId")
 	private Attribute attribute;
 
@@ -79,7 +80,7 @@ public class HistoricalData implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((attribute == null) ? 0 : attribute.hashCode());
+		result = prime * result + ((attribute == null) ? 0 : attribute.getAttributeId());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(value);

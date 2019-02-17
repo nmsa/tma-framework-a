@@ -1,5 +1,9 @@
 package eubrazil.atmosphere.qualitymodel;
 
+/**
+ * Metric aggregation operator enumeration
+ * @author JorgeLuiz
+ */
 public enum MetricAggregationOperator {
 	
 	AVERAGE(0, "AVERAGE"), MINIMUM(1, "MINIMUM"), MAXIMUM(2, "MAXIMUM"), SUM(3, "SUM");

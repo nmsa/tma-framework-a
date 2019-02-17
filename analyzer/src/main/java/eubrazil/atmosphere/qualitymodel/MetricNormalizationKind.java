@@ -1,5 +1,9 @@
 package eubrazil.atmosphere.qualitymodel;
 
+/**
+ * Metric normalization kind enumeration
+ * @author JorgeLuiz
+ */
 public enum MetricNormalizationKind {
 
 	BENEFIT(0, "AVERAGE"), COST(1, "MINIMUM");

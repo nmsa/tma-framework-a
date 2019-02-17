@@ -6,6 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 
+/**
+ * Start Spring Boot Analyzer Application
+ * @author JorgeLuiz
+ */
 @EnableAutoConfiguration
 @EnableSpringConfigured
 @ComponentScan
