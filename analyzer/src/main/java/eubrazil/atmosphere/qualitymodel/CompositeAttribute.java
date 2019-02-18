@@ -18,11 +18,14 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import eubrazil.atmosphere.commons.utils.ListUtils;
+import eubrazil.atmosphere.exceptions.UndefinedException;
 import eubrazil.atmosphere.exceptions.UndefinedMetricException;
+import eubrazil.atmosphere.exceptions.UndefinedPreferenceException;
 import eubrazil.atmosphere.service.TrustworthinessService;
 
 /**
  * The persistent class for the compositeattribute database table.
+ * @author JorgeLuiz
  */
 @Entity(name="compositeattribute")
 @NamedQuery(name="compositeattribute.findAll", query="SELECT c FROM compositeattribute c")
@@ -42,7 +45,38 @@ public class CompositeAttribute extends Attribute implements Serializable {
 	public CompositeAttribute() {
 	}
 
-	protected double calculateNeutrality(ConfigurationProfile profile) {
+	public HistoricalData calculate(ConfigurationProfile profile) throws UndefinedException {
+		
+		if (profile == null || ListUtils.isEmpty(profile.getPreferences())) {
+			throw new UndefinedPreferenceException("No defined preference for composite attribute " + this.getName());
+		}
+		
+		HistoricalData d = new HistoricalData();
+		d.setInstant(new Timestamp(System.currentTimeMillis()));
+		d.setAttribute(profile.getPreference(this).getAttribute());
+
+		switch (operator) {
+		case NEUTRALITY:
+			d.setValue(calculateNeutrality(profile));
+			break;
+		case REPLACEABILITY:
+			d.setValue(calculateReplaceability(profile));
+			break;
+		case SIMULTANEITY:
+			d.setValue(calculateSimultaneity(profile));
+			break;
+		default:
+			throw new UnsupportedOperationException();
+		}
+
+		// Stores calculated score in HistoricalDate
+		TrustworthinessService privacyService = SpringContextBridge.services().getTrustworthinessService();
+		privacyService.save(d);
+		
+		return d;
+	}
+	
+	protected double calculateNeutrality(ConfigurationProfile profile) throws UndefinedException {
 		double score = 0.0;
 		if (ListUtils.isNotEmpty(children)) {
 			for (Attribute child : children) {
@@ -56,11 +90,10 @@ public class CompositeAttribute extends Attribute implements Serializable {
 				}
 			}
 		}
-		System.out.println("Score Neutrality: " + score);
 		return score;
 	}
 
-	protected double calculateSimultaneity(ConfigurationProfile profile) {
+	protected double calculateSimultaneity(ConfigurationProfile profile) throws UndefinedException {
 		double score = 0.0;
 		if (ListUtils.isNotEmpty(this.children)) {
 			for (Attribute child : children) {
@@ -82,7 +115,7 @@ public class CompositeAttribute extends Attribute implements Serializable {
 		return score;
 	}
 
-	protected double calculateReplaceability(ConfigurationProfile profile) {
+	protected double calculateReplaceability(ConfigurationProfile profile) throws UndefinedException {
 		double score = 0.0;
 		if (ListUtils.isNotEmpty(this.children)) {
 			for (Attribute child : children) {
@@ -100,33 +133,6 @@ public class CompositeAttribute extends Attribute implements Serializable {
 			}
 		}
 		return score;
-	}
-	
-	public HistoricalData calculate(ConfigurationProfile profile) {
-		HistoricalData d = new HistoricalData();
-		d.setInstant(new Timestamp(System.currentTimeMillis()));
-		d.setAttribute(profile.getPreference(this).getAttribute());
-
-		switch (operator) {
-		case NEUTRALITY:
-			d.setValue(calculateNeutrality(profile));
-			break;
-		case REPLACEABILITY:
-			d.setValue(calculateReplaceability(profile));
-			break;
-		case SIMULTANEITY:
-			d.setValue(calculateSimultaneity(profile));
-			break;
-		default:
-			throw new UnsupportedOperationException();
-		}
-
-		// Stores calculated score in HistoricalDate
-		TrustworthinessService privacyService = SpringContextBridge.services().getTrustworthinessService();
-		//System.out.println(d);
-		privacyService.save(d);
-		
-		return d;
 	}
 
 	public AttributeAggregationOperator getOperator() {

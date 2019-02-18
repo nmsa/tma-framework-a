@@ -17,6 +17,10 @@ import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
+/**
+ * Quartz scheduler settings
+ * @author JorgeLuiz
+ */
 @Configuration
 public class SchedulerConfig {
 

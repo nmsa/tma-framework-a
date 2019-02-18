@@ -8,6 +8,10 @@ import eubrazil.atmosphere.entity.Data;
 import eubrazil.atmosphere.qualitymodel.ConfigurationProfile;
 import eubrazil.atmosphere.qualitymodel.HistoricalData;
 
+/**
+ * Trustworthiness services
+ * @author JorgeLuiz
+ */
 public interface TrustworthinessService {
 
 	public List<Data> getLimitedDataListById(Integer probeId, Integer descriptionId, Integer resourceId,

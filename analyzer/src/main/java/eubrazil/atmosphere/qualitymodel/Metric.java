@@ -19,9 +19,9 @@ import org.springframework.data.domain.PageRequest;
 import eubrazil.atmosphere.entity.Data;
 import eubrazil.atmosphere.service.TrustworthinessService;
 
-
 /**
  * The persistent class for the metric database table.
+ * @author JorgeLuiz
  */
 @Entity(name="metricqm")
 @NamedQuery(name="metricqm.findAll", query="SELECT m FROM metricqm m")

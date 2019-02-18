@@ -11,12 +11,14 @@ import javax.persistence.Enumerated;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
+import eubrazil.atmosphere.commons.utils.ListUtils;
 import eubrazil.atmosphere.entity.Data;
 import eubrazil.atmosphere.exceptions.UndefinedMetricException;
+import eubrazil.atmosphere.service.TrustworthinessService;
 
 /**
  * The persistent class for the leafattribute database table.
- *
+ * @author JorgeLuiz
  */
 @Entity(name="leafattribute")
 @NamedQuery(name="leafattribute.findAll", query="SELECT l FROM leafattribute l")
@@ -56,13 +58,15 @@ public class Leafattribute extends Attribute implements Serializable {
 
 	public HistoricalData calculate(ConfigurationProfile profile) throws UndefinedMetricException {
 
-		if (profile == null || profile.getMetrics().isEmpty()) {
-			throw new UndefinedMetricException("No defined metric for leaf atribute " + this.getName());
+		if (profile == null || ListUtils.isEmpty(profile.getMetrics())) {
+			throw new UndefinedMetricException("No defined metric for leaf attribute " + this.getName());
 		}
 
 		HistoricalData d = new HistoricalData();
 		d.setInstant(new Timestamp(System.currentTimeMillis()));
-		d.setAttribute(this);
+		d.setAttribute(profile.getPreference(this).getAttribute());
+		
+		System.out.println("Attribute leaf: " + profile.getPreference(this).getAttribute());
 
 		switch (operator) {
 		case AVERAGE:
@@ -81,6 +85,9 @@ public class Leafattribute extends Attribute implements Serializable {
 			throw new UnsupportedOperationException();
 		}
 
+		TrustworthinessService privacyService = SpringContextBridge.services().getTrustworthinessService();
+		privacyService.save(d);
+		
 		return d;
 	}
 

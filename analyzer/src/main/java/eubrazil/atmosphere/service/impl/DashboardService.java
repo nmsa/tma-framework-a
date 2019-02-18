@@ -6,6 +6,10 @@ import org.springframework.stereotype.Service;
 import eubrazil.atmosphere.entity.dashboard.Properties;
 import eubrazil.atmosphere.repository.DashboardRepository;
 
+/**
+ * Dashboard services
+ * @author JorgeLuiz
+ */
 @Service
 public class DashboardService {
 

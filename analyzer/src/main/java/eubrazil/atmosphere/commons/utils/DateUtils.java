@@ -3,6 +3,10 @@ package eubrazil.atmosphere.commons.utils;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Useful methods for calculations related to Date
+ * @author JorgeLuiz
+ */
 public class DateUtils {
 
 	private static final DateUtils INSTANCE = new DateUtils();
