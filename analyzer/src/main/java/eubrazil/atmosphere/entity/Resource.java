@@ -11,10 +11,10 @@ import javax.persistence.NamedQuery;
 
 /**
  * The persistent class for the Resource database table.
- * 
+ *
  */
-@Entity(name="resource")
-@NamedQuery(name="resource.findAll", query="SELECT r FROM resource r")
+@Entity(name="Resource")
+@NamedQuery(name="Resource.findAll", query="SELECT r FROM Resource r")
 public class Resource implements Serializable {
 	private static final long serialVersionUID = 1L;
 

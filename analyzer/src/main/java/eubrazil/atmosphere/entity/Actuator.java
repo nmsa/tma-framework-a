@@ -6,10 +6,10 @@ import javax.persistence.*;
 
 /**
  * The persistent class for the Actuator database table.
- * 
+ *
  */
-@Entity(name="actuator")
-@NamedQuery(name="actuator.findAll", query="SELECT a FROM actuator a")
+@Entity(name="Actuator")
+@NamedQuery(name="Actuator.findAll", query="SELECT a FROM Actuator a")
 public class Actuator implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -7,10 +7,10 @@ import java.sql.Timestamp;
 
 /**
  * The persistent class for the Probe database table.
- * 
+ *
  */
-@Entity(name="probe")
-@NamedQuery(name="probe.findAll", query="SELECT p FROM probe p")
+@Entity(name="Probe")
+@NamedQuery(name="Probe.findAll", query="SELECT p FROM Probe p")
 public class Probe implements Serializable {
 	private static final long serialVersionUID = 1L;
 

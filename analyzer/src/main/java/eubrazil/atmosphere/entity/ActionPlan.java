@@ -6,10 +6,10 @@ import javax.persistence.*;
 
 /**
  * The persistent class for the ActionPlan database table.
- * 
+ *
  */
-@Entity(name="actionplan")
-@NamedQuery(name="actionplan.findAll", query="SELECT a FROM actionplan a")
+@Entity(name="ActionPlan")
+@NamedQuery(name="ActionPlan.findAll", query="SELECT a FROM ActionPlan a")
 public class ActionPlan implements Serializable {
 	private static final long serialVersionUID = 1L;
 

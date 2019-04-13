@@ -4,16 +4,20 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import eubrazil.atmosphere.commons.utils.ListUtils;
+//import eubrazil.atmosphere.commons.utils.ListUtils;
 import eubrazil.atmosphere.entity.Data;
 import eubrazil.atmosphere.exceptions.UndefinedMetricException;
+import eubrazil.atmosphere.kafka.KafkaManager;
 import eubrazil.atmosphere.service.TrustworthinessService;
 
 /**
@@ -25,7 +29,7 @@ import eubrazil.atmosphere.service.TrustworthinessService;
 public class Leafattribute extends Attribute implements Serializable {
 
 	private static final long serialVersionUID = 5498567272022007160L;
-	
+
 	@Enumerated(EnumType.ORDINAL)
 	private MetricNormalizationKind normalizationKind = MetricNormalizationKind.BENEFIT;
 
@@ -42,7 +46,12 @@ public class Leafattribute extends Attribute implements Serializable {
 	@OneToOne(mappedBy="attribute")
 	private Metric metric;
 
+	@Transient
+	private static KafkaManager kafkaManager;
+	
 	public Leafattribute() {
+		super();
+		kafkaManager = new KafkaManager();
 	}
 
 	public Leafattribute(int attributeId, MetricNormalizationKind normalizationKind, double normalizationMax, double normalizationMin,
@@ -65,7 +74,7 @@ public class Leafattribute extends Attribute implements Serializable {
 		HistoricalData d = new HistoricalData();
 		d.setInstant(new Timestamp(System.currentTimeMillis()));
 		d.setAttribute(profile.getPreference(this).getAttribute());
-		
+
 		System.out.println("Attribute leaf: " + profile.getPreference(this).getAttribute());
 
 		switch (operator) {
@@ -97,7 +106,7 @@ public class Leafattribute extends Attribute implements Serializable {
 		Iterator<Metric> iterMetric = profile.getMetrics().iterator();
 		while (iterMetric.hasNext()) {
 			Metric metric = iterMetric.next();
-			
+
 			if (metric.getAttribute().equals(this)) {
 				// The user-defined metric concerns the same leaf attribute (metric definition)
 				List<Data> data = metric.updateData();
@@ -222,7 +231,7 @@ public class Leafattribute extends Attribute implements Serializable {
 	public void setMetric(Metric metric) {
 		this.metric = metric;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Leafattribute [normalizationKind=" + normalizationKind + ", normalizationMax=" + normalizationMax

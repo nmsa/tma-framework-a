@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name="properties")
@@ -12,14 +13,14 @@ public class Properties implements Serializable {
 	private static final long serialVersionUID = 6028870066004550610L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String name;
 	private float relevance;
 	private float threshold;
 	private float periodicity;
-	
+
 	public String getName() {
 		return name;
 	}
@@ -44,5 +45,5 @@ public class Properties implements Serializable {
 	public void setPeriodicity(float periodicity) {
 		this.periodicity = periodicity;
 	}
-	
+
 }

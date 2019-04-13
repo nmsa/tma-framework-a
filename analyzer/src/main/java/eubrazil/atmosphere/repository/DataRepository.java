@@ -24,7 +24,7 @@ public interface DataRepository extends CrudRepository<Data, Long> {
 	 * @param pageable
 	 * @return
 	 */
-	@Query(value="SELECT d FROM data d WHERE d.id.probeId = ?1 and d.id.descriptionId = ?2 and d.id.resourceId = ?3 order by d.id.valueTime desc")
+	@Query(value="SELECT d FROM Data d WHERE d.id.probeId = ?1 and d.id.descriptionId = ?2 and d.id.resourceId = ?3 order by d.id.valueTime desc")
 	List<Data> getLimitedDataListById(Integer probeId, Integer descriptionId, Integer resourceId, Pageable numSamples);
 
 }

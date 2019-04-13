@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -30,7 +31,7 @@ public abstract class Attribute implements Serializable {
 	private static final long serialVersionUID = 4884416721621562261L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int attributeId;
 
 	private String name;
@@ -47,9 +48,9 @@ public abstract class Attribute implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="compositeattributeId")
 	private CompositeAttribute compositeattribute;
-	
+
 	public abstract HistoricalData calculate(ConfigurationProfile user) throws UndefinedException;
-	
+
 	public Attribute() {
 	}
 

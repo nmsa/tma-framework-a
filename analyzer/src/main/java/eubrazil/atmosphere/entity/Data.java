@@ -10,8 +10,8 @@ import javax.persistence.NamedQuery;
 /**
  * The persistent class for the Data database table.
  */
-@Entity(name="data")
-@NamedQuery(name="data.findAll", query="SELECT d FROM data d")
+@Entity(name="Data")
+@NamedQuery(name="Data.findAll", query="SELECT d FROM Data d")
 public class Data implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -24,7 +24,7 @@ public class Data implements Serializable {
 //	@ManyToOne
 //	@JoinColumn(name="metricId", insertable = false, updatable = false)
 //	private eubrazil.atmosphere.qualitymodel.Metric metric;
-	
+
 	public Data() {
 	}
 

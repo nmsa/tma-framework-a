@@ -6,10 +6,10 @@ import javax.persistence.*;
 
 /**
  * The persistent class for the Metric database table.
- * 
+ *
  */
-@Entity(name="metric")
-@NamedQuery(name="metric.findAll", query="SELECT m FROM metric m")
+@Entity(name="Metric")
+@NamedQuery(name="Metric.findAll", query="SELECT m FROM Metric m")
 public class Metric implements Serializable {
 	private static final long serialVersionUID = 1L;
 

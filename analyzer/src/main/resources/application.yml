@@ -1,11 +1,18 @@
 spring:
     jpa:
-        database: MYSQL
+        database: mysql
         hibernate:
-            ddl-auto: validate
-
+                ddl-auto: validate
+                naming:
+                    implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+                    physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        show-sql: false
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL5Dialect
+                format_sql: true
     datasource:
-        url: jdbc:mysql://mysql:3306/knowledgedb
-        username: atm
-        password: root
-        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://10.98.170.151:3306/knowledge
+        username: root
+        password: passtobereplaced
+        driverClassName: com.mysql.cj.jdbc.Driver

@@ -7,16 +7,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
-
+import javax.persistence.Table;
 
 /**
  * The persistent class for the Action database table.
- * 
+ *
  */
-@Entity(name="action")
-@NamedQuery(name="action.findAll", query="SELECT a FROM action a")
+@Entity
+@Table(name="Action")
+@NamedQuery(name="Action.findAll", query="SELECT a FROM Action a")
 public class Action implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
