@@ -6,7 +6,7 @@ The analyzer will calculate the scores and add them to the topic `topic-planning
 ## Prerequisites
 This component requires the software available in [tma-utils](https://github.com/joseadp/tma-utils).
 
-###Steps to run the SpringBoot Analyzer Application:
+### Steps to run the SpringBoot Analyzer Application:
 
 1) Go to the Analyzer project (/tma-framework/tma-framework-a/analyzer) and run the following command to build the project:
 
