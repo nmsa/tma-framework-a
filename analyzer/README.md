@@ -17,6 +17,7 @@ This component requires the software available in [tma-utils](https://github.com
 2) Run the following command to initialize the two containers (Analyzer and Dashboard):
 	
 	Note 1: Docker must have been initialized before executing the command below.
+	
 	Note 2: You must have been configured the connection to the knowledge database in the application.yml file (src/main/resources).
 	
 	docker compose up
