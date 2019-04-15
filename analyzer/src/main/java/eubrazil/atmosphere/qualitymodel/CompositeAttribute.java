@@ -41,7 +41,7 @@ public class CompositeAttribute extends Attribute implements Serializable {
 	@Fetch(FetchMode.SUBSELECT)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Attribute> children;
-
+	
 	public CompositeAttribute() {
 	}
 
@@ -50,7 +50,7 @@ public class CompositeAttribute extends Attribute implements Serializable {
 		if (profile == null || ListUtils.isEmpty(profile.getPreferences())) {
 			throw new UndefinedPreferenceException("No defined preference for composite attribute " + this.getName());
 		}
-		
+
 		HistoricalData d = new HistoricalData();
 		d.setInstant(new Timestamp(System.currentTimeMillis()));
 		d.setAttribute(profile.getPreference(this).getAttribute());
@@ -75,7 +75,7 @@ public class CompositeAttribute extends Attribute implements Serializable {
 		
 		return d;
 	}
-	
+
 	protected double calculateNeutrality(ConfigurationProfile profile) throws UndefinedException {
 		double score = 0.0;
 		if (ListUtils.isNotEmpty(children)) {

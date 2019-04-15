@@ -6,10 +6,10 @@ import javax.persistence.*;
 
 /**
  * The persistent class for the QualityModel database table.
- * 
+ *
  */
-@Entity(name="qualitymodel")
-@NamedQuery(name="qualitymodel.findAll", query="SELECT q FROM qualitymodel q")
+@Entity(name="QualityModel")
+@NamedQuery(name="QualityModel.findAll", query="SELECT q FROM QualityModel q")
 public class QualityModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 

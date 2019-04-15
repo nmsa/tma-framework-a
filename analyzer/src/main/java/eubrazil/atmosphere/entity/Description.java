@@ -6,10 +6,10 @@ import javax.persistence.*;
 
 /**
  * The persistent class for the Description database table.
- * 
+ *
  */
-@Entity(name="description")
-@NamedQuery(name="description.findAll", query="SELECT d FROM description d")
+@Entity(name="Description")
+@NamedQuery(name="Description.findAll", query="SELECT d FROM Description d")
 public class Description implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -17,10 +17,13 @@ public class Description implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int descriptionId;
 
+	@Column(columnDefinition = "char")
 	private String dataType;
 
+	@Column(columnDefinition = "char")
 	private String descriptionName;
 
+	@Column(columnDefinition = "char")
 	private String unit;
 
 	public Description() {

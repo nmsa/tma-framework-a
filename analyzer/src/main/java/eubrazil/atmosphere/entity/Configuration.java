@@ -6,10 +6,10 @@ import javax.persistence.*;
 
 /**
  * The persistent class for the Configuration database table.
- * 
+ *
  */
-@Entity(name="configuration")
-@NamedQuery(name="configuration.findAll", query="SELECT c FROM configuration c")
+@Entity(name="Configuration")
+@NamedQuery(name="Configuration.findAll", query="SELECT c FROM Configuration c")
 public class Configuration implements Serializable {
 	private static final long serialVersionUID = 1L;
 

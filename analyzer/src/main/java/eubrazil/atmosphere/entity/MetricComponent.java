@@ -6,10 +6,10 @@ import javax.persistence.*;
 
 /**
  * The persistent class for the MetricComponent database table.
- * 
+ *
  */
-@Entity(name="metriccomponent")
-@NamedQuery(name="metriccomponent.findAll", query="SELECT m FROM metriccomponent m")
+@Entity(name="MetricComponent")
+@NamedQuery(name="MetricComponent.findAll", query="SELECT m FROM MetricComponent m")
 public class MetricComponent implements Serializable {
 	private static final long serialVersionUID = 1L;
 

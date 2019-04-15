@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -28,9 +29,9 @@ public class ConfigurationProfile implements Serializable {
 	private static final long serialVersionUID = 726009967174063732L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int configurationprofileId;
-	
+
 	//TODO boolean active = false;
 
 	//bi-directional many-to-one association to Metric
@@ -66,7 +67,7 @@ public class ConfigurationProfile implements Serializable {
 	public void setMetrics(Set<Metric> metrics) {
 		this.metrics = metrics;
 	}
-	
+
 	public Metric addMetric(Metric metric) {
 		getMetrics().add(metric);
 		metric.setConfigurationprofile(this);
@@ -87,7 +88,7 @@ public class ConfigurationProfile implements Serializable {
 		}
 		return preferences;
 	}
-	
+
 	public Preference getPreference(Attribute child) {
 		for (Preference p : preferences) {
 			if (child.equals(p.getAttribute())) {

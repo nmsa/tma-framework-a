@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,6 +17,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.data.domain.PageRequest;
 
+import eubrazil.atmosphere.config.appconfig.PropertiesManager;
 import eubrazil.atmosphere.entity.Data;
 import eubrazil.atmosphere.service.TrustworthinessService;
 
@@ -26,9 +28,9 @@ import eubrazil.atmosphere.service.TrustworthinessService;
 @Entity(name="metricqm")
 @NamedQuery(name="metricqm.findAll", query="SELECT m FROM metricqm m")
 public class Metric {
-	
+
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int attributeId;
 
 	private String descriptionName;
@@ -111,14 +113,18 @@ public class Metric {
 	public void setData(List<Data> data) {
 		this.data = data;
 	}
-
+	
 	public List<Data> updateData() {
+		
+		Integer probeId = Integer.parseInt(PropertiesManager.getInstance().getProperty("probe.id"));
+		Integer descriptionId = Integer.parseInt(PropertiesManager.getInstance().getProperty("description.id"));
+		Integer resourceId = Integer.parseInt(PropertiesManager.getInstance().getProperty("resource.id"));
+		
 		TrustworthinessService privacyService = SpringContextBridge.services().getTrustworthinessService();
-		// TODO - Verify how to get and pass parameters for this method (for now it is hard coded)
-		return privacyService.getLimitedDataListById(new Integer(8), new Integer(30), new Integer(8),
+		return privacyService.getLimitedDataListById(probeId, descriptionId, resourceId,
 				new PageRequest(0, this.attribute.getNumSamples()));
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Metric [descriptionName=" + descriptionName + ", probeName=" + probeName + ", resourceName="

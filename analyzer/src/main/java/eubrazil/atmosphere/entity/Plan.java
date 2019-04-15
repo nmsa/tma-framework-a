@@ -12,10 +12,10 @@ import javax.persistence.NamedQuery;
 
 /**
  * The persistent class for the Plan database table.
- * 
+ *
  */
-@Entity(name="plan")
-@NamedQuery(name="plan.findAll", query="SELECT p FROM plan p")
+@Entity(name="Plan")
+@NamedQuery(name="Plan.findAll", query="SELECT p FROM Plan p")
 public class Plan implements Serializable {
 	private static final long serialVersionUID = 1L;
 
