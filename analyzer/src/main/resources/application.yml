@@ -7,12 +7,13 @@ spring:
                     implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
                     physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         show-sql: false
+        database-platform: org.hibernate.dialect.MySQLDialect
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.MySQL5Dialect
                 format_sql: true
     datasource:
-        url: jdbc:mysql://10.98.170.151:3306/knowledge
-        username: root
-        password: passtobereplaced
-        driverClassName: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://mysql:3306/knowledgedb
+        username: atm
+        password: root
+        driverClassName: com.mysql.jdbc.Driver

@@ -1,8 +1,21 @@
 version: '3'
 services:
+  knowledgedb:
+     image: mysql:8.0.15
+     container_name: mysql
+     restart: always
+     environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_DATABASE=knowledgedb
+        - MYSQL_USER=atm
+        - MYSQL_PASSWORD=root
+     ports:  
+       - 3308:3306
   web:
     image: atm/analyzer
     build: .
+    depends_on:
+       - knowledgedb
     container_name: analyzer
     restart: always
     ports:

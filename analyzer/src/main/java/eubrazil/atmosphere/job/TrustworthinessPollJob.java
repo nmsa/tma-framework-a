@@ -2,7 +2,6 @@ package eubrazil.atmosphere.job;
 
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
@@ -23,7 +22,6 @@ import eubrazil.atmosphere.commons.utils.ListUtils;
 import eubrazil.atmosphere.config.appconfig.PropertiesManager;
 import eubrazil.atmosphere.config.quartz.SchedulerConfig;
 import eubrazil.atmosphere.exceptions.UndefinedException;
-import eubrazil.atmosphere.kafka.KafkaManager;
 import eubrazil.atmosphere.qualitymodel.CompositeAttribute;
 import eubrazil.atmosphere.qualitymodel.ConfigurationProfile;
 import eubrazil.atmosphere.qualitymodel.HistoricalData;
@@ -45,7 +43,7 @@ public class TrustworthinessPollJob implements Job {
 	@Value("${trigger.job.time}")
 	private String triggerJobTime;
 	
-	private static KafkaManager kafkaManager;
+	//private static KafkaManager kafkaManager;
 
 	@Override
 	public void execute(JobExecutionContext jobExecutionContext) {
@@ -70,21 +68,24 @@ public class TrustworthinessPollJob implements Job {
 			LOGGER.info(new Date() + " - Calculated score for trustworthiness: " + historicalData.getValue());
 			
 			// Send calculated score to kafka topic
-			kafkaManager = new KafkaManager();
-			try {
+			//kafkaManager = new KafkaManager();
+//			try {
 				
 				Integer probeId = Integer.parseInt(PropertiesManager.getInstance().getProperty("probe.id"));
 				Integer descriptionId = Integer.parseInt(PropertiesManager.getInstance().getProperty("description.id"));
 				Integer resourceId = Integer.parseInt(PropertiesManager.getInstance().getProperty("resource.id"));
 				
 				PrivacyScore privacyScore = new PrivacyScore(historicalData.getValue(), configurationActor.getConfigurationprofileId(), probeId, descriptionId, resourceId);
-				kafkaManager.addItemKafka(privacyScore);
 				
-			} catch (InterruptedException e) {
-				LOGGER.error("InterruptedException when adding kafka item: ", e);
-			} catch (ExecutionException e) {
-				LOGGER.error("ExecutionException when adding kafka item: ", e);
-			}
+				LOGGER.info("Calculated privacy score: " + privacyScore.getScore());
+				
+				//kafkaManager.addItemKafka(privacyScore);
+				
+//			} catch (InterruptedException e) {
+//				LOGGER.error("InterruptedException when adding kafka item: ", e);
+//			} catch (ExecutionException e) {
+//				LOGGER.error("ExecutionException when adding kafka item: ", e);
+//			}
 			
 		} catch (UndefinedException e) {
 			LOGGER.error("Property not defined in the quality model ", e);

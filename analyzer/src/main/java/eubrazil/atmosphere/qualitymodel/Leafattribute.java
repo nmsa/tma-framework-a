@@ -4,20 +4,17 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 import eubrazil.atmosphere.commons.utils.ListUtils;
 //import eubrazil.atmosphere.commons.utils.ListUtils;
 import eubrazil.atmosphere.entity.Data;
 import eubrazil.atmosphere.exceptions.UndefinedMetricException;
-import eubrazil.atmosphere.kafka.KafkaManager;
 import eubrazil.atmosphere.service.TrustworthinessService;
 
 /**
@@ -45,13 +42,9 @@ public class Leafattribute extends Attribute implements Serializable {
 	//bi-directional one-to-one association to Metric
 	@OneToOne(mappedBy="attribute")
 	private Metric metric;
-
-	@Transient
-	private static KafkaManager kafkaManager;
 	
 	public Leafattribute() {
 		super();
-		kafkaManager = new KafkaManager();
 	}
 
 	public Leafattribute(int attributeId, MetricNormalizationKind normalizationKind, double normalizationMax, double normalizationMin,
