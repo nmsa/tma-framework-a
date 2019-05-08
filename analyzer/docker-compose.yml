@@ -27,3 +27,10 @@ services:
     restart: always
     ports:
       - "80:80"
+  metabase:
+    image: metabase
+    build: metabase/
+    container_name: metabase
+    restart: always
+    ports:
+      - "3000:3000"
