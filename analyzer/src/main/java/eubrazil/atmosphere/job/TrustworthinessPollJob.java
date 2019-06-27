@@ -20,7 +20,6 @@ import org.springframework.stereotype.Component;
 
 import eubr.atmosphere.tma.utils.PrivacyScore;
 import eubrazil.atmosphere.commons.utils.ListUtils;
-import eubrazil.atmosphere.config.appconfig.PropertiesManager;
 import eubrazil.atmosphere.config.quartz.SchedulerConfig;
 import eubrazil.atmosphere.exceptions.UndefinedException;
 import eubrazil.atmosphere.kafka.KafkaManager;
@@ -42,17 +41,19 @@ public class TrustworthinessPollJob implements Job {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
+	private static final Integer PRIVACY_CONFIGURATION_PROFILE_ID = 1;
+	
 	@Value("${trigger.job.time}")
 	private String triggerJobTime;
 	
-	private static KafkaManager kafkaManager;
+	private static Date lastTimestampRead = null;
 
 	@Override
 	public void execute(JobExecutionContext jobExecutionContext) {
 		LOGGER.info("TrustworthinessPollJob - execution..");
 
 		TrustworthinessService privacyService = SpringContextBridge.services().getTrustworthinessService();
-		List<ConfigurationProfile> configProfileList = privacyService.findPrivacyInstance();
+		List<ConfigurationProfile> configProfileList = privacyService.findConfigurationProfileInstance(PRIVACY_CONFIGURATION_PROFILE_ID);
 
 		if (ListUtils.isEmpty(configProfileList)) {
 			LOGGER.error("Quality Model for privacy not defined in the database.");
@@ -61,24 +62,36 @@ public class TrustworthinessPollJob implements Job {
 
 		ConfigurationProfile configurationActor =  ListUtils.getFirstElement(configProfileList);
 		LOGGER.info("TrustworthinessQualityModel (TrustworthinessPollJob) - ConfigurationProfile: " + configurationActor);
-
+		
+		Date lastTimestampDataInserted = privacyService.getLastTimestampInsertedForMetrics(configurationActor.getMetrics());
+		LOGGER.info("lastTimestampDataInserted: " + lastTimestampDataInserted);
+		LOGGER.info("lastTimestampRead: " + lastTimestampRead);
+		if (lastTimestampRead != null && lastTimestampDataInserted != null
+				&& lastTimestampRead.equals(lastTimestampDataInserted)) {
+			LOGGER.info(
+					new Date() + " - No new data entered for privacy metrics in the Data table. Last timestamp read: " + lastTimestampRead);
+			return;
+		} else if (lastTimestampRead == null
+				|| (lastTimestampRead != null && !lastTimestampRead.equals(lastTimestampDataInserted))) {
+			lastTimestampRead = lastTimestampDataInserted;
+			LOGGER.info("update lastTimestampRead: " + lastTimestampRead);
+		}
+		
 		Preference privacyPreference = configurationActor.getPreferences().iterator().next();
 		CompositeAttribute privacy = (CompositeAttribute) privacyPreference.getAttribute();
 
 		try {
-			HistoricalData historicalData = privacy.calculate(configurationActor);
+			HistoricalData historicalData = null;
+			historicalData = privacy.calculate(configurationActor, lastTimestampDataInserted);
 			LOGGER.info(new Date() + " - Calculated score for trustworthiness: " + historicalData.getValue());
 			
-			// Send calculated score to kafka topic
-			kafkaManager = new KafkaManager();
 			try {
 				
-				Integer probeId = Integer.parseInt(PropertiesManager.getInstance().getProperty("probe.id"));
-				Integer descriptionId = Integer.parseInt(PropertiesManager.getInstance().getProperty("description.id"));
-				Integer resourceId = Integer.parseInt(PropertiesManager.getInstance().getProperty("resource.id"));
-				
-				PrivacyScore privacyScore = new PrivacyScore(historicalData.getValue(), configurationActor.getConfigurationprofileId(), probeId, descriptionId, resourceId);
-				kafkaManager.addItemKafka(privacyScore);
+				PrivacyScore privacyScore = new PrivacyScore(historicalData.getValue(),
+						configurationActor.getConfigurationprofileId(), privacy.getAttributeId(), null,
+						privacyService.getInstanceValueById(), lastTimestampDataInserted);
+				// Add calculated score to kafka topic
+				KafkaManager.getInstance().addItemKafka(privacyScore);
 				
 			} catch (InterruptedException e) {
 				LOGGER.error("InterruptedException when adding kafka item: ", e);
@@ -92,7 +105,7 @@ public class TrustworthinessPollJob implements Job {
 
 		LOGGER.info("TrustworthinessPollJob - end of execution..");
 	}
-
+	
 	@Bean(name = "jobBean1")
 	public JobDetailFactoryBean job() {
 		return SchedulerConfig.createJobDetail(this.getClass());

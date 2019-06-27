@@ -1,6 +1,7 @@
 package eubrazil.atmosphere.qualitymodel;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -49,7 +50,7 @@ public abstract class Attribute implements Serializable {
 	@JoinColumn(name="compositeattributeId")
 	private CompositeAttribute compositeattribute;
 
-	public abstract HistoricalData calculate(ConfigurationProfile user) throws UndefinedException;
+	public abstract HistoricalData calculate(ConfigurationProfile user, Date timestamp) throws UndefinedException;
 
 	public Attribute() {
 	}
