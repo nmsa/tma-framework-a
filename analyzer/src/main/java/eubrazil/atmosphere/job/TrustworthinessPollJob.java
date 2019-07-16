@@ -77,8 +77,10 @@ public class TrustworthinessPollJob implements Job {
 			LOGGER.info("update lastTimestampRead: " + lastTimestampRead);
 		}
 		
-		Preference privacyPreference = configurationActor.getPreferences().iterator().next();
-		CompositeAttribute privacy = (CompositeAttribute) privacyPreference.getAttribute();
+//		Preference privacyPreference = configurationActor.getPreferences().iterator().next();
+//		CompositeAttribute privacy = (CompositeAttribute) privacyPreference.getAttribute();
+		
+		CompositeAttribute privacy = getCompositeAttribute(configurationActor);
 
 		try {
 			HistoricalData historicalData = null;
@@ -86,7 +88,6 @@ public class TrustworthinessPollJob implements Job {
 			LOGGER.info(new Date() + " - Calculated score for trustworthiness: " + historicalData.getValue());
 			
 			try {
-				
 				PrivacyScore privacyScore = new PrivacyScore(historicalData.getValue(),
 						configurationActor.getConfigurationprofileId(), privacy.getAttributeId(), null,
 						privacyService.getInstanceValueById(), lastTimestampDataInserted);
@@ -104,6 +105,15 @@ public class TrustworthinessPollJob implements Job {
 		}
 
 		LOGGER.info("TrustworthinessPollJob - end of execution..");
+	}
+	
+	private CompositeAttribute getCompositeAttribute(ConfigurationProfile configurationActor) {
+		for (Preference preference : configurationActor.getPreferences()) {
+			if (preference.getAttribute() != null && preference.getAttribute() instanceof CompositeAttribute) {
+				return (CompositeAttribute) preference.getAttribute();
+			}
+		}
+		return null;
 	}
 	
 	@Bean(name = "jobBean1")

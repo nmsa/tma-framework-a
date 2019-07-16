@@ -113,6 +113,9 @@ public class Leafattribute extends Attribute implements Serializable {
 			}
 		}
 
+		if (this.normalizationKind == MetricNormalizationKind.COST) {
+			return 1 - (average / amount);
+		}
 		return average / amount;
 	}
 
@@ -134,6 +137,9 @@ public class Leafattribute extends Attribute implements Serializable {
 			}
 		}
 
+		if (this.normalizationKind == MetricNormalizationKind.COST) {
+			return 1 - minimum;
+		}
 		return minimum;
 	}
 
@@ -155,6 +161,9 @@ public class Leafattribute extends Attribute implements Serializable {
 			}
 		}
 
+		if (this.normalizationKind == MetricNormalizationKind.COST) {
+			return 1 - maximum;
+		}
 		return maximum;
 	}
 
@@ -175,6 +184,9 @@ public class Leafattribute extends Attribute implements Serializable {
 			}
 		}
 
+		if (this.normalizationKind == MetricNormalizationKind.COST) {
+			return 1 - sum;
+		}
 		return sum;
 	}
 
