@@ -22,4 +22,10 @@ This component requires the software available in [tma-utils](https://github.com
 		
 		- You must have been configured the connection to the knowledge database in the application.yml file (src/main/resources).
 	
-	docker compose up
+	docker-compose up
+	
+	
+		- To restart cache use two commands below.
+	
+	docker-compose build --no-cache
+	docker-compose up -d 
