@@ -17,7 +17,6 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import eubrazil.atmosphere.config.appconfig.PropertiesManager;
 import eubrazil.atmosphere.entity.Data;
 import eubrazil.atmosphere.service.TrustworthinessService;
 
@@ -33,6 +32,12 @@ public class Metric {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int attributeId;
 
+	private Integer descriptionId;
+	
+	private Integer probeId;
+	
+	private Integer resourceId;
+	
 	private String descriptionName;
 
 	private String probeName;
@@ -116,15 +121,15 @@ public class Metric {
 	
 	public List<Data> updateData(Date timestamp) {
 		
-		Integer probeId = Integer.parseInt(PropertiesManager.getInstance().getProperty("probe.id"));
-		Integer resourceId = Integer.parseInt(PropertiesManager.getInstance().getProperty("resource.id"));
+//		Integer probeId = Integer.parseInt(PropertiesManager.getInstance().getProperty("probe.id"));
+//		Integer resourceId = Integer.parseInt(PropertiesManager.getInstance().getProperty("resource.id"));
 		
-		Integer descriptionId = null;
-		if (this.descriptionName.equalsIgnoreCase("InformationLossMetric")) {
-			descriptionId = Integer.parseInt(PropertiesManager.getInstance().getProperty("score")); // loss
-		} else {
-			descriptionId = Integer.parseInt(PropertiesManager.getInstance().getProperty("riskP")); // risk
-		}
+//		Integer descriptionId = null;
+//		if (this.descriptionName.equalsIgnoreCase("InformationLossMetric")) {
+//			descriptionId = Integer.parseInt(PropertiesManager.getInstance().getProperty("score")); // loss
+//		} else {
+//			descriptionId = Integer.parseInt(PropertiesManager.getInstance().getProperty("riskP")); // risk
+//		}
 		
 		TrustworthinessService privacyService = SpringContextBridge.services().getTrustworthinessService();
 		return privacyService.getLimitedDataListByIdAndTimestamp(probeId, descriptionId, resourceId, timestamp);

@@ -77,10 +77,7 @@ public class TrustworthinessPollJob implements Job {
 			LOGGER.info("update lastTimestampRead: " + lastTimestampRead);
 		}
 		
-//		Preference privacyPreference = configurationActor.getPreferences().iterator().next();
-//		CompositeAttribute privacy = (CompositeAttribute) privacyPreference.getAttribute();
-		
-		CompositeAttribute privacy = getCompositeAttribute(configurationActor);
+		CompositeAttribute privacy = getRootAttribute(configurationActor);
 
 		try {
 			HistoricalData historicalData = null;
@@ -107,9 +104,9 @@ public class TrustworthinessPollJob implements Job {
 		LOGGER.info("TrustworthinessPollJob - end of execution..");
 	}
 	
-	private CompositeAttribute getCompositeAttribute(ConfigurationProfile configurationActor) {
+	private CompositeAttribute getRootAttribute(ConfigurationProfile configurationActor) {
 		for (Preference preference : configurationActor.getPreferences()) {
-			if (preference.getAttribute() != null && preference.getAttribute() instanceof CompositeAttribute) {
+			if ( preference.getAttributeType().isRoot() ) {
 				return (CompositeAttribute) preference.getAttribute();
 			}
 		}
