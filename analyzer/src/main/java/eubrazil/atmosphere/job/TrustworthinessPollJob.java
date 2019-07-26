@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import eubr.atmosphere.tma.utils.PrivacyScore;
 import eubrazil.atmosphere.commons.utils.ListUtils;
 import eubrazil.atmosphere.config.quartz.SchedulerConfig;
+import eubrazil.atmosphere.entity.Plan;
 import eubrazil.atmosphere.exceptions.UndefinedException;
 import eubrazil.atmosphere.kafka.KafkaManager;
 import eubrazil.atmosphere.qualitymodel.CompositeAttribute;
@@ -52,8 +53,8 @@ public class TrustworthinessPollJob implements Job {
 	public void execute(JobExecutionContext jobExecutionContext) {
 		LOGGER.info("TrustworthinessPollJob - execution..");
 
-		TrustworthinessService privacyService = SpringContextBridge.services().getTrustworthinessService();
-		List<ConfigurationProfile> configProfileList = privacyService.findConfigurationProfileInstance(PRIVACY_CONFIGURATION_PROFILE_ID);
+		TrustworthinessService trustworthinessService = SpringContextBridge.services().getTrustworthinessService();
+		List<ConfigurationProfile> configProfileList = trustworthinessService.findConfigurationProfileInstance(PRIVACY_CONFIGURATION_PROFILE_ID);
 
 		if (ListUtils.isEmpty(configProfileList)) {
 			LOGGER.error("Quality Model for privacy not defined in the database.");
@@ -63,7 +64,7 @@ public class TrustworthinessPollJob implements Job {
 		ConfigurationProfile configurationActor =  ListUtils.getFirstElement(configProfileList);
 		LOGGER.info("TrustworthinessQualityModel (TrustworthinessPollJob) - ConfigurationProfile: " + configurationActor);
 		
-		Date lastTimestampDataInserted = privacyService.getLastTimestampInsertedForMetrics(configurationActor.getMetrics());
+		Date lastTimestampDataInserted = trustworthinessService.getLastTimestampInsertedForMetrics(configurationActor.getMetrics());
 		LOGGER.info("lastTimestampDataInserted: " + lastTimestampDataInserted);
 		LOGGER.info("lastTimestampRead: " + lastTimestampRead);
 		if (lastTimestampRead != null && lastTimestampDataInserted != null
@@ -85,9 +86,14 @@ public class TrustworthinessPollJob implements Job {
 			LOGGER.info(new Date() + " - Calculated score for trustworthiness: " + historicalData.getValue());
 			
 			try {
-				PrivacyScore privacyScore = new PrivacyScore(historicalData.getValue(),
-						configurationActor.getConfigurationprofileId(), privacy.getAttributeId(), null,
-						privacyService.getInstanceValueById(), lastTimestampDataInserted);
+				
+				Plan plan = trustworthinessService.getPlanIdByMetricAndConfigurationProfile(privacy.getAttributeId(),
+						configurationActor.getConfigurationprofileId());
+				
+				PrivacyScore privacyScore = new PrivacyScore(configurationActor.getConfigurationprofileId(),
+						privacy.getAttributeId(), trustworthinessService.getInstanceValueById(),
+						historicalData.getValue(), lastTimestampDataInserted, (plan != null ? plan.getPlanId() : null));
+				
 				// Add calculated score to kafka topic
 				KafkaManager.getInstance().addItemKafka(privacyScore);
 				

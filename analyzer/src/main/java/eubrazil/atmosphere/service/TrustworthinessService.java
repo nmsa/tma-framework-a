@@ -8,6 +8,7 @@ import java.util.Set;
 import org.springframework.data.domain.Pageable;
 
 import eubrazil.atmosphere.entity.Data;
+import eubrazil.atmosphere.entity.Plan;
 import eubrazil.atmosphere.qualitymodel.ConfigurationProfile;
 import eubrazil.atmosphere.qualitymodel.HistoricalData;
 import eubrazil.atmosphere.qualitymodel.Metric;
@@ -30,5 +31,7 @@ public interface TrustworthinessService {
 	public Date getLastTimestampInsertedForMetrics(Set<Metric> metrics);
 	
 	public Double getInstanceValueById();
+
+	public Plan getPlanIdByMetricAndConfigurationProfile(Integer metricId, Integer configurationProfileID);
 	
 }
