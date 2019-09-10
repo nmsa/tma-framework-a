@@ -1,5 +1,6 @@
 package eubrazil.atmosphere.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
@@ -26,5 +27,11 @@ public interface DataRepository extends CrudRepository<Data, Long> {
 	 */
 	@Query(value="SELECT d FROM Data d WHERE d.id.probeId = ?1 and d.id.descriptionId = ?2 and d.id.resourceId = ?3 order by d.id.valueTime desc")
 	List<Data> getLimitedDataListById(Integer probeId, Integer descriptionId, Integer resourceId, Pageable numSamples);
+	
+	@Query(value="SELECT d FROM Data d WHERE d.id.probeId = ?1 and d.id.descriptionId = ?2 and d.id.resourceId = ?3 and d.id.valueTime = ?4")
+	List<Data> getLimitedDataListByIdAndTimestamp(Integer probeId, Integer descriptionId, Integer resourceId, Date timestamp);
 
+	@Query(value="SELECT d.value FROM Data d WHERE d.id.probeId = ?1 and d.id.descriptionId = ?2 and d.id.resourceId = ?3 order by d.id.valueTime desc")
+	List<Double> getInstanceValueById(Integer probeId, Integer descriptionId, Integer resourceId);
+	
 }
