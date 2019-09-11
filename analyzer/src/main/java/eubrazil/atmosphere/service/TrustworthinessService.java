@@ -7,11 +7,11 @@ import java.util.Set;
 
 import org.springframework.data.domain.Pageable;
 
-import eubrazil.atmosphere.entity.Data;
-import eubrazil.atmosphere.entity.Plan;
-import eubrazil.atmosphere.qualitymodel.ConfigurationProfile;
-import eubrazil.atmosphere.qualitymodel.HistoricalData;
-import eubrazil.atmosphere.qualitymodel.Metric;
+import eubr.atmosphere.tma.entity.qualitymodel.ConfigurationProfile;
+import eubr.atmosphere.tma.entity.qualitymodel.Data;
+import eubr.atmosphere.tma.entity.qualitymodel.Metric;
+import eubr.atmosphere.tma.entity.qualitymodel.MetricData;
+import eubr.atmosphere.tma.entity.qualitymodel.QualityModel;
 
 /**
  * Trustworthiness services
@@ -24,7 +24,7 @@ public interface TrustworthinessService {
 	
 	public List<Data> getLimitedDataListByIdAndTimestamp(Integer probeId, Integer descriptionId, Integer resourceId, Date timestamp);
 
-	public void save(HistoricalData historicalData);
+	public void save(MetricData metricData);
 
 	public List<ConfigurationProfile> findConfigurationProfileInstance(Integer configurationProfileID);
 
@@ -32,6 +32,6 @@ public interface TrustworthinessService {
 	
 	public Double getInstanceValueById();
 
-	public Plan getPlanIdByMetricAndConfigurationProfile(Integer metricId, Integer configurationProfileID);
+	public QualityModel getQualityModelById(Integer qualityModelId);
 	
 }

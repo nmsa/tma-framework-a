@@ -11,17 +11,17 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import eubrazil.atmosphere.commons.utils.ListUtils;
+import eubr.atmosphere.tma.entity.qualitymodel.ConfigurationProfile;
+import eubr.atmosphere.tma.entity.qualitymodel.Data;
+import eubr.atmosphere.tma.entity.qualitymodel.Metric;
+import eubr.atmosphere.tma.entity.qualitymodel.MetricData;
+import eubr.atmosphere.tma.entity.qualitymodel.QualityModel;
+import eubr.atmosphere.tma.utils.ListUtils;
 import eubrazil.atmosphere.config.appconfig.PropertiesManager;
-import eubrazil.atmosphere.entity.Data;
-import eubrazil.atmosphere.entity.Plan;
-import eubrazil.atmosphere.qualitymodel.ConfigurationProfile;
-import eubrazil.atmosphere.qualitymodel.HistoricalData;
-import eubrazil.atmosphere.qualitymodel.Metric;
 import eubrazil.atmosphere.repository.ConfigurationProfileRepository;
 import eubrazil.atmosphere.repository.DataRepository;
-import eubrazil.atmosphere.repository.HistoricalDataRepository;
-import eubrazil.atmosphere.repository.PlanRepository;
+import eubrazil.atmosphere.repository.MetricDataRepository;
+import eubrazil.atmosphere.repository.QualityModelRepository;
 import eubrazil.atmosphere.service.TrustworthinessService;
 
 /**
@@ -35,13 +35,13 @@ public class TrustworthinessServiceImpl implements TrustworthinessService {
 	private DataRepository dataRepository;
 	
 	@Autowired
-	private HistoricalDataRepository historicalDataRepository;
+	private MetricDataRepository historicalDataRepository;
 	
 	@Autowired
 	private ConfigurationProfileRepository configurationProfileRepository;
-	
+
 	@Autowired
-	private PlanRepository planRepository;
+	private QualityModelRepository qualityModelRepository;
 	
 	@Override
 	public List<Data> getLimitedDataListById(Integer probeId, Integer descriptionId, Integer resourceId,
@@ -55,8 +55,8 @@ public class TrustworthinessServiceImpl implements TrustworthinessService {
 	}
 	
 	@Override
-	public void save(HistoricalData historicalData) {
-		historicalDataRepository.save(historicalData);
+	public void save(MetricData metricData) {
+		historicalDataRepository.save(metricData);
 	}
 	
 	@Override
@@ -108,8 +108,8 @@ public class TrustworthinessServiceImpl implements TrustworthinessService {
 	}
 	
 	@Override
-	public Plan getPlanIdByMetricAndConfigurationProfile(Integer metricId, Integer configurationProfileID) {
-		return planRepository.getPlanIdByMetricAndConfigurationProfile(metricId, configurationProfileID);
+	public QualityModel getQualityModelById(Integer qualityModelId) {
+		return qualityModelRepository.getQualityModelById(qualityModelId);
 	}
 
 }

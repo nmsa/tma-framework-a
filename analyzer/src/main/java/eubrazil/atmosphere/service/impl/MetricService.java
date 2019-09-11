@@ -6,25 +6,25 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import eubrazil.atmosphere.qualitymodel.Attribute;
-import eubrazil.atmosphere.repository.AttributeRepository;
+import eubr.atmosphere.tma.entity.qualitymodel.Metric;
+import eubrazil.atmosphere.repository.MetricRepository;
 
 /**
  * Dashboard services
  * @author Felipe Gaia
  */
 @Service
-public class AttributeService {
+public class MetricService {
 
 	@Autowired
-	private AttributeRepository repository;
+	private MetricRepository repository;
 	
-	public void save(Attribute a) {
+	public void save(Metric a) {
 		repository.save(a);
 	}
 	
-	public List<Attribute> getAllAttributes(){
-		List<Attribute> list = new ArrayList<>();
+	public List<Metric> getAllMetrics(){
+		List<Metric> list = new ArrayList<>();
 		repository.findAll().forEach(e -> list.add(e));
 		return list;
 	}

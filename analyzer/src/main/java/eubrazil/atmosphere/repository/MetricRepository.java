@@ -1,19 +1,17 @@
 package eubrazil.atmosphere.repository;
 
-import java.util.List;
-
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import eubrazil.atmosphere.qualitymodel.Attribute;
+import eubr.atmosphere.tma.entity.qualitymodel.Metric;
 
 /**
  * Dashboard services
  * @author Felipe Gaia
  */
 @Repository
-public interface AttributeRepository extends CrudRepository<Attribute, Long> {
+public interface MetricRepository extends CrudRepository<Metric, Long> {
 
 	@Override
-	Iterable<Attribute> findAll();	
+	Iterable<Metric> findAll();	
 }

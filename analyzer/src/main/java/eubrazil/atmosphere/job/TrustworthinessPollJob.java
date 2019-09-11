@@ -18,16 +18,14 @@ import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.stereotype.Component;
 
-import eubr.atmosphere.tma.utils.PrivacyScore;
-import eubrazil.atmosphere.commons.utils.ListUtils;
+import eubr.atmosphere.tma.entity.qualitymodel.CompositeAttribute;
+import eubr.atmosphere.tma.entity.qualitymodel.ConfigurationProfile;
+import eubr.atmosphere.tma.entity.qualitymodel.MetricData;
+import eubr.atmosphere.tma.entity.qualitymodel.Preference;
+import eubr.atmosphere.tma.entity.qualitymodel.QualityModel;
+import eubr.atmosphere.tma.exceptions.UndefinedException;
+import eubr.atmosphere.tma.utils.ListUtils;
 import eubrazil.atmosphere.config.quartz.SchedulerConfig;
-import eubrazil.atmosphere.entity.Plan;
-import eubrazil.atmosphere.exceptions.UndefinedException;
-import eubrazil.atmosphere.kafka.KafkaManager;
-import eubrazil.atmosphere.qualitymodel.CompositeAttribute;
-import eubrazil.atmosphere.qualitymodel.ConfigurationProfile;
-import eubrazil.atmosphere.qualitymodel.HistoricalData;
-import eubrazil.atmosphere.qualitymodel.Preference;
 import eubrazil.atmosphere.qualitymodel.SpringContextBridge;
 import eubrazil.atmosphere.service.TrustworthinessService;
 
@@ -43,6 +41,7 @@ public class TrustworthinessPollJob implements Job {
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
 	private static final Integer PRIVACY_CONFIGURATION_PROFILE_ID = 1;
+	private static final Integer PRIVACY_QUALITY_MODEL_ID = 1;
 	
 	@Value("${trigger.job.time}")
 	private String triggerJobTime;
@@ -56,6 +55,8 @@ public class TrustworthinessPollJob implements Job {
 		TrustworthinessService trustworthinessService = SpringContextBridge.services().getTrustworthinessService();
 		List<ConfigurationProfile> configProfileList = trustworthinessService.findConfigurationProfileInstance(PRIVACY_CONFIGURATION_PROFILE_ID);
 
+		QualityModel qualityModel = trustworthinessService.getQualityModelById(PRIVACY_QUALITY_MODEL_ID);
+		
 		if (ListUtils.isEmpty(configProfileList)) {
 			LOGGER.error("Quality Model for privacy not defined in the database.");
 			return;
@@ -78,24 +79,24 @@ public class TrustworthinessPollJob implements Job {
 			LOGGER.info("update lastTimestampRead: " + lastTimestampRead);
 		}
 		
-		CompositeAttribute privacy = getRootAttribute(configurationActor);
+		CompositeAttribute compositeAttribute = getRootAttribute(configurationActor);
 
 		try {
-			HistoricalData historicalData = null;
-			historicalData = privacy.calculate(configurationActor, lastTimestampDataInserted);
-			LOGGER.info(new Date() + " - Calculated score for trustworthiness: " + historicalData.getValue());
+			MetricData metricData = null;
+			metricData = compositeAttribute.calculate(configurationActor, qualityModel, lastTimestampDataInserted);
+			LOGGER.info(new Date() + " - Calculated score for trustworthiness: " + metricData.getValue());
 			
 			try {
 				
-				Plan plan = trustworthinessService.getPlanIdByMetricAndConfigurationProfile(privacy.getAttributeId(),
-						configurationActor.getConfigurationprofileId());
+//				Plan plan = trustworthinessService.getPlanIdByMetricAndConfigurationProfile(privacy.getAttributeId(),
+//						configurationActor.getConfigurationprofileId());
 				
-				PrivacyScore privacyScore = new PrivacyScore(configurationActor.getConfigurationprofileId(),
-						privacy.getAttributeId(), trustworthinessService.getInstanceValueById(),
-						historicalData.getValue(), lastTimestampDataInserted, (plan != null ? plan.getPlanId() : null));
-				
-				// Add calculated score to kafka topic
-				KafkaManager.getInstance().addItemKafka(privacyScore);
+//				PrivacyScore privacyScore = new PrivacyScore(configurationActor.getConfigurationprofileId(),
+//						privacy.getAttributeId(), trustworthinessService.getInstanceValueById(),
+//						metricData.getValue(), lastTimestampDataInserted);
+//				
+//				// Add calculated score to kafka topic
+//				KafkaManager.getInstance().addItemKafka(privacyScore);
 				
 			} catch (InterruptedException e) {
 				LOGGER.error("InterruptedException when adding kafka item: ", e);
