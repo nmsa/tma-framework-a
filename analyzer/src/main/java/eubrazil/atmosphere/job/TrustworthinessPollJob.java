@@ -20,12 +20,15 @@ import org.springframework.stereotype.Component;
 
 import eubr.atmosphere.tma.entity.qualitymodel.CompositeAttribute;
 import eubr.atmosphere.tma.entity.qualitymodel.ConfigurationProfile;
+import eubr.atmosphere.tma.entity.qualitymodel.Metric;
 import eubr.atmosphere.tma.entity.qualitymodel.MetricData;
 import eubr.atmosphere.tma.entity.qualitymodel.Preference;
 import eubr.atmosphere.tma.entity.qualitymodel.QualityModel;
 import eubr.atmosphere.tma.exceptions.UndefinedException;
 import eubr.atmosphere.tma.utils.ListUtils;
+import eubr.atmosphere.tma.utils.PrivacyScore;
 import eubrazil.atmosphere.config.quartz.SchedulerConfig;
+import eubrazil.atmosphere.kafka.KafkaManager;
 import eubrazil.atmosphere.qualitymodel.SpringContextBridge;
 import eubrazil.atmosphere.service.TrustworthinessService;
 
@@ -40,8 +43,7 @@ public class TrustworthinessPollJob implements Job {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
-	private static final Integer PRIVACY_CONFIGURATION_PROFILE_ID = 1;
-	private static final Integer PRIVACY_QUALITY_MODEL_ID = 1;
+	private static final Integer TRUSTWORTHINESS_CONFIGURATION_PROFILE_ID = 1;
 	
 	@Value("${trigger.job.time}")
 	private String triggerJobTime;
@@ -53,9 +55,9 @@ public class TrustworthinessPollJob implements Job {
 		LOGGER.info("TrustworthinessPollJob - execution..");
 
 		TrustworthinessService trustworthinessService = SpringContextBridge.services().getTrustworthinessService();
-		List<ConfigurationProfile> configProfileList = trustworthinessService.findConfigurationProfileInstance(PRIVACY_CONFIGURATION_PROFILE_ID);
+		List<ConfigurationProfile> configProfileList = trustworthinessService.findConfigurationProfileInstance(TRUSTWORTHINESS_CONFIGURATION_PROFILE_ID);
 
-		QualityModel qualityModel = trustworthinessService.getQualityModelById(PRIVACY_QUALITY_MODEL_ID);
+		QualityModel qualityModel = trustworthinessService.getQualityModelById(TRUSTWORTHINESS_CONFIGURATION_PROFILE_ID);
 		
 		if (ListUtils.isEmpty(configProfileList)) {
 			LOGGER.error("Quality Model for privacy not defined in the database.");
@@ -71,7 +73,7 @@ public class TrustworthinessPollJob implements Job {
 		if (lastTimestampRead != null && lastTimestampDataInserted != null
 				&& lastTimestampRead.equals(lastTimestampDataInserted)) {
 			LOGGER.info(
-					new Date() + " - No new data entered for privacy metrics in the Data table. Last timestamp read: " + lastTimestampRead);
+					new Date() + " - No new data entered for trustworthiness metrics in the Data table. Last timestamp read: " + lastTimestampRead);
 			return;
 		} else if (lastTimestampRead == null
 				|| (lastTimestampRead != null && !lastTimestampRead.equals(lastTimestampDataInserted))) {
@@ -83,19 +85,15 @@ public class TrustworthinessPollJob implements Job {
 
 		try {
 			MetricData metricData = null;
-			metricData = compositeAttribute.calculate(configurationActor, qualityModel, lastTimestampDataInserted);
+			metricData = compositeAttribute.calculate(configurationActor, qualityModel, new MetricData(), lastTimestampDataInserted);
 			LOGGER.info(new Date() + " - Calculated score for trustworthiness: " + metricData.getValue());
 			
 			try {
 				
-//				Plan plan = trustworthinessService.getPlanIdByMetricAndConfigurationProfile(privacy.getAttributeId(),
-//						configurationActor.getConfigurationprofileId());
-				
-//				PrivacyScore privacyScore = new PrivacyScore(configurationActor.getConfigurationprofileId(),
-//						privacy.getAttributeId(), trustworthinessService.getInstanceValueById(),
-//						metricData.getValue(), lastTimestampDataInserted);
-//				
-//				// Add calculated score to kafka topic
+//				PrivacyScore privacyScore = new PrivacyScore(configurationActor.getConfigurationProfileID(),
+//						metricData.getId().getMetricId(), metricData.getValue(), );
+//
+////				// Add calculated score to kafka topic
 //				KafkaManager.getInstance().addItemKafka(privacyScore);
 				
 			} catch (InterruptedException e) {
@@ -113,8 +111,9 @@ public class TrustworthinessPollJob implements Job {
 	
 	private CompositeAttribute getRootAttribute(ConfigurationProfile configurationActor) {
 		for (Preference preference : configurationActor.getPreferences()) {
-			if ( preference.getAttributeType().isRoot() ) {
-				return (CompositeAttribute) preference.getAttribute();
+			Metric m = preference.getMetric();
+			if ( m.getId() == m.getCompositeattribute().getId() ) {
+				return (CompositeAttribute) preference.getMetric();
 			}
 		}
 		return null;

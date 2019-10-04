@@ -1,13 +1,10 @@
 package eubrazil.atmosphere.service.impl;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -74,17 +71,17 @@ public class TrustworthinessServiceImpl implements TrustworthinessService {
 		Integer descriptionId = null;
 		
 		for (Metric metric : metrics) {
-			if (metric.getDescriptionName().equalsIgnoreCase("InformationLossMetric")) {
-				descriptionId = Integer.parseInt(PropertiesManager.getInstance().getProperty("score")); // loss
-			} else {
-				descriptionId = Integer.parseInt(PropertiesManager.getInstance().getProperty("riskP")); // risk
-			}
-			List<Data> lData = dataRepository.getLimitedDataListById(probeId, descriptionId, resourceId, new PageRequest (0, 1));
-			Data lastDataInserted = Collections.max(lData, Comparator.comparing(d -> d.getId().getValueTime()));
-			if (lastDataInserted != null && (lastTime == null
-					|| (lastTime != null && lastTime.before(lastDataInserted.getId().getValueTime())))) {
-				lastTime = lastDataInserted.getId().getValueTime();
-			}
+//			if (metric.getDescriptionName().equalsIgnoreCase("InformationLossMetric")) {
+//				descriptionId = Integer.parseInt(PropertiesManager.getInstance().getProperty("score")); // loss
+//			} else {
+//				descriptionId = Integer.parseInt(PropertiesManager.getInstance().getProperty("riskP")); // risk
+//			}
+//			List<Data> lData = dataRepository.getLimitedDataListById(probeId, descriptionId, resourceId, new PageRequest (0, 1));
+//			Data lastDataInserted = Collections.max(lData, Comparator.comparing(d -> d.getId().getValueTime()));
+//			if (lastDataInserted != null && (lastTime == null
+//					|| (lastTime != null && lastTime.before(lastDataInserted.getId().getValueTime())))) {
+//				lastTime = lastDataInserted.getId().getValueTime();
+//			}
 		}
 		
 		return lastTime;
