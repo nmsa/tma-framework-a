@@ -10,13 +10,14 @@ import org.springframework.stereotype.Service;
 
 import eubr.atmosphere.tma.entity.qualitymodel.ConfigurationProfile;
 import eubr.atmosphere.tma.entity.qualitymodel.Data;
-import eubr.atmosphere.tma.entity.qualitymodel.Metric;
+import eubr.atmosphere.tma.entity.qualitymodel.MetricAttributeView;
 import eubr.atmosphere.tma.entity.qualitymodel.MetricData;
 import eubr.atmosphere.tma.entity.qualitymodel.QualityModel;
 import eubr.atmosphere.tma.utils.ListUtils;
 import eubrazil.atmosphere.config.appconfig.PropertiesManager;
 import eubrazil.atmosphere.repository.ConfigurationProfileRepository;
 import eubrazil.atmosphere.repository.DataRepository;
+import eubrazil.atmosphere.repository.MetricAttributeViewRepository;
 import eubrazil.atmosphere.repository.MetricDataRepository;
 import eubrazil.atmosphere.repository.QualityModelRepository;
 import eubrazil.atmosphere.service.TrustworthinessService;
@@ -40,6 +41,9 @@ public class TrustworthinessServiceImpl implements TrustworthinessService {
 	@Autowired
 	private QualityModelRepository qualityModelRepository;
 	
+	@Autowired
+	private MetricAttributeViewRepository metricAttributeViewRepository;
+	
 	@Override
 	public List<Data> getLimitedDataListById(Integer probeId, Integer descriptionId, Integer resourceId,
 			Pageable numSamples) {
@@ -62,7 +66,7 @@ public class TrustworthinessServiceImpl implements TrustworthinessService {
 	}
 	
 	@Override
-	public Date getLastTimestampInsertedForMetrics(Set<Metric> metrics) {
+	public Date getLastTimestampInsertedForMetrics(Set<MetricAttributeView> metrics) {
 		
 		Date lastTime = null;
 		
@@ -70,7 +74,7 @@ public class TrustworthinessServiceImpl implements TrustworthinessService {
 		Integer resourceId = Integer.parseInt(PropertiesManager.getInstance().getProperty("resource.id"));
 		Integer descriptionId = null;
 		
-		for (Metric metric : metrics) {
+		for (MetricAttributeView metric : metrics) {
 //			if (metric.getDescriptionName().equalsIgnoreCase("InformationLossMetric")) {
 //				descriptionId = Integer.parseInt(PropertiesManager.getInstance().getProperty("score")); // loss
 //			} else {
@@ -109,4 +113,9 @@ public class TrustworthinessServiceImpl implements TrustworthinessService {
 		return qualityModelRepository.getQualityModelById(qualityModelId);
 	}
 
+	@Override
+	public MetricAttributeView getMetricAttributeViewById(Integer id) {
+		return metricAttributeViewRepository.getMetricAttributeViewById(id);
+	}
+	
 }

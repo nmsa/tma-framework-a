@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 import eubr.atmosphere.tma.entity.qualitymodel.ConfigurationProfile;
 import eubr.atmosphere.tma.entity.qualitymodel.Data;
-import eubr.atmosphere.tma.entity.qualitymodel.Metric;
+import eubr.atmosphere.tma.entity.qualitymodel.MetricAttributeView;
 import eubr.atmosphere.tma.entity.qualitymodel.MetricData;
 import eubr.atmosphere.tma.entity.qualitymodel.QualityModel;
 
@@ -28,10 +28,12 @@ public interface TrustworthinessService {
 
 	public List<ConfigurationProfile> findConfigurationProfileInstance(Integer configurationProfileID);
 
-	public Date getLastTimestampInsertedForMetrics(Set<Metric> metrics);
+	public Date getLastTimestampInsertedForMetrics(Set<MetricAttributeView> metrics);
 	
 	public Double getInstanceValueById();
 
 	public QualityModel getQualityModelById(Integer qualityModelId);
+
+	MetricAttributeView getMetricAttributeViewById(Integer id);
 	
 }
