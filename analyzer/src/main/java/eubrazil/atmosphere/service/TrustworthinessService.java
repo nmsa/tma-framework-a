@@ -11,6 +11,7 @@ import eubr.atmosphere.tma.entity.qualitymodel.ConfigurationProfile;
 import eubr.atmosphere.tma.entity.qualitymodel.Data;
 import eubr.atmosphere.tma.entity.qualitymodel.MetricAttributeView;
 import eubr.atmosphere.tma.entity.qualitymodel.MetricData;
+import eubr.atmosphere.tma.entity.qualitymodel.Preference;
 import eubr.atmosphere.tma.entity.qualitymodel.QualityModel;
 
 /**
@@ -35,5 +36,7 @@ public interface TrustworthinessService {
 	public QualityModel getQualityModelById(Integer qualityModelId);
 
 	MetricAttributeView getMetricAttributeViewById(Integer id);
+
+	Preference findPreferenceById(int id);
 	
 }

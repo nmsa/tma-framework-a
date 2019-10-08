@@ -12,6 +12,7 @@ import eubr.atmosphere.tma.entity.qualitymodel.ConfigurationProfile;
 import eubr.atmosphere.tma.entity.qualitymodel.Data;
 import eubr.atmosphere.tma.entity.qualitymodel.MetricAttributeView;
 import eubr.atmosphere.tma.entity.qualitymodel.MetricData;
+import eubr.atmosphere.tma.entity.qualitymodel.Preference;
 import eubr.atmosphere.tma.entity.qualitymodel.QualityModel;
 import eubr.atmosphere.tma.utils.ListUtils;
 import eubrazil.atmosphere.config.appconfig.PropertiesManager;
@@ -19,6 +20,7 @@ import eubrazil.atmosphere.repository.ConfigurationProfileRepository;
 import eubrazil.atmosphere.repository.DataRepository;
 import eubrazil.atmosphere.repository.MetricAttributeViewRepository;
 import eubrazil.atmosphere.repository.MetricDataRepository;
+import eubrazil.atmosphere.repository.PreferenceRepository;
 import eubrazil.atmosphere.repository.QualityModelRepository;
 import eubrazil.atmosphere.service.TrustworthinessService;
 
@@ -43,6 +45,9 @@ public class TrustworthinessServiceImpl implements TrustworthinessService {
 	
 	@Autowired
 	private MetricAttributeViewRepository metricAttributeViewRepository;
+	
+	@Autowired
+	private PreferenceRepository preferenceRepository;
 	
 	@Override
 	public List<Data> getLimitedDataListById(Integer probeId, Integer descriptionId, Integer resourceId,
@@ -116,6 +121,11 @@ public class TrustworthinessServiceImpl implements TrustworthinessService {
 	@Override
 	public MetricAttributeView getMetricAttributeViewById(Integer id) {
 		return metricAttributeViewRepository.getMetricAttributeViewById(id);
+	}
+	
+	@Override
+	public Preference findPreferenceById(int id) {
+		return preferenceRepository.findPreferenceById(id);
 	}
 	
 }
