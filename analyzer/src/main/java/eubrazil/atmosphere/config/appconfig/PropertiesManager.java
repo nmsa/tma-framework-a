@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * Properties manager
+ * @author JorgeLuiz
+ */
 public class PropertiesManager {
 
     private static PropertiesManager instance = null;

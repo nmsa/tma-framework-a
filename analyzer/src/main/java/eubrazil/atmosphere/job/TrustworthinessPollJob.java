@@ -22,7 +22,6 @@ import eubr.atmosphere.tma.entity.qualitymodel.ConfigurationProfile;
 import eubr.atmosphere.tma.entity.qualitymodel.MetricAttributeView;
 import eubr.atmosphere.tma.entity.qualitymodel.MetricData;
 import eubr.atmosphere.tma.entity.qualitymodel.Preference;
-import eubr.atmosphere.tma.entity.qualitymodel.QualityModel;
 import eubr.atmosphere.tma.exceptions.UndefinedException;
 import eubr.atmosphere.tma.utils.ListUtils;
 import eubr.atmosphere.tma.utils.PrivacyScore;
@@ -59,12 +58,6 @@ public class TrustworthinessPollJob implements Job {
 		List<ConfigurationProfile> configProfileList = trustworthinessService.findConfigurationProfileInstance(trustworthinessConfigurationProfileID);
 		if (ListUtils.isEmpty(configProfileList)) {
 			LOGGER.error("Configuration Profile not defined in the Knowledge base.");
-			return;
-		}
-		
-		QualityModel qualityModel = trustworthinessService.getQualityModelById(trustworthinessQualityModelID);
-		if (qualityModel == null) {
-			LOGGER.error("Quality model not defined in the Knowledge base.");
 			return;
 		}
 
