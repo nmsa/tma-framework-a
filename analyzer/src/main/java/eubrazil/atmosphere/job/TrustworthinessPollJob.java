@@ -1,7 +1,9 @@
 package eubrazil.atmosphere.job;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
@@ -26,6 +28,7 @@ import eubr.atmosphere.tma.exceptions.UndefinedException;
 import eubr.atmosphere.tma.utils.ListUtils;
 import eubr.atmosphere.tma.utils.PrivacyScore;
 import eubrazil.atmosphere.config.quartz.SchedulerConfig;
+import eubrazil.atmosphere.kafka.KafkaManager;
 import eubrazil.atmosphere.qualitymodel.SpringContextBridge;
 import eubrazil.atmosphere.service.TrustworthinessService;
 
@@ -67,23 +70,24 @@ public class TrustworthinessPollJob implements Job {
 		CompositeAttributeView compositeAttribute = getRootAttribute(configurationActor);
 
 		try {
-			MetricData metricData = compositeAttribute.calculate(configurationActor);
+			Timestamp timestamp = new Timestamp(new Date().getTime()); // TODO: Get timestamp of last data entered
+			MetricData metricData = compositeAttribute.calculate(configurationActor, timestamp);
 			LOGGER.info(new Date() + " - Calculated score for trustworthiness: " + metricData.getValue());
 			
-//			try {
+			try {
 				
 				Preference preference = trustworthinessService.findPreferenceById(compositeAttribute.getId());
 				PrivacyScore privacyScore = new PrivacyScore(configurationActor.getConfigurationProfileID(),
 						metricData.getMetricId().getMetricId(), metricData.getValue(), preference.getThreshold());
 
 				// Add calculated score to kafka topic
-				//KafkaManager.getInstance().addItemKafka(privacyScore);
+				KafkaManager.getInstance().addItemKafka(privacyScore);
 				
-//			} catch (InterruptedException e) {
-//				LOGGER.error("InterruptedException when adding kafka item: ", e);
-//			} catch (ExecutionException e) {
-//				LOGGER.error("ExecutionException when adding kafka item: ", e);
-//			}
+			} catch (InterruptedException e) {
+				LOGGER.error("InterruptedException when adding kafka item: ", e);
+			} catch (ExecutionException e) {
+				LOGGER.error("ExecutionException when adding kafka item: ", e);
+			}
 			
 		} catch (UndefinedException e) {
 			LOGGER.error("Property not defined in the quality model ", e);
@@ -115,7 +119,8 @@ public class TrustworthinessPollJob implements Job {
 
 	@Bean(name = "jobBean1Trigger")
 	public CronTriggerFactoryBean jobTrigger(@Qualifier("jobBean1") JobDetail jobDetail) {
-		return SchedulerConfig.createCronTrigger(jobDetail, triggerJobTime + " * * * * ?");
+		return SchedulerConfig.createCronTrigger(jobDetail, "0 0 12 1 1/1 ? *");
+		//return SchedulerConfig.createCronTrigger(jobDetail, triggerJobTime + " * * * * ?");
 	}
 
 }
