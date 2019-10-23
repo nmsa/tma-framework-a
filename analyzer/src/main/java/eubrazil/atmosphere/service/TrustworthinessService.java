@@ -3,7 +3,6 @@ package eubrazil.atmosphere.service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.data.domain.Pageable;
 
@@ -28,8 +27,6 @@ public interface TrustworthinessService {
 	public void save(MetricData metricData);
 
 	public List<ConfigurationProfile> findConfigurationProfileInstance(Integer configurationProfileID);
-
-	public Date getLastTimestampInsertedForMetrics(Set<MetricAttributeView> metrics);
 	
 	public Double getInstanceValueById();
 
