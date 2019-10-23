@@ -1,0 +1,29 @@
+<html ng-app="AngularCharts">
+<head>
+    <title>Atmosphere TEP Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="core.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.js"></script>
+    
+    <script>
+    	var host = window.location.protocol + "//" + window.location.hostname;
+
+		var urlstr = window.location.href;
+		var url = new URL(urlstr);
+		var metricId = url.searchParams.get("metricId");
+		var metricName = url.searchParams.get("metricName");
+    </script>
+
+</head>
+<body>
+<div id="logo">
+	<img src="./imgs/logo.png" alt="atmosphere site">
+</div>
+	<div class="links">
+		<button onclick="window.history.back();">Back</button> <br>
+	<br>
+	<p> <script> document.write(metricName) </script> </p>
+    <iframe id="metabaseMetric" src="" frameborder="0" width="1400" height="800" allowtransparency>Browser not compatible.</iframe>
+    <script>document.getElementById("metabaseMetric").src = host + ":3000/public/dashboard/66a56dff-2c56-41fa-b845-e985b8e26a71?metricid=" + metricId;</script>
+
+</body>
+</html>

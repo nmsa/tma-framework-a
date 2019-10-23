@@ -117,6 +117,32 @@ public static final Logger LOGGER = LoggerFactory.getLogger(DashboardController.
 	}
 	
 	@CrossOrigin
+	@RequestMapping(value = "/getroot", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public String getroot() {
+
+		JSONArray properties = new JSONArray();
+		JSONObject item;
+		Metric	m;
+
+		// for each root property (also called attribute or metric)
+		for(CompositeAttribute ca : compositeAttributeService.getAllRootCompositeAttributes()) {		
+			// recover metric data
+			m = metricService.getMetricById(ca.getId().getParentMetric());
+
+			// create a json object and include metric (id, name)
+			item = new JSONObject();
+			item.put("Id", m.getMetricId());
+			item.put("Name", m.getMetricName());
+
+			// add json object into array
+			properties.put(item);
+		}
+
+		return properties.toString();
+	}
+	
+	@CrossOrigin
 	@RequestMapping(value = "/scores", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public String scores() {

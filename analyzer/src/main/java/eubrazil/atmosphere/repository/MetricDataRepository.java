@@ -12,6 +12,6 @@ public interface MetricDataRepository extends CrudRepository<MetricData, Long> {
 	@Override
 	Iterable<MetricData> findAll();
 	
-	@Query(value="select md from MetricData md where md.metricId.metricId = ?1 and md.metricId.valueTime = (select max(md.metricId.valueTime) from MetricData md)")
+	@Query(value="select md from MetricData md where md.metricId.metricId = ?1 and md.metricId.valueTime = (select max(md.metricId.valueTime) from MetricData md where md.metricId.metricId = ?1)")
     MetricData findlLastMetricDataById(int id);
 }
