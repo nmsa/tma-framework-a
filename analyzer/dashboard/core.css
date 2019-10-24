@@ -1,0 +1,193 @@
+#logo {
+  border-bottom:2px solid #0E72C8;
+}
+
+#logo img {
+  top: 0;
+  height: 90px;
+  padding-left:20px;
+}
+
+.links {
+	padding-top:20px;
+}
+
+#content {
+  min-width: 100%;
+  z-index: 1;
+  padding-top: 20px;
+}
+
+#left {
+  float:left;
+  width:570px;
+}
+
+#right {
+  float:left;
+  border:1px solid gray;
+  border-radius: 4px 4px 4px 4px;
+}
+
+#right iframe {
+  border:0px solid white;
+}
+
+#dleft {
+  float:left;
+}
+
+#dright {
+  float:left;
+  width:120px;
+  height:2000px;
+}
+
+#detailsi {
+  padding-top:450px;
+}
+
+#detailsp {
+  padding-top:600px;
+}
+
+body {
+	font-family: "Helvetica Neue", "Helvetica", sans-serif;
+	/* font-famlity: monospace; */
+	font-size:14px;
+}
+
+iframe {
+  border:1px solid gray;
+  border-radius: 4px 4px 4px 4px;
+}
+
+/*** 
+	Configurations Form CSS 
+***/ 
+
+tr:nth-of-type(odd) {
+	background-color: #FFFFFF;
+}
+
+table.greyGridTable {
+	border: 1px solid #d3d3d3;
+	border-radius: 4px 4px 4px 4px;
+	border-spacing:0;
+	width: 100%;
+	text-align: center;
+	font-family: "Helvetica Neue", "Helvetica", sans-serif;
+	/* font-famlity: monospace; */
+	font-size: 12.16px;
+	margin-bottom: 4px;
+}
+
+table.greyGridTable td, table.greyGridTable th {
+	border: 1px solid #d3d3d3;
+	color: #2e353b;
+	padding: 3px 4px;
+}
+
+table.greyGridTable tbody td {
+}
+
+table.greyGridTable tr:nth-child(even) {
+	background: #EBEBEB;
+}
+	
+table.greyGridTable th {
+	background: #FFFFFF;
+	border-bottom: 2px solid #2e353b;
+	font-size:13px;
+	padding:4px;
+}
+
+table.greyGridTable th {
+	font-weight: bold;
+	color: #333333;
+	text-align: center;
+	background-color:#c0c0c0;
+}
+
+table.greyGridTable th:first-child {
+	border-left: none;
+}
+
+table.greyGridTable tfoot {
+	font-weight: bold;
+	color: #333333;
+	border-top: 4px solid #333333;
+}
+
+table.greyGridTable tfoot td {
+}
+
+/*** 
+	Score Css 
+***/ 
+
+ul {
+  list-style-type: none;
+  margin: 0px;
+  padding-left:25px;
+}
+
+.caret {
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none;
+  display: inline-block;
+  padding-bottom:10px;
+  color: #2e353b;
+}
+
+.leaf {
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none;
+  display: inline-block;
+  padding-bottom:10px;
+  color: #2e353b;
+}
+
+.node {
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none;
+  display: inline-block;
+  padding-bottom:10px;
+}
+
+.leaf::before {
+  /* content: url('/imgs/metric-icon.png'); */
+  color: #2e353b;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.caret::before {
+  content: "\25B6";
+  color: #2e353b;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.caret-down::before {
+  -ms-transform: rotate(90deg); /* IE 9 */
+  -webkit-transform: rotate(90deg); /* Safari */'
+  transform: rotate(90deg);  
+}
+
+.nested {
+  display: none;
+}
+
+.active {
+  display: block;
+}

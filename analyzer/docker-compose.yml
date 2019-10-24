@@ -8,9 +8,10 @@ services:
     ports:
       - "8080:8080"
   dashboard:
-    image: nginx
+    image: eubraatmosphere/tma-dashboard:1.1
     build: dashboard/
     container_name: dashboard
     restart: always
     ports:
       - "80:80"
+      - "3000:3000"

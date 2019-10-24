@@ -1,0 +1,68 @@
+<html>
+<head>
+<title>Atmosphere TEP Dashboard</title>
+	<link rel="stylesheet" type="text/css" href="core.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.js"></script>
+
+	<script>
+
+	var host = window.location.protocol + "//" + window.location.hostname;
+
+	var app = angular.module('ScoresApp', []);
+	app.controller('ScoresController', function($scope, $http) {
+
+    	$http.get(host + ":8080/dash/scores")
+    	.then(function (response) {    
+    		$scope.metrics = response.data;
+    	});
+	});
+
+	app.directive("treeview", function($compile) {
+    	return {
+        	restrict: "E",
+        	scope: {nodes: '='},
+        	template:
+            	'<span ng-if="nodes.Children.length === 0" class="leaf"></span>'+
+            	'<span ng-if="!(nodes.Children.length === 0)" onclick="expand(this)" class="caret"></span>'+
+            	'<a href="/metric-link.htm?metricId={{ nodes.Id }}&metricName={{ nodes.Name }}" class="node" target="_parent">{{ nodes.Name }} - {{ nodes.Score }}</a>'+
+            	'<ul class="nested">' + 
+                	'<li ng-repeat="child in nodes.Children">' +
+                    	'<treeview nodes="child"></treeview>' + //TODO: the last element hasn't caret class
+                	'</li>' +
+            	'</ul>',
+        	compile: function(tElement, tAttr) {
+            	var contents = tElement.contents().remove();
+            	var compiledContents;
+            	return function(scope, iElement, iAttr) {
+                	if(!compiledContents) {
+                    	compiledContents = $compile(contents);
+                	}
+                	compiledContents(scope, function(clone, scope) {
+                		iElement.append(clone); 
+                	});
+            	};
+        	}
+    	};
+	});
+	
+	function expand(element) {
+    	element.parentElement.querySelector(".nested").classList.toggle("active");
+    	element.classList.toggle("caret-down");
+  	}
+ 
+	</script>
+	
+</head>
+
+<body>
+	<p>
+		<b> Scores Tree View </b>
+
+		<div ng-app="ScoresApp" ng-controller="ScoresController">
+			<p ng-repeat="item in metrics">
+				<treeview nodes="item"></treeview>
+			</p>
+		</div>
+	</p>
+</body>
+</html>
