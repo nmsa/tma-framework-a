@@ -5,8 +5,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.js"></script>
 
 	<script>
-	//var host = window.location.protocol + "//" + window.location.hostname;
-	var host = 'http://143.106.73.48';
+	var host = window.location.protocol + "//" + window.location.hostname;
 
 	var app = angular.module('ConfigApp', []);
 	
@@ -22,7 +21,6 @@
     	$http.get(host + ":8080/dash/getroot")
     	.then(function (response) {    
     		$scope.metrics = response.data;
-    		alert(JSON.stringify($scope.metrics));
     	});
     	
     	$scope.getIframeSrc = function(id) {
@@ -37,6 +35,7 @@
 		<b> Trustworthiness </b>
 		<div ng-app="ConfigApp" ng-controller="ConfigController">
 			<div ng-repeat="item in metrics">
+				<p> <script> {{ item.Name }} </script> </p>
 				<iframe id="{{ 'metabaseMetric' + item.Id }}" src="{{getIframeSrc(item.Id)}}" frameborder="0" width="850" height="300" allowtransparency>Browser not compatible.</iframe>
 			</div>
 		</div>
