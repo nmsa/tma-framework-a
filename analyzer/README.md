@@ -4,7 +4,7 @@ Calculates the final score for the privacy metric.
 The analyzer will calculate the scores and add them to the topic `topic-planning`.
 
 ## Prerequisites
-This component requires the software available in [tma-utils](https://github.com/joseadp/tma-utils).
+This component requires the software available in [tma-utils](https://github.com/eubr-atmosphere/tma-framework/tree/master/common/tma-utils).
 
 ### Steps to run the SpringBoot Analyzer Application:
 
