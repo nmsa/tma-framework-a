@@ -14,7 +14,7 @@ This component requires the software available in [tma-utils](https://github.com
 
 	mvn clean install
 
-2) Run the following command to initialize the two containers (Analyzer and Dashboard):
+2) Run the following command to initialize the Analyzer container:
 	
 	Notes: 
 	
@@ -22,10 +22,31 @@ This component requires the software available in [tma-utils](https://github.com
 		
 		- You must have been configured the connection to the knowledge database in the application.yml file (src/main/resources).
 	
-	docker-compose up
+	docker-compose up -d analyzer
+
+		
+### Steps to run the Dashboard container
+
+1) Run the following command to initialize Dashboard container based on DockerHub's Atmosphere project image:
+
+	docker-compose up -d dashboard
+
+2) Access the Metabase and reconfigure the database connection:
+
+   1. Access the Metabase url using the dashboard host and the port 3000.
+   ![url](https://github.com/eubr-atmosphere/tma-framework-a/tree/master/analyzer/metabase/url.png)
+  
+   2. In the top-right corner of the site, click on the "gear" icon and after on "Administrator".
+   ![admin](https://github.com/eubr-atmosphere/tma-framework-a/tree/master/analyzer/metabase/admin.png)
+  
+   3. Click on "Banco de Dados" and after on "knowledge".
+   ![datasources](https://github.com/eubr-atmosphere/tma-framework-a/tree/master/analyzer/metabase/datasources.png)
+
+   4. Change the settings to match your DB server installation.
+   ![values](https://github.com/eubr-atmosphere/tma-framework-a/tree/master/analyzer/metabase/values.png)
+
+
+### To restart cache use two commands below.
 	
-	
-		- To restart cache use two commands below.
-	
-	docker-compose build --no-cache
-	docker-compose up -d 
+   docker-compose build --no-cache
+   docker-compose up -d container-name
