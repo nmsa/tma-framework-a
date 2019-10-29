@@ -34,6 +34,7 @@ This component requires the software available in [tma-utils](https://github.com
 2) Access the Metabase and reconfigure the database connection:
 
    1. Access the Metabase url using the dashboard host and the port 3000.
+
    ![url](https://github.com/eubr-atmosphere/tma-framework-a/tree/master/analyzer/README/url.png)
    
    2. Use the e-mail atmosphere.eubrazil.dashboard@gmail.com and the password passtobereplaced1234 to sign in:
@@ -47,7 +48,6 @@ This component requires the software available in [tma-utils](https://github.com
 
    5. Change the settings to match your DB server installation.
    ![values](https://github.com/eubr-atmosphere/tma-framework-a/tree/master/analyzer/README/values.png)
-
 
 ### To restart cache use two commands below.
 	
