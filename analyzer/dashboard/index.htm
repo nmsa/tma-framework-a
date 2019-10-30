@@ -4,8 +4,9 @@
     <link rel="stylesheet" type="text/css" href="core.css">
     
     <script>
-    	var url = window.location.protocol + "//" + window.location.hostname;
+    	var host = window.location.protocol + "//" + window.location.hostname;    	
     </script>
+    
 </head>
 <body>
 	<div id="logo">
@@ -16,21 +17,12 @@
 		<div id="left">
     		<iframe src="configurations.htm" frameborder="0" width="550" height="550">Browser not compatible.</iframe>
 			<br/><br/>
-			<iframe src="scores.htm" frameborder="0" width="550" height="550">Browser not compatible.</iframe>
+			<iframe src="scores-link.htm" frameborder="0" width="550" height="550">Browser not compatible.</iframe>
 		</div>
 		<div id="right">
 			<div id="dleft">
-    			<iframe id="metabase" src="" frameborder="0" width="730" height="2000" allowtransparency>Browser not compatible.</iframe>
-    			<script>document.getElementById("metabase").src = url + ":3000/public/dashboard/7056ed17-9542-423a-b6e4-66e5e4bd7f93";</script>
+    			<iframe id="metabase" src="trustworthiness.htm" frameborder="0" width="850" height="2000" allowtransparency>Browser not compatible.</iframe>
     		</div>
-    		<div id="dright">
-    			<form id="detailsp" method="get" action="/privacy.htm">
-    				<button type="submit">+ Details Privacy</button>
-    			</form>
-				<form id="detailsi" method="get" action="/infra.htm">
-					<button type="submit">+ Details Infra</button>
-				</form>
-			</div>
 		</div>
 	</div>
 </body>

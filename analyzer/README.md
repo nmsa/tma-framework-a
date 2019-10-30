@@ -4,7 +4,7 @@ Calculates the final score for the privacy metric.
 The analyzer will calculate the scores and add them to the topic `topic-planning`.
 
 ## Prerequisites
-This component requires the software available in [tma-utils](https://github.com/joseadp/tma-utils).
+This component requires the software available in [tma-utils](https://github.com/eubr-atmosphere/tma-framework/tree/master/common/tma-utils).
 
 ### Steps to run the SpringBoot Analyzer Application:
 
@@ -34,17 +34,20 @@ This component requires the software available in [tma-utils](https://github.com
 2) Access the Metabase and reconfigure the database connection:
 
    1. Access the Metabase url using the dashboard host and the port 3000.
-   ![url](https://github.com/eubr-atmosphere/tma-framework-a/tree/master/analyzer/metabase/url.png)
-  
-   2. In the top-right corner of the site, click on the "gear" icon and after on "Administrator".
-   ![admin](https://github.com/eubr-atmosphere/tma-framework-a/tree/master/analyzer/metabase/admin.png)
-  
-   3. Click on "Banco de Dados" and after on "knowledge".
-   ![datasources](https://github.com/eubr-atmosphere/tma-framework-a/tree/master/analyzer/metabase/datasources.png)
 
-   4. Change the settings to match your DB server installation.
-   ![values](https://github.com/eubr-atmosphere/tma-framework-a/tree/master/analyzer/metabase/values.png)
+   ![url](https://github.com/eubr-atmosphere/tma-framework-a/tree/master/analyzer/README/url.png)
+   
+   2. Use the e-mail atmosphere.eubrazil.dashboard@gmail.com and the password passtobereplaced1234 to sign in:
+   ![signin](https://github.com/eubr-atmosphere/tma-framework-a/tree/master/analyzer/README/signin.png)
+  
+   3. In the top-right corner of the site, click on the "gear" icon and after on "Admin".
+   ![admin](https://github.com/eubr-atmosphere/tma-framework-a/tree/master/analyzer/README/admin.png)
+  
+   4. Click on "Databases" and after on "knowledge".
+   ![datasources](https://github.com/eubr-atmosphere/tma-framework-a/tree/master/analyzer/README/datasources.png)
 
+   5. Change the settings to match your DB server installation.
+   ![values](https://github.com/eubr-atmosphere/tma-framework-a/tree/master/analyzer/README/values.png)
 
 ### To restart cache use two commands below.
 	
