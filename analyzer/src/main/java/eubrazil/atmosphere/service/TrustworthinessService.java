@@ -3,6 +3,7 @@ package eubrazil.atmosphere.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.domain.Pageable;
 
@@ -35,5 +36,7 @@ public interface TrustworthinessService {
 	MetricAttributeView getMetricAttributeViewById(Integer id);
 
 	Preference findPreferenceById(int id);
+
+	Date getLastTimestampInsertedForMetrics(Set<Preference> preferences);
 	
 }

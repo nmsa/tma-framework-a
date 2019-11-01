@@ -1,6 +1,5 @@
 package eubrazil.atmosphere.job;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -52,6 +51,8 @@ public class TrustworthinessPollJob implements Job {
 	@Value("${trigger.job.time}")
 	private String triggerJobTime;
 
+	private static Date lastTimestampRead = null;
+	
 	@Override
 	public void execute(JobExecutionContext jobExecutionContext) {
 		LOGGER.info("TrustworthinessPollJob - execution..");
@@ -68,10 +69,23 @@ public class TrustworthinessPollJob implements Job {
 		LOGGER.info("TrustworthinessQualityModel (TrustworthinessPollJob) - ConfigurationProfile: " + configurationActor);
 		
 		CompositeAttributeView compositeAttribute = getRootAttribute(configurationActor);
-
+		
+		Date lastTimestampDataInserted = trustworthinessService.getLastTimestampInsertedForMetrics(configurationActor.getPreferences());
+		LOGGER.info("lastTimestampDataInserted: " + lastTimestampDataInserted);
+		LOGGER.info("lastTimestampRead: " + lastTimestampRead);
+		if (lastTimestampRead != null && lastTimestampDataInserted != null
+				&& lastTimestampRead.equals(lastTimestampDataInserted)) {
+			LOGGER.info(
+					new Date() + " - No new data entered for trustworthiness metrics in the Data table. Last timestamp read: " + lastTimestampRead);
+			return;
+		} else if (lastTimestampRead == null
+				|| (lastTimestampRead != null && !lastTimestampRead.equals(lastTimestampDataInserted))) {
+			lastTimestampRead = lastTimestampDataInserted;
+			LOGGER.info("update lastTimestampRead: " + lastTimestampRead);
+		}
+		
 		try {
-			Timestamp timestamp = new Timestamp(new Date().getTime()); // TODO: Get timestamp of last data entered
-			MetricData metricData = compositeAttribute.calculate(configurationActor, timestamp);
+			MetricData metricData = compositeAttribute.calculate(configurationActor, lastTimestampRead);
 			LOGGER.info(new Date() + " - Calculated score for trustworthiness: " + metricData.getValue());
 			
 			try {
@@ -119,8 +133,7 @@ public class TrustworthinessPollJob implements Job {
 
 	@Bean(name = "jobBean1Trigger")
 	public CronTriggerFactoryBean jobTrigger(@Qualifier("jobBean1") JobDetail jobDetail) {
-		return SchedulerConfig.createCronTrigger(jobDetail, "0 0 12 1 1/1 ? *");
-		//return SchedulerConfig.createCronTrigger(jobDetail, triggerJobTime + " * * * * ?");
+		return SchedulerConfig.createCronTrigger(jobDetail, triggerJobTime + " * * * * ?");
 	}
 
 }
