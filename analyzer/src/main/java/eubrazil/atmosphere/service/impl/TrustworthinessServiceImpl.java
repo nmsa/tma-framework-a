@@ -1,14 +1,19 @@
 package eubrazil.atmosphere.service.impl;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import eubr.atmosphere.tma.entity.qualitymodel.ConfigurationProfile;
 import eubr.atmosphere.tma.entity.qualitymodel.Data;
+import eubr.atmosphere.tma.entity.qualitymodel.Metric;
 import eubr.atmosphere.tma.entity.qualitymodel.MetricAttributeView;
 import eubr.atmosphere.tma.entity.qualitymodel.MetricData;
 import eubr.atmosphere.tma.entity.qualitymodel.Preference;
@@ -19,6 +24,7 @@ import eubrazil.atmosphere.repository.ConfigurationProfileRepository;
 import eubrazil.atmosphere.repository.DataRepository;
 import eubrazil.atmosphere.repository.MetricAttributeViewRepository;
 import eubrazil.atmosphere.repository.MetricDataRepository;
+import eubrazil.atmosphere.repository.MetricRepository;
 import eubrazil.atmosphere.repository.PreferenceRepository;
 import eubrazil.atmosphere.repository.QualityModelRepository;
 import eubrazil.atmosphere.service.TrustworthinessService;
@@ -47,6 +53,9 @@ public class TrustworthinessServiceImpl implements TrustworthinessService {
 	
 	@Autowired
 	private PreferenceRepository preferenceRepository;
+	
+	@Autowired
+	private MetricRepository metricRepository;
 	
 	@Override
 	public List<Data> getLimitedDataListById(Integer probeId, Integer descriptionId, Integer resourceId,
@@ -99,6 +108,33 @@ public class TrustworthinessServiceImpl implements TrustworthinessService {
 	@Override
 	public Preference findPreferenceById(int id) {
 		return preferenceRepository.findPreferenceById(id);
+	}
+	
+	@Override
+	public Date getLastTimestampInsertedForMetrics(Set<Preference> preferences) {
+		
+		Date lastTime = null;
+		
+		Integer probeId = Integer.parseInt(PropertiesManager.getInstance().getProperty("probe.id"));
+		Integer resourceId = Integer.parseInt(PropertiesManager.getInstance().getProperty("resource.id"));
+		Integer descriptionId = null;
+		
+		for (Preference p : preferences) {
+			Metric metric = metricRepository.findMetricById(p.getId().getMetricId());
+			if (metric.getMetricName().equalsIgnoreCase("INFORMATIONLOSS")) {
+				descriptionId = Integer.parseInt(PropertiesManager.getInstance().getProperty("score")); // loss
+			} else {
+				descriptionId = Integer.parseInt(PropertiesManager.getInstance().getProperty("riskP")); // risk
+			}
+			List<Data> lData = dataRepository.getLimitedDataListById(probeId, descriptionId, resourceId, new PageRequest (0, 1));
+			Data lastDataInserted = Collections.max(lData, Comparator.comparing(d -> d.getId().getValueTime()));
+			if (lastDataInserted != null && (lastTime == null
+					|| (lastTime != null && lastTime.before(lastDataInserted.getId().getValueTime())))) {
+				lastTime = lastDataInserted.getId().getValueTime();
+			}
+		}
+		
+		return lastTime;
 	}
 	
 }
