@@ -12,7 +12,9 @@ The dashboard will present the data calculated by analyzer.
 	
 		- Docker must have been initialized before executing the command below.
 		
-		- You must have been configured the connection to the knowledge database in the application.yml (src/main/resources) and changeDS.sql (dashboard/) files.
+		- You must have been configured the connection to knowledge database in the files:
+		  * application.yml (src/main/resources)
+		  * changeDS.sql (dashboard/)
 
 ---
 
@@ -47,10 +49,10 @@ If the deploy be in Docker containers, follow the steps below:
    ``docker exec -ti dashboard /bin/bash``
    
    3. Start the metabase service and reconfigure the connection using the commands:  
-   * ``service metabase start``  
    * ``cd /usr/share/metabase/``  
    * ``java -cp ./metabase.jar org.h2.tools.RunScript -url jdbc:h2:`pwd`/metabase-atm.db -script changeDS.sql``  
-   * ``rm changeDS.sql``
+   * ``rm changeDS.sql``  
+   * ``service metabase start``  
    
 ### To restart cache use two commands below.
 	
@@ -76,7 +78,7 @@ If the deploy be in Kubernetes PODs, follow the steps below:
    ``kubectl exec -ti tma-dashboard-0 /bin/bash``
    
    3. Start the metabase service and reconfigure the connection using the commands:  
-   * ``service metabase start``  
    * ``cd /usr/share/metabase/``  
    * ``java -cp ./metabase.jar org.h2.tools.RunScript -url jdbc:h2:`pwd`/metabase-atm.db -script changeDS.sql``  
-   * ``rm changeDS.sql``
+   * ``rm changeDS.sql``  
+   * ``service metabase start``  
