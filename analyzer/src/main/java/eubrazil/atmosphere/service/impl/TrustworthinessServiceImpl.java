@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import eubr.atmosphere.tma.entity.qualitymodel.CompositeAttributeView;
 import eubr.atmosphere.tma.entity.qualitymodel.ConfigurationProfile;
 import eubr.atmosphere.tma.entity.qualitymodel.Data;
 import eubr.atmosphere.tma.entity.qualitymodel.Metric;
@@ -20,6 +21,7 @@ import eubr.atmosphere.tma.entity.qualitymodel.Preference;
 import eubr.atmosphere.tma.entity.qualitymodel.QualityModel;
 import eubr.atmosphere.tma.utils.ListUtils;
 import eubrazil.atmosphere.config.appconfig.PropertiesManager;
+import eubrazil.atmosphere.repository.CompositeAttributeViewRepository;
 import eubrazil.atmosphere.repository.ConfigurationProfileRepository;
 import eubrazil.atmosphere.repository.DataRepository;
 import eubrazil.atmosphere.repository.MetricAttributeViewRepository;
@@ -56,6 +58,9 @@ public class TrustworthinessServiceImpl implements TrustworthinessService {
 	
 	@Autowired
 	private MetricRepository metricRepository;
+	
+	@Autowired
+	private CompositeAttributeViewRepository compositeAttributeViewRepository;
 	
 	@Override
 	public List<Data> getLimitedDataListById(Integer probeId, Integer descriptionId, Integer resourceId,
@@ -103,6 +108,11 @@ public class TrustworthinessServiceImpl implements TrustworthinessService {
 	@Override
 	public MetricAttributeView getMetricAttributeViewById(Integer id) {
 		return metricAttributeViewRepository.getMetricAttributeViewById(id);
+	}
+	
+	@Override
+	public CompositeAttributeView getCompositeAttributeViewById(Integer id) {
+		return compositeAttributeViewRepository.getCompositeAttributeViewById(id);
 	}
 	
 	@Override

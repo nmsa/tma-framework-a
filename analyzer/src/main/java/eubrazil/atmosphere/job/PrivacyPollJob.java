@@ -2,6 +2,7 @@ package eubrazil.atmosphere.job;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
@@ -24,55 +25,89 @@ import eubr.atmosphere.tma.entity.qualitymodel.MetricData;
 import eubr.atmosphere.tma.entity.qualitymodel.Preference;
 import eubr.atmosphere.tma.exceptions.UndefinedException;
 import eubr.atmosphere.tma.utils.ListUtils;
+import eubr.atmosphere.tma.utils.PrivacyScore;
 import eubrazil.atmosphere.config.quartz.SchedulerConfig;
+import eubrazil.atmosphere.kafka.KafkaManager;
 import eubrazil.atmosphere.qualitymodel.SpringContextBridge;
 import eubrazil.atmosphere.service.TrustworthinessService;
 
 /**
- * Trustworthiness Poll Job
+ * Privacy Poll Job
  * @author JorgeLuiz
  */
 @Component
 @DisallowConcurrentExecution
 @PropertySource(ignoreResourceNotFound = true, value = "classpath:config.properties")
-public class TrustworthinessPollJob implements Job {
+public class PrivacyPollJob implements Job {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 	
-	@Value("${trustworthiness.configuration.profile.id}")
-	private Integer trustworthinessConfigurationProfileID;
+	@Value("${privacy.configuration.profile.id}")
+	private Integer privacyConfigurationProfileID;
 	
-	@Value("${trustworthiness.quality.model.id}")
-	private Integer trustworthinessQualityModelID;
+	@Value("${privacy.quality.model.id}")
+	private Integer privacyQualityModelID;
 	
-	@Value("${trustworthiness.trigger.job.time}")
+	@Value("${privacy.trigger.job.time}")
 	private String triggerJobTime;
+
+	private static Date lastTimestampRead = null;
 	
 	@Override
 	public void execute(JobExecutionContext jobExecutionContext) {
-		LOGGER.info("TrustworthinessPollJob - execution..");
+		LOGGER.info("PrivacyPollJob - execution..");
 
 		TrustworthinessService trustworthinessService = SpringContextBridge.services().getTrustworthinessService();
 		
-		List<ConfigurationProfile> configProfileList = trustworthinessService.findConfigurationProfileInstance(trustworthinessConfigurationProfileID);
+		List<ConfigurationProfile> configProfileList = trustworthinessService.findConfigurationProfileInstance(privacyConfigurationProfileID);
 		if (ListUtils.isEmpty(configProfileList)) {
-			LOGGER.error("Configuration Profile for trustworthiness not defined in the Knowledge base.");
+			LOGGER.error("Configuration Profile not defined in the Knowledge base.");
 			return;
 		}
 
 		ConfigurationProfile configurationActor =  ListUtils.getFirstElement(configProfileList);
-		LOGGER.info("TrustworthinessQualityModel (TrustworthinessPollJob) - ConfigurationProfile: " + configurationActor);
+		LOGGER.info("PrivacyQualityModel (PrivacyPollJob) - ConfigurationProfile: " + configurationActor);
 		
 		CompositeAttributeView compositeAttribute = getRootAttribute(configurationActor);
 		
+		Date lastTimestampDataInserted = trustworthinessService.getLastTimestampInsertedForMetrics(configurationActor.getPreferences());
+		LOGGER.info("lastTimestampDataInserted: " + lastTimestampDataInserted);
+		LOGGER.info("lastTimestampRead: " + lastTimestampRead);
+		if (lastTimestampRead != null && lastTimestampDataInserted != null
+				&& lastTimestampRead.equals(lastTimestampDataInserted)) {
+			LOGGER.info(
+					new Date() + " - No new data entered for privacy metrics in the Data table. Last timestamp read: " + lastTimestampRead);
+			return;
+		} else if (lastTimestampRead == null
+				|| (lastTimestampRead != null && !lastTimestampRead.equals(lastTimestampDataInserted))) {
+			lastTimestampRead = lastTimestampDataInserted;
+			LOGGER.info("update lastTimestampRead: " + lastTimestampRead);
+		}
+		
 		try {
-			MetricData metricData = compositeAttribute.calculate(configurationActor, null);
-			LOGGER.info(new Date() + " - Calculated score for trustworthiness: " + metricData.getValue());
+			MetricData metricData = compositeAttribute.calculate(configurationActor, lastTimestampRead);
+			LOGGER.info(new Date() + " - Calculated score for privacy: " + metricData.getValue());
+			
+			try {
+				
+				Preference preference = trustworthinessService.findPreferenceById(compositeAttribute.getId());
+				PrivacyScore privacyScore = new PrivacyScore(configurationActor.getConfigurationProfileID(),
+						metricData.getMetricId().getMetricId(), metricData.getValue(), preference.getThreshold());
+
+				// Add calculated score to kafka topic
+				KafkaManager.getInstance().addItemKafka(privacyScore);
+				
+			} catch (InterruptedException e) {
+				LOGGER.error("InterruptedException when adding kafka item: ", e);
+			} catch (ExecutionException e) {
+				LOGGER.error("ExecutionException when adding kafka item: ", e);
+			}
+			
 		} catch (UndefinedException e) {
 			LOGGER.error("Property not defined in the quality model ", e);
 		}
 
-		LOGGER.info("TrustworthinessPollJob - end of execution..");
+		LOGGER.info("PrivacyPollJob - end of execution..");
 	}
 	
 	private CompositeAttributeView getRootAttribute(ConfigurationProfile configurationActor) {
@@ -91,14 +126,14 @@ public class TrustworthinessPollJob implements Job {
 		return null;
 	}
 	
-	@Bean(name = "jobBean2")
+	@Bean(name = "jobBean1")
 	public JobDetailFactoryBean job() {
 		return SchedulerConfig.createJobDetail(this.getClass());
 	}
 
-	@Bean(name = "jobBean2Trigger")
-	public CronTriggerFactoryBean jobTrigger(@Qualifier("jobBean2") JobDetail jobDetail) {
-		return SchedulerConfig.createCronTrigger(jobDetail, triggerJobTime + " * * ? * *");
+	@Bean(name = "jobBean1Trigger")
+	public CronTriggerFactoryBean jobTrigger(@Qualifier("jobBean1") JobDetail jobDetail) {
+		return SchedulerConfig.createCronTrigger(jobDetail, triggerJobTime + " * * * * ?");
 	}
 
 }
