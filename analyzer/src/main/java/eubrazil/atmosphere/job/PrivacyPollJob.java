@@ -142,7 +142,7 @@ public class PrivacyPollJob implements Job {
 
 	@Bean(name = "jobBean1Trigger")
 	public CronTriggerFactoryBean jobTrigger(@Qualifier("jobBean1") JobDetail jobDetail) {
-		return SchedulerConfig.createCronTrigger(jobDetail, triggerJobTime + " * * * * ?");
+		return SchedulerConfig.createCronTrigger(jobDetail, triggerJobTime);
 	}
 
 }
