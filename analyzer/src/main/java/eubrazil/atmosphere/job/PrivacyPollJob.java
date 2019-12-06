@@ -26,6 +26,8 @@ import eubr.atmosphere.tma.entity.qualitymodel.Preference;
 import eubr.atmosphere.tma.exceptions.UndefinedException;
 import eubr.atmosphere.tma.utils.ListUtils;
 import eubr.atmosphere.tma.utils.PrivacyScore;
+import eubr.atmosphere.tma.utils.TrustworthinessScore;
+import eubrazil.atmosphere.config.appconfig.PropertiesManager;
 import eubrazil.atmosphere.config.quartz.SchedulerConfig;
 import eubrazil.atmosphere.kafka.KafkaManager;
 import eubrazil.atmosphere.qualitymodel.SpringContextBridge;
@@ -90,12 +92,19 @@ public class PrivacyPollJob implements Job {
 			
 			try {
 				
+				Integer resourceId = Integer.parseInt(PropertiesManager.getInstance().getProperty("resource.id"));
+				
 				Preference preference = trustworthinessService.findPreferenceById(compositeAttribute.getId());
 				PrivacyScore privacyScore = new PrivacyScore(configurationActor.getConfigurationProfileID(),
 						metricData.getMetricId().getMetricId(), metricData.getValue(), preference.getThreshold());
+				privacyScore.setValueTime(System.currentTimeMillis() / 1000);
+				privacyScore.setMetricId(metricData.getMetricId().getMetricId());
+				privacyScore.setResourceId(resourceId);
 
+				TrustworthinessScore trustworthinessScore = new TrustworthinessScore(privacyScore);
+				
 				// Add calculated score to kafka topic
-				KafkaManager.getInstance().addItemKafka(privacyScore);
+				KafkaManager.getInstance().addItemKafka(trustworthinessScore);
 				
 			} catch (InterruptedException e) {
 				LOGGER.error("InterruptedException when adding kafka item: ", e);

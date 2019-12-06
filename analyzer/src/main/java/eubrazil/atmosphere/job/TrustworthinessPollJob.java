@@ -50,29 +50,29 @@ public class TrustworthinessPollJob implements Job {
 	
 	@Override
 	public void execute(JobExecutionContext jobExecutionContext) {
-		LOGGER.info("TrustworthinessPollJob - execution..");
-
-		TrustworthinessService trustworthinessService = SpringContextBridge.services().getTrustworthinessService();
-		
-		List<ConfigurationProfile> configProfileList = trustworthinessService.findConfigurationProfileInstance(trustworthinessConfigurationProfileID);
-		if (ListUtils.isEmpty(configProfileList)) {
-			LOGGER.error("Configuration Profile for trustworthiness not defined in the Knowledge base.");
-			return;
-		}
-
-		ConfigurationProfile configurationActor =  ListUtils.getFirstElement(configProfileList);
-		LOGGER.info("TrustworthinessQualityModel (TrustworthinessPollJob) - ConfigurationProfile: " + configurationActor);
-		
-		CompositeAttributeView compositeAttribute = getRootAttribute(configurationActor);
-		
-		try {
-			MetricData metricData = compositeAttribute.calculate(configurationActor, null);
-			LOGGER.info(new Date() + " - Calculated score for trustworthiness: " + metricData.getValue());
-		} catch (UndefinedException e) {
-			LOGGER.error("Property not defined in the quality model ", e);
-		}
-
-		LOGGER.info("TrustworthinessPollJob - end of execution..");
+//		LOGGER.info("TrustworthinessPollJob - execution..");
+//
+//		TrustworthinessService trustworthinessService = SpringContextBridge.services().getTrustworthinessService();
+//		
+//		List<ConfigurationProfile> configProfileList = trustworthinessService.findConfigurationProfileInstance(trustworthinessConfigurationProfileID);
+//		if (ListUtils.isEmpty(configProfileList)) {
+//			LOGGER.error("Configuration Profile for trustworthiness not defined in the Knowledge base.");
+//			return;
+//		}
+//
+//		ConfigurationProfile configurationActor =  ListUtils.getFirstElement(configProfileList);
+//		LOGGER.info("TrustworthinessQualityModel (TrustworthinessPollJob) - ConfigurationProfile: " + configurationActor);
+//		
+//		CompositeAttributeView compositeAttribute = getRootAttribute(configurationActor);
+//		
+//		try {
+//			MetricData metricData = compositeAttribute.calculate(configurationActor, null);
+//			LOGGER.info(new Date() + " - Calculated score for trustworthiness: " + metricData.getValue());
+//		} catch (UndefinedException e) {
+//			LOGGER.error("Property not defined in the quality model ", e);
+//		}
+//
+//		LOGGER.info("TrustworthinessPollJob - end of execution..");
 	}
 	
 	private CompositeAttributeView getRootAttribute(ConfigurationProfile configurationActor) {

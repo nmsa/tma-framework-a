@@ -137,10 +137,12 @@ public class TrustworthinessServiceImpl implements TrustworthinessService {
 				descriptionId = Integer.parseInt(PropertiesManager.getInstance().getProperty("riskP")); // risk
 			}
 			List<Data> lData = dataRepository.getLimitedDataListById(probeId, descriptionId, resourceId, new PageRequest (0, 1));
-			Data lastDataInserted = Collections.max(lData, Comparator.comparing(d -> d.getId().getValueTime()));
-			if (lastDataInserted != null && (lastTime == null
-					|| (lastTime != null && lastTime.before(lastDataInserted.getId().getValueTime())))) {
-				lastTime = lastDataInserted.getId().getValueTime();
+			if (ListUtils.isNotEmpty(lData)) {
+				Data lastDataInserted = Collections.max(lData, Comparator.comparing(d -> d.getId().getValueTime()));
+				if (lastDataInserted != null && (lastTime == null
+						|| (lastTime != null && lastTime.before(lastDataInserted.getId().getValueTime())))) {
+					lastTime = lastDataInserted.getId().getValueTime();
+				}
 			}
 		}
 		
