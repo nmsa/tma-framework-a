@@ -14,7 +14,7 @@ public class PropertiesManager {
     private static Properties props = null;
 
     private PropertiesManager() {
-        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("classpath:config.properties");
+        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("config.properties");
         props = new Properties();
         try {
             props.load(inputStream);

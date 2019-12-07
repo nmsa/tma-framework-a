@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.springframework.data.domain.Pageable;
 
+import eubr.atmosphere.tma.entity.qualitymodel.CompositeAttributeView;
 import eubr.atmosphere.tma.entity.qualitymodel.ConfigurationProfile;
 import eubr.atmosphere.tma.entity.qualitymodel.Data;
 import eubr.atmosphere.tma.entity.qualitymodel.MetricAttributeView;
@@ -38,5 +39,7 @@ public interface TrustworthinessService {
 	Preference findPreferenceById(int id);
 
 	Date getLastTimestampInsertedForMetrics(Set<Preference> preferences);
+
+	CompositeAttributeView getCompositeAttributeViewById(Integer id);
 	
 }
