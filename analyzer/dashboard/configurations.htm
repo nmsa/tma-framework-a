@@ -11,7 +11,7 @@
 	var app = angular.module('ConfigApp', []);
 	app.controller('ConfigController', function($scope, $http) {
 
-    	$http.get(url + ":8080/dash/get")
+    	$http.get(url + ":32203/dash/get")
     	.then(function (response) {    
     		$scope.metrics = response.data;
     	});
@@ -19,7 +19,7 @@
 		$scope.insertdata = function() {
 			json = $scope.metrics;
 
-			$http.post(url + ":8080/dash/save", {
+			$http.post(url + ":32203/dash/save", {
 				json
 			})
 			.success(function(data, status, headers, config) {
@@ -44,20 +44,20 @@
 		<form ng-app="ngNumbersOnly">
 			<table class="greyGridTable">
 				<tr>
-					<th>Properties Relevance (Weights)</th>
+					<th>Properties</th>
+					<th>Relevance (Weights)</th>
 					<th>Thresholds (0-1)</th>
-					<th>Periodicity (ms)</th>
+					<!-- <th>Periodicity (ms)</th> -->
 				</tr>
 				<tr ng-repeat="item in metrics">
 					<td style="text-align: left">
-						<input type="checkbox" ng-model="metrics[$index].Selected"> <label for="metrics[$index].Name">{{ item.Name }}</label>
+						<label for="metrics[$index].Name">{{ item.Name }}</label>
+					</td>
+					<td>
 						<input type="number" ng-model="metrics[$index].Relevance" min="0" max="100">%<br /> 
 					</td>
 					<td>
 						<input type="number" ng-model="metrics[$index].Threshold" min="0" max="1" precision="2" step="0.05">
-					</td>
-					<td>
-						<input type="number" ng-model="metrics[$index].Periodicity" min="0" max="200" step="5">
 					</td>
 				</tr>
 			</table>
