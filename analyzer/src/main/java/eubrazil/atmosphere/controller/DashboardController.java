@@ -102,15 +102,14 @@ public static final Logger LOGGER = LoggerFactory.getLogger(DashboardController.
 				item = new JSONObject();
 				item.put("Id", m.getMetricId());
 				item.put("Name", m.getMetricName());
-			
-				// recover job time by config.properties file
-				// jobTime = Integer.parseInt(PropertiesManager.getInstance().getProperty("trigger.job.time").split("/")[1]);
 
 				// include other values
 				item.put("Relevance", p.getWeight() * 100);
 				item.put("Threshold", p.getThreshold() * 10);
-				// item.put("Periodicity", jobTime);
-			
+
+				// include other values
+				item.put("Relevance", p.getWeight());
+				item.put("Threshold", p.getThreshold());			
 				// add json object into array
 				properties.put(item);
 			}
