@@ -61,24 +61,24 @@ public static final Logger LOGGER = LoggerFactory.getLogger(DashboardController.
 	@ResponseBody
 	public void save(@RequestBody String input) {
 	
-		// load json values into object	
-		JSONObject json = new JSONObject(input);
-		JSONArray properties = json.getJSONArray("json");
+	   // load json values into object	
+	   JSONObject json = new JSONObject(input);
+	   JSONArray properties = json.getJSONArray("json");
+
+           JSONObject item;
+           Preference p;
 		
-		JSONObject item;
-		Preference p;
-		
-		// for each property (metric)
-		for(int i=0; i < properties.length(); i++) {
-    		// recover json object
-    		item = properties.getJSONObject(i);
-            
-            // update value into db
-            p = preferenceService.getPreferenceById(item.getInt("Id"));
-            p.setThreshold(item.getDouble("Threshold"));
-            p.setWeight(item.getDouble("Relevance"));
-            preferenceService.save(p);
-        }
+           // for each property (metric)
+           for(int i=0; i < properties.length(); i++) {
+              // recover json object
+              item = properties.getJSONObject(i);
+
+              // update value into db
+              p = preferenceService.getPreferenceById(item.getInt("Id"));
+              p.setThreshold(item.getDouble("Threshold") / 10);
+              p.setWeight(item.getDouble("Relevance") / 100);
+              preferenceService.save(p);
+           }
  	}
 	
 	@CrossOrigin
@@ -93,24 +93,27 @@ public static final Logger LOGGER = LoggerFactory.getLogger(DashboardController.
 
 		// for each property (also called attribute or metric)
 		for(Metric m : metricService.getAllMetrics()) {
-			// create a json object and include metric (id, name)
-			item = new JSONObject();
-			item.put("Id", m.getMetricId());
-			item.put("Name", m.getMetricName());
-			
 			// recover other values by Preference db table
 			p = preferenceService.getPreferenceById(m.getMetricId());
 			
-			// recover job time by config.properties file
-			jobTime = Integer.parseInt(PropertiesManager.getInstance().getProperty("trigger.job.time").split("/")[1]);
-
-			// include other values
-			item.put("Relevance", p.getWeight());
-			item.put("Threshold", p.getThreshold());
-			item.put("Periodicity", jobTime);
+			if(p != null) // show only metrics with Preference
+			{
+				// create a json object and include metric (id, name)
+				item = new JSONObject();
+				item.put("Id", m.getMetricId());
+				item.put("Name", m.getMetricName());
 			
-			// add json object into array
-			properties.put(item);
+				// recover job time by config.properties file
+				// jobTime = Integer.parseInt(PropertiesManager.getInstance().getProperty("trigger.job.time").split("/")[1]);
+
+				// include other values
+				item.put("Relevance", p.getWeight() * 100);
+				item.put("Threshold", p.getThreshold() * 10);
+				// item.put("Periodicity", jobTime);
+			
+				// add json object into array
+				properties.put(item);
+			}
 		}
 
 		return properties.toString();

@@ -1,0 +1,39 @@
+---        
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: tma-analyze
+  labels:
+    run: tma-analyze
+
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    nodePort: 32203
+    name: services
+  clusterIP: 10.109.41.185
+  selector:
+    run: tma-analyze
+
+---
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: tma-analyze
+
+spec:
+  selector:
+    matchLabels:
+      run: tma-analyze
+  template:
+    metadata:
+      labels:
+        run: tma-analyze
+    spec:
+      containers:
+      - name: tma-analyze
+        image: eubraatmosphere/tma-analyze:0.35
+        imagePullPolicy: Always
