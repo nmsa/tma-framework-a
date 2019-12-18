@@ -12,19 +12,19 @@
 	app.config(function($sceDelegateProvider) {
   		$sceDelegateProvider.resourceUrlWhitelist([
     		'self',
-    		host + ':3000/**'
+    		host + ':32461/**'
   		]);
 	});
 
 	app.controller('ConfigController', function($scope, $http) {
 
-    	$http.get(host + ":8080/dash/getroot")
+    	$http.get(host + ":32203/dash/getroot")
     	.then(function (response) {    
     		$scope.metrics = response.data;
     	});
     	
     	$scope.getIframeSrc = function(id) {
-      		return host + ':3000/public/dashboard/66a56dff-2c56-41fa-b845-e985b8e26a71?metricid=' + id;
+		return host + ':32461/public/dashboard/66a56dff-2c56-41fa-b845-e985b8e26a71?metricid=' + id;
     	};    	
 	}); 
 	</script>
@@ -35,7 +35,7 @@
 		<b> Trustworthiness </b>
 		<div ng-app="ConfigApp" ng-controller="ConfigController">
 			<div ng-repeat="item in metrics">
-				<p> <script> {{ item.Name }} </script> </p>
+				<p> {{ item.Name }} </p>
 				<iframe id="{{ 'metabaseMetric' + item.Id }}" src="{{getIframeSrc(item.Id)}}" frameborder="0" width="850" height="300" allowtransparency>Browser not compatible.</iframe>
 			</div>
 		</div>
