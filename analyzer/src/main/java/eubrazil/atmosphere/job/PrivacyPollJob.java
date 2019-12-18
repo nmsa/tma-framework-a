@@ -97,7 +97,7 @@ public class PrivacyPollJob implements Job {
 				Preference preference = trustworthinessService.findPreferenceById(compositeAttribute.getId());
 				PrivacyScore privacyScore = new PrivacyScore(configurationActor.getConfigurationProfileID(),
 						metricData.getMetricId().getMetricId(), metricData.getValue(), preference.getThreshold());
-				privacyScore.setValueTime(System.currentTimeMillis() / 1000);
+				privacyScore.setValueTime(lastTimestampRead.getTime() / 1000);
 				privacyScore.setMetricId(metricData.getMetricId().getMetricId());
 				privacyScore.setResourceId(resourceId);
 

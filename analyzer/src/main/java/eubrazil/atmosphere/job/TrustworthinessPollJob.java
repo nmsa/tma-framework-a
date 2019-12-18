@@ -48,6 +48,8 @@ public class TrustworthinessPollJob implements Job {
 	@Value("${trustworthiness.trigger.job.time}")
 	private String triggerJobTime;
 	
+	private static Date lastTimestampRead = null;
+	
 	@Override
 	public void execute(JobExecutionContext jobExecutionContext) {
 		LOGGER.info("TrustworthinessPollJob - execution..");
@@ -65,8 +67,22 @@ public class TrustworthinessPollJob implements Job {
 		
 		CompositeAttributeView compositeAttribute = getRootAttribute(configurationActor);
 		
+		Date lastTimestampDataInserted = trustworthinessService.getLastTimestampInsertedForMetrics(configurationActor.getPreferences());
+		LOGGER.info("lastTimestampDataInserted: " + lastTimestampDataInserted);
+		LOGGER.info("lastTimestampRead: " + lastTimestampRead);
+		if (lastTimestampRead != null && lastTimestampDataInserted != null
+				&& lastTimestampRead.equals(lastTimestampDataInserted)) {
+			LOGGER.info(
+					new Date() + " - No new data entered for trustwothiness metrics in the Data table. Last timestamp read: " + lastTimestampRead);
+			return;
+		} else if (lastTimestampRead == null
+				|| (lastTimestampRead != null && !lastTimestampRead.equals(lastTimestampDataInserted))) {
+			lastTimestampRead = lastTimestampDataInserted;
+			LOGGER.info("update lastTimestampRead: " + lastTimestampRead);
+		}
+		
 		try {
-			MetricData metricData = compositeAttribute.calculate(configurationActor, null);
+			MetricData metricData = compositeAttribute.calculate(configurationActor, lastTimestampRead);
 			LOGGER.info(new Date() + " - Calculated score for trustworthiness: " + metricData.getValue());
 		} catch (UndefinedException e) {
 			LOGGER.error("Property not defined in the quality model ", e);
