@@ -11,7 +11,7 @@
 	var app = angular.module('ScoresApp', []);
 	app.controller('ScoresController', function($scope, $http) {
 
-    	$http.get(host + ":8080/dash/scores")
+    	$http.get(host + ":32203/dash/scores")
     	.then(function (response) {    
     		$scope.metrics = response.data;
     	});
@@ -27,7 +27,7 @@
             	'<a href="/metric-link.htm?metricId={{ nodes.Id }}&metricName={{ nodes.Name }}" class="node" target="_parent">{{ nodes.Name }} - {{ nodes.Score }}</a>'+
             	'<ul class="nested">' + 
                 	'<li ng-repeat="child in nodes.Children">' +
-                    	'<treeview nodes="child"></treeview>' + //TODO: the last element hasn't caret class
+                    	'<treeview nodes="child"></treeview>' +
                 	'</li>' +
             	'</ul>',
         	compile: function(tElement, tAttr) {
